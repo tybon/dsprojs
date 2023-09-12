@@ -1,0 +1,5 @@
+"0","## 2) plot it in a circle"
+"0","ggplot(Titanic, aes(x=1, y=Freq, fill=Class))+"
+"0","  geom_bar(stat = ""identity"")+"
+"0","  coord_polar(""y"", start=0)+"
+"0","  theme_void()"

@@ -1,0 +1,4 @@
+"0","# left join super hero and publisher "
+"0","ljsp<-left_join(superheroes, publishers)"
+"2","Joining, by = ""publisher"""
+"0","ljsp"

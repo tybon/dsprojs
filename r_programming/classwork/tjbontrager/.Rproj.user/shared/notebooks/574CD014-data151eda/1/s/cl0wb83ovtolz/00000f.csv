@@ -1,0 +1,5 @@
+"0","#factor(ti$income_lvl,levels='0 to 30,000', '30,001 to 48,000', '48_001 to 75,000', '75,001 to 110,000', 'Over 110,000', #labels='0-30k','30k-48k','48k-75k','75k-110k','110k+')"
+"0","#incomeByState = ti %>%"
+"0","#  group_by(income_lvl) %>%"
+"0","#  summarize(state)"
+"0","#incomeByState"

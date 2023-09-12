@@ -1,0 +1,4 @@
+"0",""
+"0","tcFacJoinSp = tcFactored %>%"
+"0","  inner_join(sp, by=c(""name""=""name""))"
+"0","tcFacJoinSp"

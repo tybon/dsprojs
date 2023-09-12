@@ -1,0 +1,4 @@
+"0","## change y-axis"
+"0","ggplot(titanClassProp, "
+"0","       aes(x=Class, y=prop, fill=Class))+"
+"0","  geom_col()"

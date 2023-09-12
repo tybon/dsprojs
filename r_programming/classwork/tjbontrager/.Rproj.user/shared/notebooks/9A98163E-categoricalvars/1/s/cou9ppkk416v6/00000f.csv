@@ -1,0 +1,5 @@
+"0","tc_with_count = tc%>%"
+"0","  group_by(state_code,degree_length) %>%"
+"0","  summarize()"
+"2","`summarise()` has grouped output by 'state_code'. You can override using the `.groups` argument."
+"0","tc"

@@ -1,0 +1,5 @@
+"0","coin_Bitcoin <- read_csv(""https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/coin_Bitcoin.csv"")"
+"0","coin_Dogecoin <- read_csv(""https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/coin_Dogecoin.csv"")"
+"0","coin_Ethereum <- read_csv(""https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/coin_Ethereum.csv"")"
+"0",""
+"0",""

@@ -1,0 +1,151 @@
+---
+title: 'DATA151: Comparing Distributions'
+author: "Kitada Smalley"
+output:
+  html_document:
+    collapsed: no
+    toc: yes
+    toc_depth: 5
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '5'
+---
+
+### Learning Objectives
+
+In this lesson students will compare distributions from multiple populations of interest using: 
+
+* `dplyr`: `group_by` and `summarise`
+* side-by-side `boxplots`
+* side-by-side `violin` plots
+* `beeswarm`plots
+* faceting
+
+
+#### Step 0: Library Tidyverse
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+#### Step 1: Load the Data
+
+```{r}
+aqi<-read.csv("https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/fireAQI_OrCoWa_10192022.csv", 
+                   header=TRUE)
+
+```
+
+#### Step 2: Numeric Summaries
+
+How does the air quality compare in Oregon, Washington, and Colorado?
+
+```{r}
+## LET'S START WITH MEAN and STANDARD DEV
+aqi%>%
+  group_by(State)%>%
+  summarise(n=n(), 
+            avgAQI=mean(AQI,na.rm=TRUE), 
+            sdAQI=sd(AQI,na.rm=TRUE), 
+            NAs=sum(is.na(AQI)))
+```
+
+
+Now let's add more metrics!  Let's use the quartiles.  Cutting our data into quartiles means that we have split the data into four even parts.  
+
+* $Q_1$: The first quartile is the 25th percentile 
+* $Q_2$ (Median): The second quartile is also known as the median and is the 50th percentile
+*  $Q_3$: The third quartile is the 75th percentile 
+
+We can use the `quantile()` function to get any desired quantile from our data set.  Quantile is synonymous with percentile.  When we use the quantile function we specify the fraction of data below a desired cut off point. 
+
+```{r}
+# The first quartile
+quantile(aqi$AQI, prob=.25, na.rm = TRUE)
+```
+
+
+We can do this for each state: 
+
+```{r}
+aqi%>%
+  group_by(State)%>%
+  summarise(n=n(), 
+            min=min(AQI, na.rm=TRUE),
+            Q1=quantile(AQI,prob=0.25,na.rm=TRUE),
+            med=median(AQI,na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(AQI,prob=0.75,na.rm=TRUE),
+            max=max(AQI,na.rm=TRUE))
+```
+
+What do you observe?
+
+#### Step 3: Side-by-side Boxplots
+
+```{r}
+# BOXPLOT
+ggplot(aqi,aes(x=State,y=AQI,fill=State))+geom_boxplot()
+```
+
+#### Step 4: Side-by-side Violin Plots
+
+```{r}
+# VIOLIN
+
+##INSERT CODE HERE ##
+```
+
+#### Step 5: Dot Plots
+
+You could make a dot plot!
+```{r}
+# Dot plot
+
+##INSERT CODE HERE ##
+```
+
+#### Step 6: Beeswarm Plots
+
+```{r}
+#install.packages('ggbeeswarm')
+library(ggbeeswarm)
+
+##INSERT CODE HERE ##
+```
+
+#### Step 7: Faceting
+
+Faceting can be used with any type of plot to separate subgroups.
+
+##### Faceting Histograms
+
+Here is a histogram where the y-axis is count.
+
+```{r}
+### Histogram (Counts)
+##INSERT CODE HERE ##
+```
+
+We can change the y-axis to density (proportions).
+
+```{r}
+### Histogram (Density)
+##INSERT CODE HERE ##
+```
+
+Since there is a spike in the Colorado distribution, this distorts the scale for the distributions for Oregon and Washington.  We can fix this by allowing the y-axis to freely vary. 
+
+```{r}
+### Histogram (Density - Free_y)
+##INSERT CODE HERE ##
+```
+
+##### Faceting Density Plots
+
+We can also make a density plot!
+
+```{r}
+### Density Plot (free_y)
+##INSERT CODE HERE ##
+```

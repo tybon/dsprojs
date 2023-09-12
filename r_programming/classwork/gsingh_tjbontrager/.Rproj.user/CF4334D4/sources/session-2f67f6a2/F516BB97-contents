@@ -1,0 +1,186 @@
+---
+title: "Numeric Summaries"
+author: "Tyler Bontrager, Ganesh Singh"
+date: "2022-11-02"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+# IMPORTING DATASETS
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+tc = tuition_cost
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+ti = tuition_income
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+sp = salary_potential
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+ht = historical_tuition
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+ds = diversity_school
+```
+
+```{r}
+tcFactored = tc %>%
+  mutate(degFactor = as.factor(degree_length))
+
+tcFactored
+```
+
+```{r}
+str(tcFactored)
+head(tcFactored)
+```
+
+```{r}
+ggplot(tcFactored, aes(x=in_state_tuition)) + geom_histogram()
+```
+
+```{r}
+ggplot(tcFactored, aes(x=out_of_state_tuition))+geom_histogram()
+```
+
+```{r}
+gatheredtc = tcFactored %>%
+  gather(key="in_out", value="totalCost",c(in_state_total,out_of_state_total))
+gatheredtc
+
+ggplot(tcFactored, aes(x=in_state_total))+geom_histogram()+expand_limits(x=80000,y=430) + 
+  ggtitle("Total cost of attendance for in-state students")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") # for the y axis label
+
+
+ggplot(tcFactored, aes(x=out_of_state_total))+geom_histogram()+expand_limits(x=80000,y=430) + 
+  ggtitle("Total cost of attendance for out-of-state students")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") # for the y axis label
+
+ggplot(gatheredtc, aes(x=totalCost,fill=in_out))+geom_histogram()+expand_limits(x=80000,y=430) + 
+  ggtitle("Total cost of attendance for students by residence")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") + # for the y axis label
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+
+#ggtitle(label) # for the main title
+#xlab(label) # for the x axis label
+#ylab(label) # for the y axis label
+#labs(...) # for the main title, axis labels and legend titles
+
+```
+
+As the above plots show, it's clear that the distributions are skewed to the right which means that expensive schools are generally less common, but the in-state and out-of-state costs see a shift in the primary mode. This may be because out-of-state costs are usually more expensive than in-state costs to students.
+
+
+```{r}
+tcInStateSummr = tcFactored %>%
+  group_by(degFactor) %>%
+  summarize(median(in_state_total))
+
+tcOutStateSummr = tcFactored %>%
+  group_by(degFactor) %>%
+  summarize(median(out_of_state_total))
+
+tcInStateSummr
+tcOutStateSummr
+  
+```
+
+This is a simple calculation of the median for 2-year and 4-year schools for total cost to out-of-state students.
+
+```{r}
+tcFours = tcFactored %>%
+  filter(degFactor=="4 Year")
+tcFours
+
+tcTwos = tcFactored %>%
+  filter(degFactor=="2 Year")
+```
+
+```{r}
+tc4YOOS_Summary = tcFours%>%
+  summarise(count_4YOOS=n(), 
+            min=min(tcFours$out_of_state_total, na.rm=TRUE),
+            Q1=quantile(tcFours$out_of_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcFours$out_of_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcFours$out_of_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcFours$out_of_state_total, na.rm=TRUE))
+
+tc4YIS_Summary = tcFours%>%
+  summarise(count_4YIS=n(), 
+            min=min(tcFours$in_state_total, na.rm=TRUE),
+            Q1=quantile(tcFours$in_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcFours$in_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcFours$in_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcFours$in_state_total, na.rm=TRUE))
+
+tc2YOOS_Summary = tcTwos%>%
+  summarise(count_2YOOS=n(), 
+            min=min(tcTwos$out_of_state_total, na.rm=TRUE),
+            Q1=quantile(tcTwos$out_of_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcTwos$out_of_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcTwos$out_of_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcTwos$out_of_state_total, na.rm=TRUE))
+
+tc2YIS_Summary = tcTwos%>%
+  summarise(count_2YIS=n(), 
+            min=min(tcTwos$in_state_total, na.rm=TRUE),
+            Q1=quantile(tcTwos$in_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcTwos$in_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcTwos$in_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcTwos$in_state_total, na.rm=TRUE))
+
+tc4YOOS_Summary
+tc4YIS_Summary
+tc2YOOS_Summary
+tc2YIS_Summary
+```
+
+These are the 5-number summaries for each of the categorical variables of interest.
+
+
+```{r}
+ggplot(tcFactored, aes(x = degFactor, y = in_state_total)) +  # ggplot function
+  geom_boxplot()
+```
+```{r}
+ggplot(tcFactored, aes(x = degFactor, y = out_of_state_total)) +  # ggplot function
+  geom_boxplot()
+```
+
+These box plots (couldn't figure out how to make an overlayed boxplot with both in/out of state variables) show a clear difference in the general cost between 2-year and 4-year institutions, and that out-of-state students generally pay more.
+
+
+
+```{r}
+#ggplot(tcFactored, aes(x=tcInStateSummr$degFactor, fill=tcInStateSummr$in_state_total)) +
+#  geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') +
+#  scale_fill_manual(values=c("#69b3a2", "#404080"))
+```
+
+```{r}
+ggplot(gatheredtc, aes(x = degFactor, y = totalCost, fill=in_out)) +  # ggplot function
+  geom_boxplot()+
+  ggtitle("Breakdown of total cost of attendence by degree factor")+ # for the main title  
+  xlab("Degree Factor (2/4 year)")+ # for the x axis label
+  ylab("Cost of Attendance")+ # for the y axis label
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+```
+
+
+
+
+

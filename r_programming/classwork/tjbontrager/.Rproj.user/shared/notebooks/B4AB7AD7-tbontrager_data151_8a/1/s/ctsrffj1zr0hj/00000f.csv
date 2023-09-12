@@ -1,0 +1,3 @@
+"0","library(knitr)"
+"0","kable(tabPol, col.names=c('Party', 'Count'),"
+"0","      caption = ""distribution of Political Indentities"")"

@@ -1,0 +1,13 @@
+"0","tc_with_count = tc%>%
+  group_by(state_code,degree_length) %>%
+  summarize(count())
+"
+"1","[1m[33mError[39m in `summarize()`:[22m
+[38;5;232m[33m![38;5;232m Problem while computing `..1 = count()`.
+[36mℹ[38;5;232m The error occurred in group 1: state_code = ""AK"", degree_length = ""2 Year"".[39m
+[1mCaused by error in `UseMethod()`:[22m
+[33m![39m no applicable method for 'count' applied to an object of class ""NULL""
+Backtrace:
+[90m  1. [39mtc %>% group_by(state_code, degree_length) %>% ...
+[90m 10. [39m[1mdplyr[22m::count()
+"

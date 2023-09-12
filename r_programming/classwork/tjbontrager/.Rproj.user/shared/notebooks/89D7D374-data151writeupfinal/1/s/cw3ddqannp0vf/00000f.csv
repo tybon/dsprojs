@@ -1,0 +1,7 @@
+"0","bystate = gatheredtc %>%"
+"0","  group_by(state) %>%"
+"0","  mutate(freq = n()) %>%"
+"0","  summarize(numSchools = sum(freq)) %>%"
+"0","  mutate(prop=numSchools/sum(numSchools)) %>%"
+"0","  arrange(desc(prop))"
+"0","knitr::kable(bystate,""pipe"")"

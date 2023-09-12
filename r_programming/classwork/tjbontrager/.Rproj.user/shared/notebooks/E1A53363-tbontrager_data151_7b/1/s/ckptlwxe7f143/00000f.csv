@@ -1,0 +1,4 @@
+"0","## stacked"
+"0","ggplot(Titanic, aes(x=Class, y=Freq, fill=Survived))+"
+"0","  geom_bar(stat = ""identity"")+"
+"0","  theme_bw()"

@@ -1,0 +1,186 @@
+---
+title: "Regression"
+author: "Tyler Bontrager, Ganesh Singh"
+date: "2022-11-18"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+?ggplot2
+```
+
+```{r}
+# IMPORTING DATASETS
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+tc = tuition_cost
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+ti = tuition_income
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+sp = salary_potential
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+ht = historical_tuition
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+ds = diversity_school
+```
+
+```{r}
+str(tc)
+str(ti)
+str(sp)
+str(ht)
+str(ds)
+```
+
+
+
+```{r}
+tcFactored = tc %>%
+  mutate(degFactor = as.factor(degree_length))
+tcFactored
+
+tcFacJoinSp = tcFactored %>%
+  inner_join(sp, by=c("name"="name"))
+tcFacJoinSp
+
+```
+```{r}
+tcFactored
+sp
+tcFacJoinSp
+```
+
+
+```{r}
+ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point() +
+  geom_smooth(method="lm",se=FALSE)+
+  ggtitle("Early career pay against prevalence of STEM majors in a school")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("Early-career pay ($)")
+```
+```{r}
+ECSPmodel = lm(early_career_pay~stem_percent,data=tcFacJoinSp)
+summary(ECSPmodel)
+```
+Slope: 323.30
+Y-intercept: 45584.50
+
+
+```{r}
+cor(x=sp$stem_percent,y=sp$early_career_pay)
+cor(x=sp$stem_percent,y=sp$mid_career_pay)
+```
+
+Moderately strong positive association between prevalence of STEM majors at a school and general alumni early-career earnings.
+
+
+Boring. STEM jobs tend to pay really well. Let's do something fun. Hear me out...
+
+
+```{r}
+ggplot(tcFacJoinSp, aes(x=stem_percent,y=in_state_tuition,color=type)) + 
+  geom_point() +
+  geom_smooth(method="lm",se=FALSE,lty=2) +
+  ggtitle("Cost of tuition for in-state students against prevalence of STEM majors")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("In-state tuition cost ($)")
+```
+(This graph doesn't show what was seen first for your convenience, but I will be sure to remove the color for the presentation)
+
+```{r}
+ggplot(tcFacJoinSp, aes(x=stem_percent,y=out_of_state_tuition,color=type)) + 
+  geom_point() +
+  geom_smooth(method="lm",se=FALSE,lty=2) +
+  ggtitle("Cost of tuition for out-state students against prevalence of STEM majors")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("Out-state tuition cost ($)")
+```
+
+
+```{r}
+ISSPmodel=lm(in_state_tuition~stem_percent,data=tcFacJoinSp)
+OSSPmodel=lm(out_of_state_tuition~stem_percent,data=tcFacJoinSp)
+
+summary(ISSPmodel)
+summary(OSSPmodel)
+```
+In-state
+Slope: 258.53
+Y-intercept: 21958.94
+
+Out-of-state
+Slope: 289.00
+Y-intercept: 25835.03
+
+Notes for story-telling:
+
+Hypothesis: stem_percent high => stem equipment high; cost++?
+
+room and board not considered because r&b charged by a non-academic department, and stem is academic
+in-state plot revealed cluster
+out-of-state students do not generally enjoy benefits of tuition discounts at public universities
+
+Hypothesis: public => less burden on student due to public/instate status => generally less tuition, but still guessing stem equipment drives up cost.
+
+```{r}
+cor(tcFacJoinSp$in_state_total,tcFacJoinSp$stem_percent)
+
+#duh, cor doesn't care about the clusters.
+```
+```{r}
+tcFacJoinSpPUB = tcFacJoinSp %>%
+  filter(type=="Public")
+tcFacJoinSpPUB
+
+tcFacJoinSpPRIV = tcFacJoinSp %>%
+  filter(type=="Private")
+tcFacJoinSpPRIV
+
+```
+
+```{r}
+cor(tcFacJoinSpPRIV$in_state_tuition,tcFacJoinSpPRIV$stem_percent)
+cor(tcFacJoinSpPUB$in_state_tuition,tcFacJoinSpPUB$stem_percent)
+```
+
+```{r}
+cor(tcFacJoinSpPRIV$out_of_state_tuition,tcFacJoinSpPRIV$stem_percent)
+cor(tcFacJoinSpPUB$out_of_state_tuition,tcFacJoinSpPUB$stem_percent)
+```
+
+Moderately weak positive association between tuition cost and prevalence of stem majors at a school. But only MODERATELY! There still is some good correlation here. Other ideas?
+
+
+Observation notes:
+
+Correlations for both seem to be generally higher than that of the one taken before splitting.
+
+Question: what is a stronger explanation for expensive schools? Are there other factors beyond funding STEM departments?
+
+This dataset does not contain readily-usable data on ivy-league status or reputation. What if schools use their alumni's early career salary as a selling point to justify higher prices?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

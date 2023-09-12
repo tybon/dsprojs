@@ -1,0 +1,409 @@
+---
+title: 'DATA151: Tables and Bars'
+author: "STUDENT NAME HERE"
+output:
+  html_document:
+    collapsed: no
+    toc: yes
+    toc_depth: 5
+    toc_float: yes
+---
+
+### Learning Objectives
+
+In this lesson students will learn to apply categorical data analysis methods to data sets with fundamentally different structures. 
+
+* Work with cross-tabulated data
+* Work with individual level raw data
+* Create univarite tables to show marginal distributions 
+* Create two-way tables to show joint and conditional distributions
+* Create bar graphs and assess which type of bar graph is best for a given scenario (stacked, dodged, filled)
+
+The `tidyverse` package is needed for these examples
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+
+### Example #1: Titanic Data
+
+#### Step 0: Install the package
+
+```{r}
+#install.packages("titanic")
+library(titanic)
+```
+
+#### Step 1: Load the data
+
+```{r}
+data("Titanic")
+
+str(Titanic)
+
+# Table =/= tibble
+# coerce titanic into a tibble
+```
+
+#### Step 2: Reformat as data.frame
+
+If we want to be able to use all our helpful `dplyr` verbs, we need to reformat this table as a `data.frame`.
+
+```{r}
+Titanic<-as.data.frame(Titanic)
+```
+
+#### Step 3: One-way Table
+
+Create a one-way frequency table for the distribution of class.
+
+```{r}
+## frequency table for class
+## can you think of how you would do this in dplyr?
+titanClass<-Titanic%>%
+  group_by(Class)%>%
+  summarise(n_class=sum(Freq))
+
+titanClass
+```
+
+##### Relative Frequency Table
+
+We might also want to display proportions.
+
+```{r}
+## What could we do if we want proportions?
+
+titanClassProp<-titanClass%>%
+  mutate(prop=n_class/sum(n_class))
+
+titanClassProp
+```
+
+#### Step 4: Univariate Bar Graphs
+
+Let's visualize this distribution. 
+
+##### A. Simple 
+
+Since the data are already cross-tabulated we must specify the height of the bars with `y=Freq` and `stat = "identity"`.
+
+```{r}
+## bar graphs
+# ggplot(dataset, aesthetic mapping)
+ggplot(Titanic, aes(x=Class, y=Freq))+
+  geom_bar(stat = "identity")
+#stat = height; data is already cross-tabulated. already has a tallied up amount.we must say stat='identity'
+# because there exists a column to show us how tall the bars must be.
+```
+
+
+##### B. Color
+
+Since bars are two dimensional the `color` aesthetic only outlines bars. 
+
+What is going on in this graph?
+
+```{r}
+## add color
+ggplot(Titanic, aes(x=Class, y=Freq, color=Class))+
+  geom_bar(stat = "identity")
+```
+
+
+##### C. Fill
+
+```{r}
+## oops! let's use fill
+ggplot(Titanic, aes(x=Class, y=Freq, fill=Class))+
+  geom_bar(stat = "identity")
+```
+
+##### D. Proportions
+
+If we want the height of the bar to be a non-integer value (such as proportions) we can use `geom_col`.
+
+```{r}
+## change y-axis
+ggplot(titanClassProp, 
+       aes(x=Class, y=prop, fill=Class))+
+  geom_col()
+```
+
+##### E. Recipe for a Pie Graph
+
+###### Step 1. 
+
+Make a stacked bar graph.
+
+```{r}
+## Pie chart
+## 1) Start with a stacked bar
+ggplot(Titanic, aes(x=1, y=Freq, fill=Class))+
+  geom_bar(stat = "identity")
+```
+
+###### Step 2. 
+
+Use polar coordinates
+
+```{r}
+## 2) plot it in a circle
+ggplot(Titanic, aes(x=1, y=Freq, fill=Class))+
+  geom_bar(stat = "identity")+
+  coord_polar("y", start=0)+ #<- Cartesian to polar
+  theme_void() # theme is void: takes away gray and other noise in the background.
+```
+
+#### Step 4: Two-way Table
+
+```{r}
+## Joint distributions
+titan2Way<-Titanic%>%
+  group_by(Class, Survived)%>%
+  summarise(tot=sum(Freq))
+
+titan2Way
+```
+
+#### Step 5: Types of Distributions
+
+##### A. Joint Distribution
+
+```{r}
+## Now Joint
+titanJoint<-titan2Way%>%
+  mutate(joint=tot/2201)
+titanJoint
+
+sum(titanJoint$joint)
+```
+
+##### B. Marginal Distribution
+
+```{r}
+## Marginal Class
+titanMargClass<-titanJoint%>%
+  group_by(Class)%>%
+  summarise(marginal=sum(joint))
+titanMargClass
+
+## Marginal Survival
+titanMargSurv<-titanJoint%>%
+  group_by(Survived)%>%
+  summarise(marginal=sum(joint))
+titanMargSurv
+```
+
+##### C. Conditional Distribution
+
+```{r}
+## Conditional on Class
+titanCondClass<-titan2Way%>%
+  left_join(titanClass)%>%
+  mutate(cond=tot/n_class)
+
+titanCondClass
+```
+
+
+#### Step 6: Bar Graphs with Two Variables
+
+##### A. Stacked (default)
+
+```{r}
+## stacked
+ggplot(Titanic, aes(x=Class, y=Freq, fill=Survived))+
+  geom_bar(stat = "identity")+
+  theme_bw()
+```
+
+##### B. Side-by-side (dodge)
+
+```{r}
+## side-by-side
+ggplot(Titanic, aes(x=Class, y=Freq, fill=Survived))+
+  geom_bar(stat = "identity", 
+           position="dodge")+ #dodge == "side-by-side"
+  theme_bw()
+```
+
+##### C.  Filled
+
+```{r}
+## filled
+ggplot(Titanic, aes(x=Class, y=Freq, fill=Survived))+
+  geom_bar(stat = "identity", 
+           position="fill")+
+  theme_bw()
+```
+
+##### CAUTION: Pies
+
+It is cognitively very difficult to compare pies!
+
+##### Comparing Across Survival 
+
+```{r}
+## comparing pies
+ggplot(Titanic, aes(x=1, y=Freq, fill=Class))+
+  geom_bar(stat = "identity", position = "fill")+
+  facet_grid(.~Survived)+
+  coord_polar("y", start=0)+
+  theme_void()
+```
+
+
+
+##### Comparing Across Class
+
+```{r}
+## USING FACET_GRID
+ggplot(Titanic, aes(x=1, y=Freq, fill=Survived))+
+  geom_bar(stat = "identity", position = "fill")+
+  facet_grid(.~Class)+
+  coord_polar("y", start=0)+
+  theme_void()
+
+## USING FACET_WRAP
+ggplot(Titanic, aes(x=1, y=Freq, fill=Survived))+
+  geom_bar(stat = "identity", position = "fill")+
+  facet_wrap(.~Class, nrow=2, ncol=2)+
+  coord_polar("y", start=0)+
+  theme_void()
+```
+
+### Example #2: Immigration Politics
+
+Nine-hundred and ten (910) randomly sampled registered voters from Tampa, FL were asked if they thought workers who have illegally entered the US should be (i) allowed to keep their jobs and apply for US citizenship, (ii) allowed to keep their jobs as temporary guest workers but not allowed to apply for US citizenship, or (iii) lose their jobs and have to leave the country. The results of the survey by political ideology are shown below.
+
+From Questions from Introduction to Modern Statistics.
+
+#### Step 0: Install the package
+
+```{r message=FALSE, warning=FALSE}
+#install.packages("openintro")
+library(openintro)
+```
+
+#### Step 1: Load the Data 
+
+```{r}
+data("immigration")
+str(immigration)
+```
+
+#### Step 2: Re-level categories
+
+By default R will order a variable alphabetically, but we might not want that. 
+
+```{r}
+immigration$political<-as.character(immigration$political)
+immigration$political<-factor(immigration$political, 
+                              levels = c("conservative","moderate", "liberal"))
+
+```
+
+In this dataset the rows represent individuals.  In the following example we will learn how to use the `table` and  `prop.table` functions. 
+
+#### Question 1
+
+What percent of these Tampa, FL voters identify themselves as conservatives? 
+
+```{r}
+# Table for Political affiliation
+# use table() function
+tabPol<-table(immigration$political)
+
+# the prop.table() function must take a table object
+prop.table(tabPol)
+
+# create a graph to display the distribution
+ggplot(immigration, aes(x=political, fill=political))+
+  geom_bar()
+
+```
+
+
+#### Question 2
+
+What percent of Tampa, FL voters are in favor of the citizenship option?
+
+```{r}
+# Table for citizenship response
+# use table() function
+# INSERT CODE HERE #
+
+# use prop.table() 
+# INSERT CODE HERE #
+
+# create a graph to display the distribution
+# INSERT CODE HERE #
+
+# stacked bar graph
+# INSERT CODE HERE #
+
+# pie graph
+# INSERT CODE HERE #
+```
+
+#### Question 3
+
+What percent of these Tampa, FL voters identify themselves as conservatives and are in favor of the citizenship option?
+
+```{r}
+## conservative and citizen
+# Row then col
+# INSERT CODE HERE #
+
+## joint
+# INSERT CODE HERE #
+```
+
+#### Question 4
+
+What percent of these Tampa, FL voters who identify themselves as conservatives are also in favor of the citizenship option? What percent of moderates share this view? What percent of liberals share this view?
+
+```{r}
+## marginal prop
+# INSERT CODE HERE #
+
+# INSERT CODE HERE #
+```
+
+### Example #3: Gender Bias
+
+In 1973, UC Berkeley became "one of the first universities to be sued for sexual discrimination" (with a statistically significant difference)
+
+#### Step 1: Load the data
+
+```{r}
+## UC Berk
+data(UCBAdmissions)
+str(UCBAdmissions)
+```
+
+#### Step 2: Reformat as data.frame
+
+```{r}
+cal<-as.data.frame(UCBAdmissions)
+```
+
+#### Step 3: Aggregated Bar Graph
+
+```{r}
+# INSERT CODE HERE #
+```
+
+#### Step 4: Separated by Department
+
+```{r}
+# INSERT CODE HERE #
+```
+
+#### Simpson's Paradox
+
+*How does this happen?*
+
+“The simple explanation is that women tended to apply to the departments that are the hardest to get into, and men tended to apply to departments that were easier to get into. (Humanities departments tended to have less research funding to support graduate students, while science and engineer departments were awash with money.) So women were rejected more than men. Presumably, the bias wasn’t at Berkeley but earlier in women’s education, when other biases led them to different fields of study than men.”

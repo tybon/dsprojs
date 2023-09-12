@@ -1,0 +1,470 @@
+---
+title: "Rough Draft"
+author: "Tyler Bontrager, Ganesh Singh"
+date: "2022-11-02"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+# IMPORTING DATASETS
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+tc = tuition_cost
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+ti = tuition_income
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+sp = salary_potential
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+ht = historical_tuition
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+ds = diversity_school
+
+echo=FALSE
+show_col_types=FALSE
+```
+
+```{r}
+tcFactored = tc %>%
+  mutate(degFactor = as.factor(degree_length))
+tcFactored
+
+gatheredtc = tcFactored %>%
+  filter(type!='Other') %>%
+  gather(key="in_out", value="totalCost",c(in_state_total,out_of_state_total))
+gatheredtc
+
+str(tcFactored)
+head(tcFactored)
+```
+
+```{r}
+# Time to explore the data!
+table(gatheredtc$state_code,gatheredtc$degFactor)
+bystate = gatheredtc %>%
+  group_by(state) %>%
+  mutate(freq = n()) %>%
+  summarize(numSchools = sum(freq)) %>%
+  mutate(prop=numSchools/sum(numSchools)) %>%
+  arrange(desc(prop))
+bystate
+```
+This table shows that California has a very high number of schools proportional to other states in the country.
+
+```{r}
+prop.table(table(gatheredtc$degFactor))
+```
+
+
+```{r}
+table(gatheredtc$state)
+```
+
+```{r}
+ggplot(tcFactored, aes(x=in_state_tuition)) + geom_histogram() +
+  ggtitle("Distribution of tuition charged by schools in the U.S.")+
+  xlab("In-state tuition")
+  
+```
+
+```{r}
+ggplot(tcFactored, aes(x=out_of_state_tuition))+geom_histogram()
+```
+
+```{r}
+ggplot(tcFactored, aes(x=in_state_total))+geom_histogram()+expand_limits(x=80000,y=430) + 
+  ggtitle("Total cost of attendance for in-state students")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") # for the y axis label
+
+
+ggplot(tcFactored, aes(x=out_of_state_total))+geom_histogram()+expand_limits(x=80000,y=430) + 
+  ggtitle("Total cost of attendance for out-of-state students")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") # for the y axis label
+
+ggplot(gatheredtc, aes(x=totalCost,fill=in_out))+geom_histogram()+expand_limits(x=80000,y=430) + 
+  ggtitle("Total cost of attendance for students by residence")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") + # for the y axis label
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+
+#ggtitle(label) # for the main title
+#xlab(label) # for the x axis label
+#ylab(label) # for the y axis label
+#labs(...) # for the main title, axis labels and legend titles
+
+```
+
+As the above plots show, it's clear that the distributions are skewed to the right which means that expensive schools are generally less common. It's interesting to see that both of these seem to have similar shapes, and a hint of evidence for a slight bimodal distribution.
+
+```{r}
+ggplot(gatheredtc, aes(x=totalCost,fill=in_out))+geom_histogram(bins=75)+expand_limits(x=80000) + 
+  ggtitle("Total cost of attendance for students by residence")+ # for the main title  
+  xlab("Cost of attendance")+ # for the x axis label
+  ylab("Count") + # for the y axis label
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+```
+Upon further inspection by increasing the bin number, the shape becomes more distinct. The second mode is mostly just a bump for the out-of-state group, but something interesting appears in the in-state group! Is there a cause for this disruption?
+
+```{r}
+tcInStateSummr = tcFactored %>%
+  group_by(degFactor) %>%
+  summarize(median(in_state_total))
+
+tcOutStateSummr = tcFactored %>%
+  group_by(degFactor) %>%
+  summarize(median(out_of_state_total))
+
+tcInStateSummr
+tcOutStateSummr
+  
+```
+
+This is a simple calculation of the median for 2-year and 4-year schools for total cost to out-of-state students.
+
+```{r}
+tcFours = tcFactored %>%
+  filter(degFactor=="4 Year")
+tcFours
+
+tcTwos = tcFactored %>%
+  filter(degFactor=="2 Year")
+```
+
+```{r}
+tc4YOOS_Summary = tcFours%>%
+  summarise(count_4YOOS=n(), 
+            min=min(tcFours$out_of_state_total, na.rm=TRUE),
+            Q1=quantile(tcFours$out_of_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcFours$out_of_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcFours$out_of_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcFours$out_of_state_total, na.rm=TRUE))
+
+tc4YIS_Summary = tcFours%>%
+  summarise(count_4YIS=n(), 
+            min=min(tcFours$in_state_total, na.rm=TRUE),
+            Q1=quantile(tcFours$in_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcFours$in_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcFours$in_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcFours$in_state_total, na.rm=TRUE))
+
+tc2YOOS_Summary = tcTwos%>%
+  summarise(count_2YOOS=n(), 
+            min=min(tcTwos$out_of_state_total, na.rm=TRUE),
+            Q1=quantile(tcTwos$out_of_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcTwos$out_of_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcTwos$out_of_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcTwos$out_of_state_total, na.rm=TRUE))
+
+tc2YIS_Summary = tcTwos%>%
+  summarise(count_2YIS=n(), 
+            min=min(tcTwos$in_state_total, na.rm=TRUE),
+            Q1=quantile(tcTwos$in_state_total, prob=0.25,na.rm=TRUE),
+            med=median(tcTwos$in_state_total, na.rm=TRUE), #or quantile(AQI,prob=0.5,na.rm=TRUE)
+            Q3=quantile(tcTwos$in_state_total, prob=0.75,na.rm=TRUE),
+            max=max(tcTwos$in_state_total, na.rm=TRUE))
+
+tc4YOOS_Summary
+tc4YIS_Summary
+tc2YOOS_Summary
+tc2YIS_Summary
+```
+
+These are the 5-number summaries for each of the categorical variables of interest.
+
+
+```{r}
+ggplot(tcFactored, aes(x = degFactor, y = in_state_total)) +  # ggplot function
+  geom_boxplot()
+```
+```{r}
+ggplot(tcFactored, aes(x = degFactor, y = out_of_state_total)) +  # ggplot function
+  geom_boxplot()
+```
+
+These box plots (couldn't figure out how to make an overlayed boxplot with both in/out of state variables) show a clear difference in the general cost between 2-year and 4-year institutions, and that out-of-state students generally pay more.
+
+
+
+```{r}
+#ggplot(tcFactored, aes(x=tcInStateSummr$degFactor, fill=tcInStateSummr$in_state_total)) +
+#  geom_histogram( color="#e9ecef", alpha=0.6, position = 'identity') +
+#  scale_fill_manual(values=c("#69b3a2", "#404080"))
+```
+
+```{r}
+ggplot(gatheredtc, aes(x = degFactor, y = totalCost, fill=in_out)) +  # ggplot function
+  geom_boxplot()+
+  ggtitle("Breakdown of total cost of attendence by degree factor")+ # for the main title  
+  xlab("Degree Factor (2/4 year)")+ # for the x axis label
+  ylab("Cost of Attendance")+ # for the y axis label
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+```
+There is clearly a difference here between how much students should expect to pay given their residency status, but it isn't as absurdly significant as we were anticipating given that we hear from high school guidence counselors, specifically about 4-year institutions. Therefore, we should look for another potential explanation for the contribution to higher costs of attendance for some students.
+
+**Total Cost of Attendance by Student Residence and College Type**
+
+```{r}
+ggplot(gatheredtc,aes(x=totalCost, fill=in_out)) +
+  geom_histogram() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by student residence")+
+  xlab("Cost of attendance ($)") +
+  ylab("Count") +
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(labels = c("In-state", "Out-of-state"))
+
+ggplot(gatheredtc,aes(x=totalCost, fill=type)) +
+  geom_histogram() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by college type")+
+  xlab("Cost of attendance ($)") +
+  ylab("Count") +
+  theme_bw()+theme(
+    legend.title = element_blank()) + scale_fill_discrete(labels=c('For Profit','Private','Public'))
+
+ggplot(gatheredtc,aes(x=totalCost, color=in_out)) +
+  geom_density() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by student residence")+
+  xlab("Cost of attendance ($)") +
+  ylab("Density") +
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_color_discrete(labels = c("In-state", "Out-of-state"))
+
+ggplot(gatheredtc,aes(x=totalCost, color=type)) +
+  geom_density() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by college type")+
+  xlab("Cost of attendance ($)") +
+  ylab("Density") +
+  theme_bw()+theme(
+    legend.title = element_blank()) + scale_color_discrete(labels=c('For Profit','Private','Public'))
+
+
+# ggplot(tcFactored, aes(x=in_state_total))+geom_histogram()+expand_limits(x=80000,y=430) +
+#   ggtitle("Total cost of attendance for in-state students")+ # for the main title
+#   xlab("Cost of attendance")+ # for the x axis label
+#   ylab("Count") # for the y axis label
+# 
+# 
+# ggplot(tcFactored, aes(x=out_of_state_total))+geom_histogram()+expand_limits(x=80000,y=430) +
+#   ggtitle("Total cost of attendance for out-of-state students")+ # for the main title
+#   xlab("Cost of attendance")+ # for the x axis label
+#   ylab("Count") # for the y axis label
+
+
+#ggtitle(label) # for the main title
+#xlab(label) # for the x axis label
+#ylab(label) # for the y axis label
+#labs(...) # for the main title, axis labels and legend titles
+
+```
+This is a density plot that shows how high the cost of attendance is for schools across the country relative to each other given institution type.
+
+```{r}
+# Time to explore the data!
+
+# Commenting out ggplot stuff to do dplyr first
+#ggplot(ti,aes(x=year, y=total_price)) + geom_point()
+
+#this is the median cost of attendance for instate/outstate 
+
+median_IN_COA <- tc %>%
+  filter(degree_length=='4 Year') %>%
+  group_by(state_code)%>%
+  summarize(median_instate_COA = median(in_state_total))
+  
+median_IN_COA
+
+median_OUT_COA <- tc %>%
+  filter(degree_length=='4 Year') %>%
+  group_by(state_code)%>%
+  summarize(median_outstate_COA = median(out_of_state_total))
+  
+median_OUT_COA
+
+#  mutate(mean_instate_COA=mean(in_state_tuition)) %>%
+#  mutate(mean_outofstate_COA=mean(out_of_state_tuition))%>%
+
+```
+
+```{r}
+#In the following graph, I want to find out whether colleges with higher STEM enrollment tend to cost more. My hypothesis is that it would be the case.
+
+jointisp = ti %>%
+  left_join(sp) %>%
+  group_by(stem_percent)%>%
+  summarize(medianNet=median(net_cost))
+jointisp
+
+ggplot(jointisp, aes(stem_percent,medianNet)) + geom_point()
+#My conclusion is that there is no association between higher STEM enrollment and median net cost.
+```
+In this graph I want to see whether a higher STEM enrollment has a high association with early career pay. In a later graphic, I will want to see whether the trend keeps for mid-career pay.
+
+```{r}
+ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point()
+```
+My conclusion is that there seems to be a weak positive correlation between these two variables.
+
+```{r}
+#In this graphic, perhaps the trend keeps?
+
+ggplot(sp, aes(stem_percent,mid_career_pay)) + geom_point()
+```
+
+```{r}
+#attempting to make the graphics easier to differentiate. I'm not sure what the difference is.
+
+ggplot(sp, aes(x=stem_percent,y=early_career_pay)) + geom_point() + expand_limits(x=0,y=0)
+```
+
+```{r}
+ggplot(sp, aes(x=stem_percent,y=mid_career_pay)) + geom_point() + expand_limits(x=0,y=0)
+```
+
+```{r}
+ggplot(sp, aes(x=stem_percent,y=mid_career_pay)) + geom_point() + expand_limits(x=0,y=0)
+```
+
+```{r}
+income = ti %>% 
+  group_by(income_lvl) %>%
+  summarize(Count=n()) %>%
+  mutate(Percent = round((Count/sum(Count)*100))) %>%
+  arrange(desc(Count))
+income
+```
+
+```{r}
+incomeByState = ti %>% 
+  group_by(income_lvl,state) %>%
+  summarize(Count=n()) %>%
+  mutate(Percent = round((Count/sum(Count)*100))) %>%
+  arrange(desc(Count))
+incomeByState
+```
+
+```{r}
+tcFacJoinSp = tcFactored %>%
+  filter(tcFactored$type!='For Profit') %>%
+  inner_join(sp, by=c("name"="name"))
+tcFacJoinSp
+```
+
+```{r}
+ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point() +
+  geom_smooth(method="lm",se=FALSE)+
+  ggtitle("Early career pay against prevalence of STEM majors in a school")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("Early-career pay ($)")+
+  theme_bw()
+```
+```{r}
+cor(sp$stem_percent,sp$early_career_pay)
+```
+There seems to be a moderately strong correlation between the prevalence of STEM majors and how much graduates tend to 
+
+```{r}
+ECSPmodel = lm(early_career_pay~stem_percent,data=tcFacJoinSp)
+summary(ECSPmodel)
+```
+
+Slope: 323.30
+Y-intercept: 45584.50
+
+
+```{r}
+cor(x=sp$stem_percent,y=sp$early_career_pay)
+cor(x=sp$stem_percent,y=sp$mid_career_pay)
+```
+
+Moderately strong positive association between prevalence of STEM majors at a school and general alumni early-career earnings.
+
+
+Boring. STEM jobs tend to pay really well. Let's do something fun. Hear me out...
+
+```{r}
+ggplot(tcFacJoinSp, aes(x=stem_percent,y=in_state_tuition)) + 
+  geom_point() +
+  geom_smooth(method="lm",se=FALSE,lty=2) +
+  ggtitle("Cost of tuition for in-state students against prevalence of STEM majors")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("In-state tuition cost ($)")
+```
+
+```{r}
+cor(x=tcFacJoinSp$stem_percent,y=tcFacJoinSp$in_state_tuition)
+```
+Terrible fit. Couldn't predict the broad side of a barn!
+
+```{r}
+ggplot(tcFacJoinSp, aes(x=stem_percent,y=in_state_tuition,color=type)) + 
+  geom_point() +
+  geom_smooth(method="lm",se=FALSE,lty=2) +
+  ggtitle("Cost of tuition for in-state students against prevalence of STEM majors")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("In-state tuition cost ($)")+
+  theme_bw()
+```
+```{r}
+correlationsIS <- tcFacJoinSp %>%
+  group_by(type) %>% 
+  summarise(r = cor(stem_percent, in_state_tuition))
+correlationsIS
+```
+Moderately weak/moderate correlation between variables given institution type.
+
+```{r}
+ggplot(tcFacJoinSp, aes(x=stem_percent,y=out_of_state_tuition,color=type)) + 
+  geom_point() +
+  geom_smooth(method="lm",se=FALSE,lty=2) +
+  ggtitle("Cost of tuition for out-state students against prevalence of STEM majors")+
+  xlab("Prevalence of STEM majors (%)")+
+  ylab("Out-state tuition cost ($)")+
+  theme_bw()
+```
+```{r}
+correlationsOOS <- tcFacJoinSp %>%
+  group_by(type) %>% 
+  summarise(r = cor(stem_percent, out_of_state_tuition))
+correlationsOOS
+```
+Correlations show that there is a moderate correlation between the two variables given type.
+
+These two graphs support the idea that tuition tends to be more expensive for schools that see greater proportions of STEM enrollment. Possibly due to the expensive equipment that generally comes with academic amenities like labs and associated equipment.
+
+
+```{r}
+ISSPmodel=lm(in_state_tuition~stem_percent,data=tcFacJoinSp)
+OSSPmodel=lm(out_of_state_tuition~stem_percent,data=tcFacJoinSp)
+
+summary(ISSPmodel)
+summary(OSSPmodel)
+```
+
+
+
+
+
+
+
+

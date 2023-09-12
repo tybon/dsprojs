@@ -1,0 +1,5 @@
+"0",""
+"0","gatheredtc = tcFactored %>%"
+"0","  filter(type!='Other') %>%"
+"0","  gather(key=""in_out"", value=""totalCost"",c(in_state_total,out_of_state_total))"
+"0","gatheredtc"

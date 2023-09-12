@@ -1,0 +1,6 @@
+"0","## Joint distributions"
+"0","titan2Way<-Titanic%>%"
+"0","  group_by(Class, Survived)%>%"
+"0","  summarise(tot=sum(Freq))"
+"2","`summarise()` has grouped output by 'Class'. You can override using the `.groups` argument."
+"0","titan2Way"

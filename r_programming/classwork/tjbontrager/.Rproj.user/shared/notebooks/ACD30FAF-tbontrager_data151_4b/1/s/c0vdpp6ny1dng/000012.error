@@ -1,0 +1,1 @@
+{"frames":[{"func":"summarize(median(birthDay))","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0},{"func":"median(birthDay)","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0}],"message":"Error in median(birthDay) : object 'birthDay' not found\n"}

@@ -1,0 +1,8 @@
+"0","pal<-c(""forestgreen"", ""gold"", ""darkorange"", ""firebrick3"", ""purple3"", ""darkred"")"
+"0",""
+"0","## ADD POINTS "
+"0","ggplot(salem, aes(date, pm25))+"
+"0","  geom_point(aes(color=quality))+"
+"0","  geom_line()+"
+"0","  scale_color_manual(values=pal)+"
+"0","  theme_minimal()"

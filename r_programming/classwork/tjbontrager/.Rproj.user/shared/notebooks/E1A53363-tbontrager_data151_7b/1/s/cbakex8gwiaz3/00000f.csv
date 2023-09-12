@@ -1,0 +1,6 @@
+"0","## Conditional on Class"
+"0","titanCondClass<-titan2Way%>%"
+"0","  left_join(titanClass)%>%"
+"0","  mutate(cond=tot/n_class)"
+"2","Joining, by = ""Class"""
+"0","titanCondClass"

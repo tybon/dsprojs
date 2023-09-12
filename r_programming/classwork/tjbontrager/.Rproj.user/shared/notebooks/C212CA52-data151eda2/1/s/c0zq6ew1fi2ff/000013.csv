@@ -1,0 +1,4 @@
+"0","#indexing each row in the table to have a unique identifier"
+"0","tc$index <- 1:nrow(tc)"
+"0",""
+"0","tc"

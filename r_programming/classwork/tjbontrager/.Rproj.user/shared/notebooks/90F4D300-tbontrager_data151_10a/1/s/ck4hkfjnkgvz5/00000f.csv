@@ -1,0 +1,10 @@
+"0","tdf_winners <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv')"
+"2","[1mRows: [22m[34m106[39m [1mColumns: [22m[34m19[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m─────────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (7): winner_name, winner_team, full_name, nickname, birth_town, birth_country, nationality
+[32mdbl[39m  (9): edition, distance, time_overall, time_margin, stage_wins, stages_led, height, weight, age
+[34mdate[39m (3): start_date, born, died"
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

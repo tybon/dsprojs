@@ -1,0 +1,5 @@
+"0","## side-by-side"
+"0","ggplot(Titanic, aes(x=Class, y=Freq, fill=Survived))+"
+"0","  geom_bar(stat = ""identity"", "
+"0","           position=""dodge"")+"
+"0","  theme_bw()"

@@ -1,0 +1,6 @@
+"0","## Joint distributions"
+"0","#tc2way<-tc %>%"
+"0","#  group_by(state_code, degree_length)%>%"
+"0","#  mutate(freq=sum(Freq))"
+"0",""
+"0","#tc2way"

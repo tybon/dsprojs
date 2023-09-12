@@ -1,0 +1,1 @@
+"0","ggplot(tcFactored, aes(x=in_state_tuition)) + geom_histogram()"

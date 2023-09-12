@@ -1,0 +1,8 @@
+"0","incomeByState = ti %>% 
+  group_by(income_lvl,state) %>%
+  summarize(Count=n()) %>%
+  mutate(Percent = round((Count/sum(Count)*100))) %>%
+  arrange(desc(Count))
+"
+"2","`summarise()` has grouped output by 'income_lvl'. You can override using the `.groups` argument."
+"0","incomeByState"

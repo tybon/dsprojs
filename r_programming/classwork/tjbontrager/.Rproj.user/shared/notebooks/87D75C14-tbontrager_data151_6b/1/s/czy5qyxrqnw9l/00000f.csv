@@ -1,0 +1,4 @@
+"0","# inner join super hero and publisher"
+"0","insp<-inner_join(superheroes, publishers)"
+"2","Joining, by = ""publisher"""
+"0","insp"

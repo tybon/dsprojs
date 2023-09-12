@@ -1,0 +1,6 @@
+"0","## INSERT CODE HERE ##
+ggplot(uniqueCyc, aes(x=n)) +
+  geom_histogram(title=""Sup chief i'm winning the gammmee!"") +
+  ggtitle(""Game-winning distribution"") # for the main title
+"
+"2","Warning: Ignoring unknown parameters: title"

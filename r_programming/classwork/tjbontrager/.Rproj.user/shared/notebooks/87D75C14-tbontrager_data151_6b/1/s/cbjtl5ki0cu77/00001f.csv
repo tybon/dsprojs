@@ -1,0 +1,6 @@
+"0","## IMPORT THE DATA
+read.csv(""C://Users/epicm/Documents/School/flder/DSWR/datasets/Hawaii_Tourism.csv"")
+"
+"2","Warning: cannot open file 'C://Users/epicm/Documents/School/flder/DSWR/datasets/Hawaii_Tourism.csv': No such file or directory"
+"2","Error in file(file, ""rt"") : cannot open the connection
+"

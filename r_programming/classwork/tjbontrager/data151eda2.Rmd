@@ -1,0 +1,230 @@
+---
+title: "data151eda2"
+author: "Tyler Bontrager"
+date: "2022-10-25"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(tidyverse)
+library(ggplot2)
+?ggplot2
+```
+
+```{r}
+# IMPORTING DATASETS
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+tc = tuition_cost
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+ti = tuition_income
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+sp = salary_potential
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+ht = historical_tuition
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+ds = diversity_school
+```
+
+```{r}
+# Time to explore the data!
+table(tc$state,tc$degree_length)
+```
+```{r}
+prop.table(table(tc$degree_length))
+```
+
+
+```{r}
+prop.table(table(gatheredtc$state_code,gatheredtc$degree_length))
+```
+
+**Proportions of Schools by Degree Factor and State**
+```{r}
+propDegByState = gatheredtc %>%
+  group_by(degFactor,state_code) %>%
+  summarise(n = n()) %>%
+  mutate(prop = n / sum(n)) %>%
+  arrange(desc(prop))
+propDegByState
+
+ggplot(propDegByState, aes(x=state_code, y=prop, color=degFactor)) + 
+  geom_point() +
+  ggtitle("States with the most schools (4/2 year) [MINIMALISTIC VISUALIZATION]") +
+  xlab('States, in alphabetical order') +
+  ylab('Proportion') +
+  theme_bw()+theme(
+    legend.title = element_blank())
+```
+Here, we can see that the x-axis is chaotic because of the fact that there are 53 discrete x-values. We see color representing the degree factor of the school: is it a two- or four-year college? A conclusion that we might be able to better draw from the table more so than the visualization is that California has a lot of schools; in fact, the most proportionally than any other state!
+
+```{r}
+table(tc$state)
+```
+
+
+
+This is a graph of the number of higher-education schools in each U.S. territory and state.
+
+```{r}
+ggplot(gatheredtc, aes(x=state_code))+
+  geom_bar()
+```
+
+```{r}
+#indexing each row in the table to have a unique identifier
+tc$index <- 1:nrow(tc)
+
+tc
+```
+
+```{r}
+## Joint distributions
+#tc2way<-tc %>%
+#  group_by(state_code, degree_length)%>%
+#  mutate(freq=sum(Freq))
+
+#tc2way
+```
+
+```{r}
+tc_with_count2 = tc %>%
+  group_by(state_code) %>%
+  mutate(school_count = n())
+
+tc_with_count2
+
+```
+
+
+```{r}
+tcFactored = tc %>%
+  mutate(degFactor = as.factor(degree_length))
+
+tcFactored
+```
+
+```{r}
+ggplot(tcFactored, aes(x=state_code,fill=degFactor))+
+  geom_bar(position="dodge")
+```
+
+
+
+
+## Numeric Summaries
+
+```{r}
+tcFactored = tc %>%
+  mutate(degFactor = as.factor(degree_length))
+
+tcFactored
+```
+
+```{r}
+str(tcFactored)
+```
+
+```{r}
+gatheredtc = tcFactored %>%
+  filter(tc$type!='Other') %>%
+  gather(key="in_out", value="totalCost",c(in_state_total,out_of_state_total))
+gatheredtc
+```
+
+
+```{r}
+ggplot(tcFactored, aes(x=in_state_tuition)) + geom_histogram()
+```
+
+```{r}
+ggplot(tcFactored, aes(x=out_of_state_tuition))+geom_histogram()
+```
+
+**Total Cost of Attendance by Student Residence and College Type**
+
+```{r}
+ggplot(gatheredtc,aes(x=totalCost, color=in_out)) +
+  geom_histogram() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by student residence")+
+  xlab("Cost of attendance ($)") +
+  ylab("Count") +
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+
+ggplot(gatheredtc,aes(x=totalCost, color=type)) +
+  geom_histogram() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by college type")+
+  xlab("Cost of attendance ($)") +
+  ylab("Count") +
+  theme_bw()+theme(
+    legend.title = element_blank())
+
+ggplot(gatheredtc,aes(x=totalCost, color=in_out)) +
+  geom_density() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by student residence")+
+  xlab("Cost of attendance ($)") +
+  ylab("Density") +
+  theme_bw()+theme(
+    legend.title = element_blank(),
+    ) + scale_fill_discrete(name = "Student Residence", labels = c("In-state", "Out-of-state"))
+
+ggplot(gatheredtc,aes(x=totalCost, color=type)) +
+  geom_density() +
+  expand_limits(x=80000) +
+  ggtitle("Distribution of cost-of-attendance by college type")+
+  xlab("Cost of attendance ($)") +
+  ylab("Density") +
+  theme_bw()+theme(
+    legend.title = element_blank())
+
+
+# ggplot(tcFactored, aes(x=in_state_total))+geom_histogram()+expand_limits(x=80000,y=430) +
+#   ggtitle("Total cost of attendance for in-state students")+ # for the main title
+#   xlab("Cost of attendance")+ # for the x axis label
+#   ylab("Count") # for the y axis label
+# 
+# 
+# ggplot(tcFactored, aes(x=out_of_state_total))+geom_histogram()+expand_limits(x=80000,y=430) +
+#   ggtitle("Total cost of attendance for out-of-state students")+ # for the main title
+#   xlab("Cost of attendance")+ # for the x axis label
+#   ylab("Count") # for the y axis label
+
+
+#ggtitle(label) # for the main title
+#xlab(label) # for the x axis label
+#ylab(label) # for the y axis label
+#labs(...) # for the main title, axis labels and legend titles
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

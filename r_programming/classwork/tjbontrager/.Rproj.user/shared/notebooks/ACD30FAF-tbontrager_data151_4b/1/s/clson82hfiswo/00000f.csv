@@ -1,0 +1,5 @@
+"0","# Let's take a peek at the data
+head(People)
+"
+"2","Error in head(People) : object 'People' not found
+"

@@ -1,0 +1,6 @@
+"0","## INSERT YOUR CODE HERE ##"
+"0","dmdLargestAvg = diamonds %>%"
+"0","  group_by(color) %>%"
+"0","  summarize(avgCarat = mean(carat)) %>%"
+"0","  arrange(desc(avgCarat))"
+"0","dmdLargestAvg"

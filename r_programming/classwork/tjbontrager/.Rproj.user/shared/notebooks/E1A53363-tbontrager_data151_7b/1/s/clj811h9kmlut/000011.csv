@@ -1,0 +1,4 @@
+"0","## bar graphs"
+"0","# ggplot(dataset, aesthetic mapping)"
+"0","ggplot(Titanic, aes(x=Class, y=Freq))+"
+"0","  geom_bar(stat = ""identity"")"

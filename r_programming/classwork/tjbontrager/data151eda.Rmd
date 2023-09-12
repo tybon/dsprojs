@@ -1,0 +1,313 @@
+---
+title: "data151_EDA"
+author: "Tyler Bontrager"
+date: "2022-10-11"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+# IMPORTING DATASETS
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+tc = tuition_cost
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+ti = tuition_income
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+sp = salary_potential
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+ht = historical_tuition
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+ds = diversity_school
+```
+
+```{r}
+head(tc)
+head(ti)
+head(sp)
+head(ht)
+head(ds)
+```
+```{r}
+str(tc)
+str(ti)
+str(sp)
+str(ht)
+str(ds)
+```
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+?ggplot2
+```
+
+```{r}
+# Time to explore the data!
+
+# Commenting out ggplot stuff to do dplyr first
+#ggplot(ti,aes(x=year, y=total_price)) + geom_point()
+
+#this is the median cost of attendance for instate/outstate 
+
+median_IN_COA <- tc %>%
+  filter(degree_length=='4 Year') %>%
+  group_by(state_code)%>%
+  summarize(median_instate_COA = median(in_state_total))
+  
+median_IN_COA
+
+median_OUT_COA <- tc %>%
+  filter(degree_length=='4 Year') %>%
+  group_by(state_code)%>%
+  summarize(median_outstate_COA = median(out_of_state_total))
+  
+median_OUT_COA
+
+#  mutate(mean_instate_COA=mean(in_state_tuition)) %>%
+#  mutate(mean_outofstate_COA=mean(out_of_state_tuition))%>%
+
+```
+
+```{r}
+# library(tidyverse)
+# library(janitor)
+# library(glue)
+# 
+# raw_df <- read_csv(here::here("2020", "2020-03-10", "all_schools.csv")) %>% 
+#   janitor::clean_names()
+# 
+# raw_cost <- raw_df %>% 
+#   select(name = institution_name, state = state_abbreviation_hd2017,
+#          contains("total_price_for_in_state_students")) %>% 
+#   pivot_longer(names_to = "category", values_to = "total_price", total_price_for_in_state_students_living_on_campus_2007_08_drvic2007:total_price_for_in_state_students_living_off_campus_not_with_family_2020_21_drvic2020) %>% 
+#   mutate(year = as.double(str_sub(category, -4)),
+#          category = str_remove(category, "total_price_for_in_state_students_living_"),
+#          campus = if_else(str_detect(category, "on_campus"), "On Campus", "Off Campus")) %>% 
+#   filter(!is.na(total_price)) %>% 
+#   select(-category)
+# 
+# net_cost <- raw_df %>% 
+#   select(name = institution_name, state = state_abbreviation_hd2017,
+#          starts_with("average_net_price_income")) %>% 
+#   pivot_longer(names_to = "category", values_to = "net_cost", 
+#                average_net_price_income_0_30_000_students_awarded_title_iv_federal_financial_aid_2016_17_sfa1617:average_net_price_income_over_110_000_students_receiving_title_iv_federal_financial_aid_2008_09_sfa0809) %>% 
+#   filter(!is.na(net_cost)) %>% 
+#   mutate(year = str_sub(category, -4, -3),
+#          year = glue::glue("20{year}"),
+#          year = as.double(year),
+#          category = str_remove(category, "average_net_price_income_"),
+#          category = str_remove(category, str_sub(category, -16)),
+#          income_lvl = str_remove(category, "_students_awarded_title_iv_federal_financial_aid"),
+#          income_lvl = case_when(
+#            str_detect(income_lvl, "30_000") ~ "0 to 30,000",
+#            str_detect(income_lvl, "30_001") ~ "30,001 to 48,000",
+#            str_detect(income_lvl, "48_001") ~ "48_001 to 75,000",
+#            str_detect(income_lvl, "75_001") ~ "75,001 to 110,000",
+#            str_detect(income_lvl, "110_000") ~ "Over 110,000",
+#            TRUE ~ NA_character_)
+#          ) %>% 
+#   select(-category)
+# 
+# full_dataset <- left_join(raw_cost, net_cost, by = c("name", "year", "state")) %>% 
+#   filter(!is.na(net_cost))
+# 
+# full_dataset %>% 
+#   write_csv(here::here("2020", "2020-03-10", "tuition_income.csv"))
+
+#code found on tidytuesday github by user jthomasmock https://github.com/jthomasmock
+```
+```{r}
+library(tidyverse)
+library(janitor)
+library(glue)
+
+# raw_df <- read_csv(here::here("2020", "2020-03-10", "all_schools.csv")) %>% 
+#   janitor::clean_names()
+# 
+# raw_cost <- raw_df %>% 
+#   select(name = institution_name, state = state_abbreviation_hd2017,
+#          contains("total_price_for_in_state_students")) %>% 
+#   pivot_longer(names_to = "category", values_to = "total_price", total_price_for_in_state_students_living_on_campus_2007_08_drvic2007:total_price_for_in_state_students_living_off_campus_not_with_family_2020_21_drvic2020) %>% 
+#   mutate(year = as.double(str_sub(category, -4)),
+#          category = str_remove(category, "total_price_for_in_state_students_living_"),
+#          campus = if_else(str_detect(category, "on_campus"), "On Campus", "Off Campus")) %>% 
+#   filter(!is.na(total_price)) %>% 
+#   select(-category)
+# 
+# net_cost <- raw_df %>% 
+#   select(name = institution_name, state = state_abbreviation_hd2017,
+#          starts_with("average_net_price_income")) %>% 
+#   pivot_longer(names_to = "category", values_to = "net_cost", 
+#                average_net_price_income_0_30_000_students_awarded_title_iv_federal_financial_aid_2016_17_sfa1617:average_net_price_income_over_110_000_students_receiving_title_iv_federal_financial_aid_2008_09_sfa0809) %>% 
+#   filter(!is.na(net_cost)) %>% 
+#   mutate(year = str_sub(category, -4, -3),
+#          year = glue::glue("20{year}"),
+#          year = as.double(year),
+#          category = str_remove(category, "average_net_price_income_"),
+#          category = str_remove(category, str_sub(category, -16)),
+#          income_lvl = str_remove(category, "_students_awarded_title_iv_federal_financial_aid"),
+#          income_lvl = case_when(
+#            str_detect(income_lvl, "30_000") ~ "0 to 30,000",
+#            str_detect(income_lvl, "30_001") ~ "30,001 to 48,000",
+#            str_detect(income_lvl, "48_001") ~ "48_001 to 75,000",
+#            str_detect(income_lvl, "75_001") ~ "75,001 to 110,000",
+#            str_detect(income_lvl, "110_000") ~ "Over 110,000",
+#            TRUE ~ NA_character_)
+#          ) %>% 
+#   select(-category)
+# 
+# full_dataset <- left_join(raw_cost, net_cost, by = c("name", "year", "state")) %>% 
+#   filter(!is.na(net_cost))
+# 
+# full_dataset %>% 
+#   write_csv(here::here("2020", "2020-03-10", "tuition_income.csv"))
+
+#code by jthomasmock
+```
+
+
+```{r}
+library(tidyverse)
+library(rvest)
+
+# scrape_salary <- function(state_name){
+#   
+#   message(glue::glue("Scraping {state_name}!"))
+#   
+#   Sys.sleep(5)
+#   
+#   url <- glue::glue("https://www.payscale.com/college-salary-report/best-schools-by-state/bachelors/{state_name}")
+# 
+#   raw_table <- url %>% 
+#     read_html() %>% 
+#     html_table(fill = TRUE) %>% 
+#     .[[1]]
+#   
+# 
+#   raw_table %>% 
+#     set_names(nm = c("rank", "name", "type", "early_career_pay", "mid_career_pay",
+#                      "make_world_better_percent", "stem_percent")) %>% 
+#     as_tibble() %>% 
+#     mutate(rank = str_remove(rank, "Rank:"),
+#            name = str_remove(name, "School Name:"),
+#            type = str_remove(type, "School Type:"),
+#            early_career_pay = parse_number(early_career_pay),
+#            mid_career_pay = str_remove(mid_career_pay, "Mid-Career Pay:"),
+#            mid_career_pay = parse_number(mid_career_pay),
+#            make_world_better_percent = parse_number(make_world_better_percent),
+#            stem_percent = parse_number(stem_percent),
+#            state_name = str_to_title(state_name)
+#     ) %>% 
+#     select(rank, name, state_name, everything(), -type)
+# }
+#   
+# all_states <- tolower(state.name) %>%
+#   str_replace(" ", "-") %>% 
+#   map(scrape_salary) %>% 
+#   bind_rows() %>% 
+#   mutate(name = str_replace(name, "A & M", "A&M"))
+# 
+# all_states %>% 
+#   write_csv(here::here("2020", "2020-03-10", "salary_potential.csv"))
+
+```
+
+```{r}
+#In the following graph, I want to find out whether colleges with higher STEM enrollment tend to cost more. My hypothesis is that it would be the case.
+
+jointisp = ti %>%
+  left_join(sp) %>%
+  group_by(stem_percent)%>%
+  summarize(medianNet=median(net_cost))
+jointisp
+
+ggplot(jointisp, aes(stem_percent,medianNet)) + geom_point()
+#My conclusion is that there is no association between higher STEM enrollment and median net cost.
+```
+
+```{r}
+#In this graph I want to see whether a higher STEM enrollment has a high association with early career pay. In a later graphic,
+# I will want to see whether the trend keeps for mid-career pay.
+
+ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point()
+#My conclusion is that there seems to be a weak positive correlation between these two variables.
+```
+```{r}
+#In this graphic, perhaps the trend keeps?
+
+ggplot(sp, aes(stem_percent,mid_career_pay)) + geom_point()
+```
+```{r}
+#attempting to make the graphics easier to differentiate. I'm not sure what the difference is.
+
+ggplot(sp, aes(x=stem_percent,y=early_career_pay)) + geom_point() + expand_limits(x=0,y=0)
+```
+```{r}
+ggplot(sp, aes(x=stem_percent,y=mid_career_pay)) + geom_point() + expand_limits(x=0,y=0)
+```
+```{r}
+ggplot(sp, aes(x=stem_percent,y=mid_career_pay)) + geom_point() + expand_limits(x=0,y=0)
+```
+
+
+```{r}
+#incomeLvlByState = ti %>%
+
+
+#ggplot(ti, aes(x=state, y=net_cost, fill=income_lvl))+
+#  geom_bar(stat = "identity", 
+#           position="dodge")
+
+ggplot(ti, aes(x=state,y=income_lvl)) + geom_count(alpha=0.2)
+```
+
+```{r}
+#factor(ti$income_lvl,levels='0 to 30,000', '30,001 to 48,000', '48_001 to 75,000', '75,001 to 110,000', 'Over 110,000', #labels='0-30k','30k-48k','48k-75k','75k-110k','110k+')
+#incomeByState = ti %>%
+#  group_by(income_lvl) %>%
+#  summarize(state)
+#incomeByState
+```
+```{r}
+ggplot(ti, aes(x=income_lvl, fill=state)) + geom_bar(position="dodge") 
+```
+```{r}
+income = ti %>% 
+  group_by(income_lvl) %>%
+  summarize(Count=n()) %>%
+  mutate(Percent = round((Count/sum(Count)*100))) %>%
+  arrange(desc(Count))
+income
+```
+```{r}
+ggplot(income, aes(x=income_lvl)) + geom_bar(position="fill") 
+```
+```{r}
+incomeByState = ti %>% 
+  group_by(income_lvl,state) %>%
+  summarize(Count=n()) %>%
+  mutate(Percent = round((Count/sum(Count)*100))) %>%
+  arrange(desc(Count))
+incomeByState
+
+studentincomes = incomeByState %>%
+  group_by(income_lvl) %>%
+  summarize(students = sum(Count))
+studentincomes
+```
+```{r}
+ggplot(incomeByState,aes(x=reorder(state,-Percent),y=Percent)) + geom_col()
+```
+
+
+
+
+
+
+
+

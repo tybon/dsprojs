@@ -1,0 +1,3 @@
+"0","#In this graphic, perhaps the trend keeps?"
+"0",""
+"0","ggplot(sp, aes(stem_percent,mid_career_pay)) + geom_point()"

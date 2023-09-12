@@ -1,0 +1,4 @@
+"0","ggplot(tc, aes(x = reorder(state_code, -ya), y = ya)) + geom_bar(stat = ""identity"")
+"
+"2","Error in tapply(X = X, INDEX = x, FUN = FUN, ...) : object 'ya' not found
+"

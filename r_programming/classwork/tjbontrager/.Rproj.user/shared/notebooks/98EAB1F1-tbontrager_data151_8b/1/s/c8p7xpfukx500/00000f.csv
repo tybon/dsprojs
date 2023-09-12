@@ -1,0 +1,22 @@
+"0","## This will give the five number summary
+## INSERT CODE HERE ##
+summary(orAQI$AQI)
+"
+"1","   Min. "
+"1","1st Qu. "
+"1"," Median "
+"1","   Mean "
+"1","3rd Qu. "
+"1","   Max. "
+"1","   NA's "
+"1","
+"
+"1","  13.00 "
+"1","  35.75 "
+"1","  62.50 "
+"1","  81.02 "
+"1"," 115.50 "
+"1"," 245.00 "
+"1","      3 "
+"1","
+"

@@ -1,0 +1,4 @@
+"0","body_wgt<-c(120, 187, 109, 103, 131, 165, 158, 116)"
+"0","backpack_wgt<-c(26, 30, 26, 24, 29, 35, 31, 28)"
+"0",""
+"0","backpack_df<-data.frame(body_wgt, backpack_wgt)"

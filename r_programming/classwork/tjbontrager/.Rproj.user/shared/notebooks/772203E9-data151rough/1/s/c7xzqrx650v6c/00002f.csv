@@ -1,0 +1,4 @@
+"0",""
+"0","#  mutate(mean_instate_COA=mean(in_state_tuition)) %>%"
+"0","#  mutate(mean_outofstate_COA=mean(out_of_state_tuition))%>%"
+"0",""

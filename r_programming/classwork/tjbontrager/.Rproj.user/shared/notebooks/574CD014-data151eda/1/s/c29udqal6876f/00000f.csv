@@ -1,0 +1,1 @@
+"0","ggplot(ti, aes(x=income_lvl, fill=state)) + geom_bar(position=""dodge"") "

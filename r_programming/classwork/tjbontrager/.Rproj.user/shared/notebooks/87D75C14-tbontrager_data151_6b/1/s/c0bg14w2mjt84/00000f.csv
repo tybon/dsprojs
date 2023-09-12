@@ -1,0 +1,2 @@
+"0","ggplot(stocksG, aes(time, price, color=stock))+"
+"0","  geom_line()"

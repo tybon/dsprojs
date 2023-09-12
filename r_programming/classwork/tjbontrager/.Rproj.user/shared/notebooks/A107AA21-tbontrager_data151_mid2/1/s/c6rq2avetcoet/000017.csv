@@ -1,0 +1,17 @@
+"0","## INSERT CODE HERE ##
+joined_allTrails_byRegion = allTrails_byParks %>%
+  left_join(stateRegion, by=c(stateRegion$state_name,allTrails_byParks$state_name))
+"
+"2","Warning: Unknown or uninitialised column: `state_name`."
+"1","[1m[33mError[39m in [38;5;232m`left_join()`[39m:[22m
+[38;5;232m[33m![38;5;232m Join columns must be present in data.
+[31m✖[38;5;232m Problem with `Alabama`, `Alaska`, `Arizona`, `Arkansas`, `California`, `Colorado`, `Connecticut`, `Delaware`,
+  `Florida`, `Georgia`, `Hawaii`, `Idaho`, `Illinois`, `Indiana`, `Iowa`, `Kansas`, `Kentucky`, `Louisiana`, `Maine`,
+  `Maryland`, `Massachusetts`, `Michigan`, `Minnesota`, `Mississippi`, `Missouri`, `Montana`, `Nebraska`, `Nevada`, `New
+  Hampshire`, `New Jersey`, `New Mexico`, `New York`, `North Carolina`, `North Dakota`, `Ohio`, `Oklahoma`, `Oregon`,
+  `Pennsylvania`, `Rhode Island`, `South Carolina`, `South Dakota`, `Tennessee`, `Texas`, `Utah`, `Vermont`, `Virginia`,
+  `Washington`, `West Virginia`, `Wisconsin`, and `Wyoming`.[39m
+Backtrace:
+[90m 1. [39mallTrails_byParks %>% ...
+[90m 3. [39m[38;5;232m[1m[94mdplyr:::left_join.data.frame([38;5;232m[22m[39m., stateRegion, by = c(stateRegion$state_name, allTrails_byParks$state_name)[38;5;232m[1m[94m)[38;5;232m[22m[39m
+"

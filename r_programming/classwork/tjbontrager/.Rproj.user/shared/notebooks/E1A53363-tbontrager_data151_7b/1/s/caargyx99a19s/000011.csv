@@ -1,0 +1,6 @@
+"0",""
+"0","## Marginal Survival"
+"0","titanMargSurv<-titanJoint%>%"
+"0","  group_by(Survived)%>%"
+"0","  summarise(marginal=sum(joint))"
+"0","titanMargSurv"

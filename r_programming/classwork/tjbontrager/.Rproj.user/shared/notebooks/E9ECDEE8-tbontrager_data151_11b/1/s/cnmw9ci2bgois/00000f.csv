@@ -1,0 +1,5 @@
+"0","# Import data"
+"0","sports<-read.csv(""https://raw.githubusercontent.com/kitadasmalley/FA2020_DataViz/main/data/NFL_fandom_data.csv"", "
+"0","                 header=TRUE)"
+"0",""
+"0","head(sports)"

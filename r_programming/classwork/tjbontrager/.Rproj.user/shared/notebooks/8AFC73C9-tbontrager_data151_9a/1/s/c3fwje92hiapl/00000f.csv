@@ -1,0 +1,3 @@
+"0","aqi<-read.csv(""https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/fireAQI_OrCoWa_10192022.csv"", "
+"0","                   header=TRUE)"
+"0",""

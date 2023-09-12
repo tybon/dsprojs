@@ -1,0 +1,8 @@
+"0","# The first quartile"
+"0","quantile(aqi$AQI, prob=.25, na.rm = TRUE)"
+"1","25% "
+"1","
+"
+"1"," 39 "
+"1","
+"

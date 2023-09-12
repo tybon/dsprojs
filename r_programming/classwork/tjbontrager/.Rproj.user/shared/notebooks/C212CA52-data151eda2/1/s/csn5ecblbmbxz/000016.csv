@@ -1,0 +1,2 @@
+"0","ggplot(gatheredtc, aes(x=state_code))+"
+"0","  geom_bar()"

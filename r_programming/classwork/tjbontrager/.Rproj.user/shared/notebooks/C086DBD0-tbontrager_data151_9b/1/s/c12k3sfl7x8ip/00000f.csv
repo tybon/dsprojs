@@ -1,0 +1,14 @@
+"0","#install.packages(""usmap"")"
+"0","library(usmap)"
+"2","
+Attaching package: ‘usmap’
+
+"
+"2","The following object is masked from ‘package:openintro’:
+
+    earthquakes
+
+"
+"0","states <- usmap::us_map()"
+"0",""
+"0","head(states)"

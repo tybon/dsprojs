@@ -1,0 +1,5 @@
+"0","## Marginal Class"
+"0","titanMargClass<-titanJoint%>%"
+"0","  group_by(Class)%>%"
+"0","  summarise(marginal=sum(joint))"
+"0","titanMargClass"

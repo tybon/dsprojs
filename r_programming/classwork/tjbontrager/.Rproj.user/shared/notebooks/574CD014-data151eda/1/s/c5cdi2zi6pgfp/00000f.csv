@@ -1,0 +1,8 @@
+"0","#incomeLvlByState = ti %>%"
+"0",""
+"0",""
+"0","#ggplot(ti, aes(x=state, y=net_cost, fill=income_lvl))+"
+"0","#  geom_bar(stat = ""identity"", "
+"0","#           position=""dodge"")"
+"0",""
+"0","ggplot(ti, aes(x=state,y=income_lvl)) + geom_count(alpha=0.2)"

@@ -1,0 +1,3 @@
+"0","## oops! let's use fill"
+"0","ggplot(Titanic, aes(x=Class, y=Freq, fill=Class))+"
+"0","  geom_bar(stat = ""identity"")"

@@ -1,0 +1,7 @@
+"0","## frequency table for class"
+"0","## can you think of how you would do this in dplyr?"
+"0","titanClass<-Titanic%>%"
+"0","  group_by(Class)%>%"
+"0","  summarise(n_class=sum(Freq))"
+"0",""
+"0","titanClass"

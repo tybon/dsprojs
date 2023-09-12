@@ -1,0 +1,8 @@
+"0",""
+"0","ggplot(propDegByState, aes(x=state_code, y=prop, color=degFactor)) + "
+"0","  geom_point() +"
+"0","  ggtitle(""States with the most schools (4/2 year) [MINIMALISTIC VISUALIZATION]"") +"
+"0","  xlab('States, in alphabetical order') +"
+"0","  ylab('Proportion') +"
+"0","  theme_bw()+theme("
+"0","    legend.title = element_blank())"

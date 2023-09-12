@@ -1,0 +1,281 @@
+---
+title: 'Midterm #2: Tidyverse Skills Check'
+author: "Tyler Bontrager"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+### Learning Objectives: 
+
+Students will demonstrate their ability to translate questions into code using `tidyverse` packages and verbs. 
+
+* `dplyr`: `filter()`, `mutate()`, `group_by()`, `summarise()`, `count()`, ect
+* `ggplot2`: `ggplot()`, `aes()`, `geom_bar`, `geom_col`, `geom_histogram`, `geom_boxplot`
+
+#### Step 0: Library tidyverse
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+#### Step 1: Load the Data 
+
+(AllTrails App)
+
+AllTrails is a fitness and travel mobile app used in outdoor recreational activities. AllTrails is commonly used for outdoor activities such as hiking, mountain biking, climbing and snow sports. The service allows users to access a database of trail maps, which includes crowdsourced reviews and images.
+
+**Citations**: 
+
+* https://www.alltrails.com/
+* https://en.wikipedia.org/wiki/AllTrails 
+
+**Data Source**: These data come from Kaggle 
+
+* https://www.kaggle.com/datasets/planejane/national-park-trails
+
+```{r message=FALSE, warning=FALSE}
+allTrails <- read_csv("https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/AllTrails%20data%20-%20nationalpark.csv")
+```
+
+#### Step 2: Look at the data
+
+What variables are available to work with? 
+
+```{r}
+str(allTrails)
+```
+
+For this assessment you will use the following variables: 
+
+* `area_name`: Name of National Park 
+* `state_name`: Name of State where trail is located
+* `length`: Length of hike in meters
+* `elevation_gain`: Elevation gain in meters
+* `route_type`: Out and back, Loop, or Point to Point
+* `avg_rating`: Star rating (out of 5)
+
+#### Step 3: Calculate the Grade 
+
+(5 points)
+
+Average grade can be calculated by taking the total elevation gain of the trail, dividing by the total distance, multiplied by 100 to equal a percent grade.  The elevation and distance must be in the same units. 
+
+
+**Citation**: 
+
+* https://venturacountytrails.org/TrailMaps/TrailSymbols.htm#:~:text=Average%20grade%20can%20be%20calculated,as%20the%20'rise%20over%20run.
+
+**TASK**: Add a column to the data frame calculate the average grade for each trail.
+
+Please do NOT create a new data frame, you can overwrite the data frame name and add on a new column.  You will be using this in subsequent parts. 
+
+```{r}
+allTrails<-allTrails%>%
+  ## INSERT CODE HERE ##
+  mutate(avgpc_grade = ((elevation_gain)/(length)*100)
+allTrails
+```
+
+#### Step 4: Distribution of Grade (8 points)
+
+##### A. Graphic - Histogram 
+
+(3 points)
+
+**TASK**: Make a histogram showing the distribution trail grades.  Don't forget to title your graph.
+
+```{r}
+## INSERT CODE HERE ##
+ggplot(allTrails, aes(x=avgpc_grade)) +
+  geom_histogram(bins=40)
+```
+
+##### B. Insight 
+
+(5 points)
+
+**TASK**: Comment on the shape of this histogram
+
+```{}
+## INSERT HERE ##
+The shape of this histogram has a bit of a right skew. most values of average % grade fall between 0 and 10, but the data trails off to the right (that is, there are a few trails with a high average % grade, and the mean will be greater than the median.)
+
+```
+
+#### Step 5: Convert Units 
+
+(5 points)
+
+The AllTrails website reports trail length and elevation gain in miles and feet, respectively.
+
+See example here: 
+https://www.alltrails.com/trail/us/washington/sentinell-peak-via-grey-wolf-deer-loop
+
+* 1 meter = 0.000621371 miles
+* 1 meter = 3.28084 feet
+
+**TASK**: Convert the values for length and elevation to miles and feet, respectively.
+
+Please do NOT create a new data frame, you can overwrite the data frame name and add on a new column.  You will be using this in subsequent parts. 
+
+```{r}
+## INSERT CODE HERE ##
+allTrails = allTrails %>%
+  mutate(length_mi = length*0.000621371) %>%
+  mutate(elevation_gain_ft = elevation_gain*3.28084)
+allTrails
+```
+
+#### Step 6: Compare Route Types 
+
+(4 points)
+
+Create a side-by-side box plot to compare the distributions of elevation gain in feet across the three route types (loop, out and back, point to point).  Please fill the boxes with color for each route type. 
+
+```{r}
+## INSERT CODE HERE ##
+ggplot(allTrails, aes(x=elevation_gain_ft, fill=route_type)) +
+  geom_boxplot(position="dodge")
+```
+
+#### Step 7: Finding Family Friendly Hikes 
+
+(10 points)
+
+Our family likes to hike together!  We have three children (ages 2, 7, and 11) so we have some limitations. 
+
+
+**TASK**: Find the best hike that fits ALL of the following conditions: 
+
+* Is in Oregon 
+* Is is a loop
+* Is less than 3 miles
+* Is "easy" (has a grade less than 5)
+
+Note: Best is defined by the highest average rating
+
+```{r}
+## INSERT CODE HERE ##
+allTrails %>%
+  filter(state_name=="Oregon",route_type=="loop",length_mi<3,avgpc_grade<5)
+allTrails
+```
+
+Respond in a full sentence, with which hike is the best family friendly hike in an Oregon National Park: 
+
+```{}
+## INSERT ANSWER HERE ##
+All 5 of the above rows satisfy the criteria of "family friendly", so in my opinion it boils down to popularity and average rating with a high number of reviews. I believe the 4.5 average rating from 95 reviews of Sun Notch Trail makes it a very interesting choice for a fun, family-friendly hike. If liveliness of the trail (lots of people) is not good, but we are still looking for a good trail, then the second row is probably the second-best option, Godfrey Glen Trail.
+```
+
+
+#### Step 8: Trails within National Parks (within States) 
+
+(5 points)
+
+**TASK**: Find the number of trails and the average star rating within each National Park. 
+
+* Which national park has the most trails?
+* Which national park has the highest rated trails?
+
+Create a new data frame to accomplish this so that we can use this in the following step. 
+
+Hint: You can group by two variables.  Please do this to keep the State in which each National Park is located. 
+
+```{r}
+## INSERT CODE HERE ##
+allTrails_byState1 = allTrails %>%
+  group_by(state_name,area_name) %>%
+  summarize(average_stars = mean(avg_rating),count=n()) %>%
+  arrange(desc(count))
+allTrails_byState1
+allTrails_byState2 = allTrails %>%
+  group_by(state_name,area_name) %>%
+  summarize(average_stars = mean(avg_rating),count=n()) %>%
+  arrange(desc(average_stars))
+allTrails_byState2
+
+#Kenai Fjords National park is the highest-rated national park, and of course Yosemite has the most number of trails.
+```
+#### Step 9: Most National Parks 
+
+(5 points)
+
+**TASK**: Find the State with the most National Parks. 
+
+Hint: You should use the data frame you created in the previous step. 
+
+```{r}
+## INSERT CODE HERE ##
+allTrails_byParks = allTrails %>%
+  group_by(area_name) %>%
+  summarize(average_stars = mean(avg_rating),count=n()) %>%
+  arrange(desc(count))
+allTrails_byParks
+
+#good ol' Great Smoky Mountains :D
+```
+#### Step 10: Join Regions 
+
+(8 points)
+
+States are grouped by regions with the following data frame: 
+
+```{r}
+stateRegion<-data.frame(state_name=state.name, 
+                        region=state.region)
+
+head(stateRegion)
+```
+
+##### A: Join 
+
+(2 points)
+
+**TASK**: Add a column for region to the data frame
+
+* You can do this with the data frame you generated in the previous step (9)
+* OR you can use the full complete data frame
+
+Hint: Use `left_join`
+
+```{r}
+?left_join
+```
+
+```{r}
+## INSERT CODE HERE ##
+joined_allTrails_byRegion = allTrails_byParks %>%
+  left_join(stateRegion, by=c(stateRegion$state_name,allTrails_byParks$state_name))
+joined_allTrails_byRegion
+```
+
+##### B: National Parks by Region 
+
+(3 points)
+
+Find the number of National Parks in each region.  Create a new data frame to accomplish this and use it in the next step. 
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+
+##### C: Bar Graph 
+
+(3 points)
+
+Create a bar graph for the number of National Parks per region.  
+
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+#### EXTRA CREDIT: MAKE A MAP! 
+
+(10 points)
+
+Make a map of the average trail star rating by state

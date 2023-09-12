@@ -1,0 +1,307 @@
+---
+title: "Tidyverse Skills Check: Tour De France"
+author: "Tyler Bontrager"
+output: html_document
+---
+
+### Learning Objectives: 
+
+Students will use this exercise to assess their ability to translate questions into code using `tidyverse` packages and verbs. 
+
+* `dplyr`: `filter()`, `mutate()`, `group_by()`, `summarise()`, `count()`, ect
+* `ggplot2`: `ggplot()`, `aes()`, `geom_bar`, `geom_col`, `geom_histogram`, `geom_boxplot`, `geom_density`
+
+#### Step 0: Library tidyverse
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+#### Step 1: Load the Data
+
+The Tour de France is an annual men's multiple-stage bicycle race primarily held in France, while also occasionally passing through nearby countries. Like the other Grand Tours, it consists of 21 stages, each a day long, over the course of 23 days, coinciding with the Bastille Day holiday.
+
+https://en.wikipedia.org/wiki/Tour_de_France
+
+In this section we will use the data about Tour de France winners from 1903 to 2019 and comes from Alastair Rushworth's Data Package tdf and Kaggle.
+
+```{r}
+tdf_winners <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv')
+```
+
+#### Step 2: Look at the data
+
+What variables are available to work with? 
+
+```{r}
+str(tdf_winners)
+```
+
+#### Part 1
+
+##### A.  Convert to Miles
+
+This data set uses the metric system.  Please convert the value for distance to the imperial system that is standard in the United States.
+
+* 1 km (kilometer) = 0.621371 miles 
+
+Create a new data frame to accomplish this so that we can use these values in subsequent parts.
+
+```{r}
+## INSERT CODE HERE ##
+tdfMiles = tdf_winners %>%
+  mutate(miles = distance/1.609)
+
+tdfMiles
+```
+
+##### B. Calculate Speed
+
+Add a new column to the data set for speed (miles/hour).  Which country is the fastest on average? Create a new data frame to accomplish this. 
+
+```{r}
+# Hint: Use the nationality variable
+## INSERT CODE HERE ##
+tdfMiles = tdfMiles %>%
+  mutate(avgmph = miles/time_overall)
+
+tdfMiles = select(tdfMiles,-na.rm)
+tdfMiles
+
+```
+
+#### Part 2
+
+##### A. Unique Cyclists
+
+* How many unique cyclists are in these data?  Create a new data frame to accomplish this and order it.
+
+* Which cyclist won the most Tour de France races? 
+
+
+```{r}
+## INSERT CODE HERE ##
+uniqueCyc = tdfMiles %>%
+  group_by(winner_name) %>%
+  count() %>%
+  arrange(desc(n))
+
+uniqueCyc
+```
+
+##### B. Graphic - Histogram
+
+Make a histogram showing the distribution for the number of wins.  Don't forget to title your graph.
+
+```{r}
+## INSERT CODE HERE ##
+ggplot(uniqueCyc, aes(x=n)) +
+  geom_histogram(title="Sup chief i'm winning the gammmee!") +
+  ggtitle("Game-winning distribution") # for the main title
+
+#xlab(label) # for the x axis label
+#ylab(label) # for the y axis label
+#labs(...) # for the main title, axis labels and legend titles
+```
+
+##### C. Insight - Comment on the shape of this histogram: 
+
+```{}
+## INSERT HERE ##
+
+Well, it is clearly obvious that the number of wins for winner is most commonly ever a 1, and never usually higher than 2. The highest is 7 wins for a winner and there is no winner who ever won exactly 6. This histogram is skewed significantly to the right as the primary mode is 1.
+
+```
+
+
+#### Professor Provided Wrangling: 
+
+These data are somewhat repetitive because the physical metrics for an individual cyclist are repeated every time they win.  Please run the following code and use it in the following sections to keep only the unique metrics for a given cylist.  
+
+
+```{r}
+uniqueWinners<-tdf_winners%>%
+  group_by(winner_name)%>%
+  summarise(wins=n(),
+            height=unique(height), 
+            weight=unique(weight), 
+            born=unique(born), 
+            died=unique(died), 
+            nationality=unique(nationality))
+
+dim(uniqueWinners)
+```
+
+One more observation I made is that the `nationality` variable has a weird space before every country name.  Let's take this out using `str_squish`.
+
+```{r}
+uniqueWinners$nationality<-stringr::str_squish(uniqueWinners$nationality)
+
+str(uniqueWinners)
+```
+
+
+#### Part 3
+
+##### A. Unique Nations
+
+ There are 14 unique nations represented in the data set.  
+ 
+* How many winners came from each?  Create a new data frame to accomplish this.  
+
+* Which country has the most winners?  Use matrix indexing to only yield the desired row. 
+ 
+```{r}
+# Hint: Use the nationality variable
+
+## INSERT CODE HERE ##
+
+
+```
+##### B. Graphic - Bar Graph
+
+Create a bar graph for the number of wins for each country.  
+
+Please also include the following code to improve your bar graph: 
+
+* Order your categories from big to small using the function `fct_infreq()` around the variable on the x-axis
+* To have a more reabable graphic you can flip the x and y axes using the `coord_flip()` function as another layer at the end of your `ggplot` code
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+
+
+#### Part 4
+
+##### A. Imperial System
+
+Please convert the values for height and weight to the imperial system, which is standard in the United States.  
+
+* 1 m (meter) = 39.3701 inches
+* 1 kg (kilogram) = 2.205 pounds
+
+Create a new data frame to accomplish this so that we can use these values in subsequent Parts 4, 5, and 6.
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+##### A. Height 
+
+Make a data frame that displays just the average height (in) of the winners from each country.  
+
+* What country has the tallest cyclists?  
+* What country has the shortest cyclists? 
+
+Hint: Recall the functions `head()` and `tail()`
+
+```{r}
+## INSERT CODE HERE ##
+
+```
+##### B. Graphic - Box Plot
+
+Create a side-by-side box plot to compare the height(in) distributions for cyclists from France, Italy, and Spain. 
+
+Hint: This will require a wrangling step before the graphic
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+##### C. Insights:
+
+Please provide observations from the side-by-side box plot above. 
+
+```{}
+## INSERT HERE ##
+```
+
+#### Part 5
+
+##### A. Join
+
+Add a column for the average height (in) for each country to the data frame for information for unique cyclists. 
+
+Hint: Use `left_join`
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+##### B. Deviations
+
+Now create a column to calculate the "deviation" between a cyclists height (in) and the average height (in) of their fellow country men. 
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+#### Part 6
+
+##### A. BMI
+
+Body Mass Index (BMI) is a convenient rule of thumb used to broadly categorize a person as underweight, normal weight, overweight, or obese based on tissue mass (muscle, fat, and bone) and height. 
+
+$$BMI = \frac{weight (lbs) \times 703}{height^2 (in^2)}$$
+Tasks/Questions: 
+
+* Add a new column to the data set for body mass index (BMI).  
+* Which cyclist had the highest BMI?  What was his BMI?
+
+```{r}
+## INSERT CODE HERE ##
+```
+
+
+#### Part 7
+
+##### A. Stages
+
+The Tour de France is made up of multiple stages.  Which cyclist led the most stages across their career (in this data set)?   
+
+Create a new data frame to accomplish this.  You will use this in the next question.
+
+```{r}
+## INSERT CODE HERE ##)
+
+```
+
+##### B. No Stage Wins
+
+How many winners of the race, as a whole, did not win a single stage?
+
+```{r}
+## INSERT CODE HERE ##
+
+```
+
+#### Part 8
+
+##### A. Longevity
+
+Creating a dataset for only cyclists who have deceased, add a new column to the data set for a cyclist’s lifetime (in years).  You can assume that each year has 365 days.  
+
+Questions: 
+
+* Which cyclist lived the longest?  
+* How many years old was he? 
+
+
+Hints: 
+
+* Note that both `born` and `died` are `as.Date` variables. Subtracting `as.Date` variables will give the number of days between the dates. 
+* If you want to remove the `days` label, use the `as.numeric()` wrapper function.
+
+```{r}
+## INSERT CODE HERE ##
+
+```
+
+
+#### FUN EXTRA CREDIT BONUS!!!!
+
+Write code to calculate a cyclist’s win streak.  Then find which cyclist had the longest win streak. 
+

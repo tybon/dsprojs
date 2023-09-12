@@ -1,0 +1,4 @@
+"0","stateRegion<-data.frame(state_name=state.name, "
+"0","                        region=state.region)"
+"0",""
+"0","head(stateRegion)"

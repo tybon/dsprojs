@@ -1,0 +1,5 @@
+"0","# gather "
+"0","stocksG<-stocks%>%"
+"0","  gather(key=stock, value=price, -time )"
+"0",""
+"0","head(stocksG)"

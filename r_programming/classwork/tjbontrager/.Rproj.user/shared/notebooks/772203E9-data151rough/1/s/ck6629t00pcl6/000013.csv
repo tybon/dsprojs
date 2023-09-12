@@ -1,0 +1,4 @@
+"0","correlationsOOS <- tcFacJoinSp %>%"
+"0","  group_by(type) %>% "
+"0","  summarise(r = cor(stem_percent, out_of_state_tuition))"
+"0","correlationsOOS"

@@ -1,0 +1,3 @@
+"0","#attempting to make the graphics easier to differentiate. I'm not sure what the difference is."
+"0",""
+"0","ggplot(sp, aes(x=stem_percent,y=early_career_pay)) + geom_point() + expand_limits(x=0,y=0)"

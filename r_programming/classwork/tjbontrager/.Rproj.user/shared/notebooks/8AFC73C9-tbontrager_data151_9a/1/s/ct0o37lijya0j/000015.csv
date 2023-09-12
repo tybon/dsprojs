@@ -1,0 +1,7 @@
+"0","## LET'S START WITH MEAN and STANDARD DEV"
+"0","aqi%>%"
+"0","  group_by(State)%>%"
+"0","  summarise(n=n(), "
+"0","            avgAQI=mean(AQI,na.rm=TRUE), "
+"0","            sdAQI=sd(AQI,na.rm=TRUE), "
+"0","            NAs=sum(is.na(AQI)))"

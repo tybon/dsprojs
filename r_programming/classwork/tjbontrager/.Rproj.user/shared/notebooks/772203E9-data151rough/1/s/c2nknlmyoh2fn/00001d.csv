@@ -1,0 +1,1 @@
+"0","ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point()"

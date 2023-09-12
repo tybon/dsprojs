@@ -1,0 +1,5 @@
+"0","## INSERT CODE HERE ##"
+"0","stateNP_Map = states %>%"
+"0","  mutate(state_name=full) %>%"
+"0","  left_join(stateNP)"
+"2","Joining, by = ""state_name"""

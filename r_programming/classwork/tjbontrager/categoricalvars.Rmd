@@ -1,0 +1,79 @@
+---
+title: "data151_EDA"
+author: "T/G"
+date: "2022-10-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+
+library(tidyverse)
+library(ggplot2)
+?ggplot2
+```
+
+```{r}
+# IMPORTING DATASETS
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+tc = tuition_cost
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+ti = tuition_income
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+sp = salary_potential
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+ht = historical_tuition
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+ds = diversity_school
+```
+
+```{r}
+tc_with_count = tc%>%
+  group_by(state_code,degree_length) %>%
+  summarize()
+
+tc
+```
+
+
+```{r}
+# Time to explore the data!
+
+table(tc$state,tc$degree_length)
+
+```
+
+
+
+
+This is a graph of the number of higher-education schools in each U.S. territory and state.
+
+```{r}
+ggplot(tc, aes(x=state_code))+
+  geom_bar()
+```
+
+```{r}
+
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

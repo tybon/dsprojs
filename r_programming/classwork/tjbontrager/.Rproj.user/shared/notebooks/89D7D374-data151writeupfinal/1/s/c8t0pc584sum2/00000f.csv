@@ -1,0 +1,8 @@
+"0","jointisp = ti %>%"
+"0","left_join(sp) %>%"
+"0","group_by(stem_percent)%>%"
+"0","summarize(medianNet=median(net_cost))"
+"0",""
+"0","tcFacJoinSp = tcFactored %>%"
+"0","  filter(tcFactored$type!='For Profit') %>%"
+"0","  inner_join(sp, by=c(""name""=""name""))"

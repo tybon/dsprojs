@@ -1,0 +1,7 @@
+"0","ggplot(tcFacJoinSp, aes(x=stem_percent,y=out_of_state_tuition,color=type)) + "
+"0","  geom_point() +"
+"0","  geom_smooth(method=""lm"",se=FALSE,lty=2) +"
+"0","  ggtitle(""Cost of tuition for out-state students against prevalence of STEM majors"")+"
+"0","  xlab(""Prevalence of STEM majors (%)"")+"
+"0","  ylab(""Out-state tuition cost ($)"")+"
+"0","  theme_bw()"

@@ -1,0 +1,3 @@
+titanic<-read.csv("https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/titanicAll.csv",
+                  header=TRUE)
+titanic

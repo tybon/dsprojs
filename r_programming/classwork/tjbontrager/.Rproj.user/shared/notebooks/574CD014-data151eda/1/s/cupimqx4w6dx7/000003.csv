@@ -1,0 +1,4 @@
+"0","#In this graph I want to see whether a higher STEM enrollment has a high association with early career pay. In a later graphic,"
+"0","# I will want to see whether the trend keeps for mid-career pay."
+"0",""
+"0","ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point()"

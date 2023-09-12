@@ -1,0 +1,4 @@
+"0","  summarize(median(birthDay))
+"
+"2","Error in median(birthDay) : object 'birthDay' not found
+"

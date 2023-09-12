@@ -1,0 +1,20 @@
+"0","#install.packages(""DAAG"")"
+"0","library(DAAG)"
+"2","
+Attaching package: ‘DAAG’
+
+"
+"2","The following objects are masked from ‘package:openintro’:
+
+    orings, possum
+
+"
+"2","The following object is masked from ‘package:MASS’:
+
+    hills
+
+"
+"0","data(allbacks)"
+"0",""
+"0","books <- allbacks[, c(3, 1, 4)]"
+"0","head(books)"

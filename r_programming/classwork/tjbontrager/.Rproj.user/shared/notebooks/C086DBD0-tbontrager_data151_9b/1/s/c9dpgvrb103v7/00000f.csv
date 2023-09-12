@@ -1,0 +1,5 @@
+"0","salem$quality<-factor(salem$quality, "
+"0","                      levels=c(""Good"", ""Moderate"", "
+"0","                               ""Unhealthy Sensitive"", ""Unhealthy"", "
+"0","                               ""Very Unhealthy"",""Hazardous"" ))"
+"0",""

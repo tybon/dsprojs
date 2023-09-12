@@ -1,0 +1,5 @@
+"0",""
+"0","ggplot(tcFactored, aes(x=in_state_total))+geom_histogram()+expand_limits(x=80000,y=430) + "
+"0","  ggtitle(""Total cost of attendance for in-state students"")+ # for the main title  "
+"0","  xlab(""Cost of attendance"")+ # for the x axis label"
+"0","  ylab(""Count"") # for the y axis label"

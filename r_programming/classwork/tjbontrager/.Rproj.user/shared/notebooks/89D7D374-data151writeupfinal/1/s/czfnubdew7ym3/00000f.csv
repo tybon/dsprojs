@@ -1,0 +1,8 @@
+"0","ggplot(gatheredtc, aes(x = degFactor, y = totalCost, fill=in_out)) +  # ggplot function"
+"0","  geom_boxplot()+"
+"0","  ggtitle(""Breakdown of total cost of attendence by degree factor"")+ # for the main title  "
+"0","  xlab(""Degree Factor (2/4 year)"")+ # for the x axis label"
+"0","  ylab(""Cost of Attendance"")+ # for the y axis label"
+"0","  theme_bw()+theme("
+"0","    legend.title = element_blank(),"
+"0","    ) + scale_fill_discrete(name = ""Student Residence"", labels = c(""In-state"", ""Out-of-state""))"

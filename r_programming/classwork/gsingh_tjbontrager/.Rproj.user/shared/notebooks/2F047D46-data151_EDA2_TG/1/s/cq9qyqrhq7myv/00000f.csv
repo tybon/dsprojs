@@ -1,0 +1,4 @@
+"0","tcFactored = tc %>%"
+"0","  mutate(degFactor = as.factor(degree_length))"
+"0",""
+"0","tcFactored"

@@ -1,0 +1,5 @@
+"0","ggplot(sp, aes(stem_percent,early_career_pay)) + geom_point() +"
+"0","  geom_smooth(method=""lm"",se=FALSE)+"
+"0","  ggtitle(""Early career pay against prevalence of STEM majors in a school"")+"
+"0","  xlab(""Prevalence of STEM majors (%)"")+"
+"0","  ylab(""Early-career pay ($)"")"

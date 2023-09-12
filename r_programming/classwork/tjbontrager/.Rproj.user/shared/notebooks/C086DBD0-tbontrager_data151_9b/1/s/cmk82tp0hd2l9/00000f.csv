@@ -1,0 +1,5 @@
+"0","## INSERT CODE HERE ##"
+"0","coinBind<-coin_Bitcoin %>%"
+"0","  rbind(coin_Dogecoin) %>%"
+"0","  rbind(coin_Ethereum)"
+"0",""

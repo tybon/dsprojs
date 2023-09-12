@@ -1,0 +1,7 @@
+"0","## INSERT CODE HERE ##"
+"0","allTrails_byState1 = allTrails %>%"
+"0","  group_by(state_name,area_name) %>%"
+"0","  summarize(average_stars = mean(avg_rating),count=n()) %>%"
+"0","  arrange(desc(count))"
+"2","`summarise()` has grouped output by 'state_name'. You can override using the `.groups` argument."
+"0","allTrails_byState1"

@@ -1,0 +1,4 @@
+"0","## Now Joint"
+"0","titanJoint<-titan2Way%>%"
+"0","  mutate(joint=tot/2201)"
+"0","titanJoint"

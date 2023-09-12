@@ -1,0 +1,4 @@
+"0","## Pie chart"
+"0","## 1) Start with a stacked bar"
+"0","ggplot(Titanic, aes(x=1, y=Freq, fill=Class))+"
+"0","  geom_bar(stat = ""identity"")"

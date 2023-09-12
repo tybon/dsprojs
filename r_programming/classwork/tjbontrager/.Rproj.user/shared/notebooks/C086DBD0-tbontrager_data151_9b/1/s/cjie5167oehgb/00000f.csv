@@ -1,0 +1,4 @@
+"0","salem<- read.csv(""https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/salemOR_AQI.csv"","
+"0","                 header=TRUE)"
+"0",""
+"0","#str(salem)"

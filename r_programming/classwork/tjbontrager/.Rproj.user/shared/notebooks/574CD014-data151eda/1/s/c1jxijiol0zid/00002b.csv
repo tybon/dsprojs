@@ -1,0 +1,7 @@
+"0",""
+"0","median_OUT_COA <- tc %>%"
+"0","  filter(degree_length=='4 Year') %>%"
+"0","  group_by(state_code)%>%"
+"0","  summarize(median_outstate_COA = median(out_of_state_total))"
+"0","  "
+"0","median_OUT_COA"

@@ -1,0 +1,1 @@
+"0","ggplot(income, aes(x=income_lvl)) + geom_bar(position=""fill"") "

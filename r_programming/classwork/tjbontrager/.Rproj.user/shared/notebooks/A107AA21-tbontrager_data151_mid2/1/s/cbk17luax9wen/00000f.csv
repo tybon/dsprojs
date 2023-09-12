@@ -1,0 +1,1 @@
+"0","allTrails <- read_csv(""https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/AllTrails%20data%20-%20nationalpark.csv"")"

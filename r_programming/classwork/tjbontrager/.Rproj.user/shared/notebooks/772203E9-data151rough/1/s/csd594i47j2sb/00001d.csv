@@ -1,0 +1,3 @@
+"0","ggplot(tcFactored, aes(x=in_state_tuition)) + geom_histogram() +"
+"0","  ggtitle(""Distribution of tuition charged by schools in the U.S."")+"
+"0","  xlab(""In-state tuition"")"

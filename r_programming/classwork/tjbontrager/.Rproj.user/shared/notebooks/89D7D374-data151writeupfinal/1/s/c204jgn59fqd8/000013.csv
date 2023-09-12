@@ -1,0 +1,7 @@
+"0","ggplot(gatheredtc, aes(x=totalCost,fill=in_out))+geom_histogram()+expand_limits(x=80000,y=430) + "
+"0","  ggtitle(""Total cost of attendance for students by residence"")+ # for the main title  "
+"0","  xlab(""Cost of attendance"")+ # for the x axis label"
+"0","  ylab(""Count"") + # for the y axis label"
+"0","  theme_bw()+theme("
+"0","    legend.title = element_blank(),"
+"0","    ) + scale_fill_discrete(name = ""Student Residence"", labels = c(""In-state"", ""Out-of-state""))"

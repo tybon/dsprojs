@@ -1,0 +1,1 @@
+"0","ggplot(gatheredtc, aes(x=out_of_state_tuition))+geom_histogram()"

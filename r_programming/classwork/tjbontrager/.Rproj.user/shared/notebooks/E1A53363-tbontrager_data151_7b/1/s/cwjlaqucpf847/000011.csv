@@ -1,0 +1,3 @@
+"0","## add color"
+"0","ggplot(Titanic, aes(x=Class, y=Freq, color=Class))+"
+"0","  geom_bar(stat = ""identity"")"

@@ -1,0 +1,14 @@
+"0","## INSERT CODE HERE ##
+peopleBMI<-peopleS%>%
+  mutate(bmi-(weight*703)/(height^2))
+"
+"1","[1m[33mError[39m in [38;5;232m`mutate()`[39m:[22m
+[38;5;232m[33m![38;5;232m Problem while computing `..1 = bmi - (weight * 703)/(height^2)`.[39m
+[1mCaused by error in [38;5;232m`mask$eval_all_mutate()`[39m:[22m
+[33m![39m object 'bmi' not found
+Backtrace:
+[90m 1. [39mpeopleS %>% mutate(bmi - (weight * 703)/(height^2))
+[90m 3. [39m[38;5;232m[1m[94mdplyr:::mutate.data.frame([38;5;232m[22m[39m., bmi - (weight * 703) / (height^2)[38;5;232m[1m[94m)[38;5;232m[22m[39m
+[90m 4. [39mdplyr:::mutate_cols(.data, dplyr_quosures(...), caller_env = caller_env())
+[90m 6. [39mmask$eval_all_mutate(quo)
+"

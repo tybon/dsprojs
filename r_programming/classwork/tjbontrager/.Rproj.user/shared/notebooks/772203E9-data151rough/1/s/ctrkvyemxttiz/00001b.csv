@@ -1,0 +1,6 @@
+"0","income = ti %>% "
+"0","  group_by(income_lvl) %>%"
+"0","  summarize(Count=n()) %>%"
+"0","  mutate(Percent = round((Count/sum(Count)*100))) %>%"
+"0","  arrange(desc(Count))"
+"0","income"

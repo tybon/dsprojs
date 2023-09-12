@@ -1,0 +1,1 @@
+"0","ggplot(sp, aes(x=stem_percent,y=mid_career_pay)) + geom_point() + expand_limits(x=0,y=0)"

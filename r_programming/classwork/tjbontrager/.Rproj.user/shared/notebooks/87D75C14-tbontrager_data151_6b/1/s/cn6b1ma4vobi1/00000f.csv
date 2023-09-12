@@ -1,0 +1,4 @@
+"0","stocksS<-stocksG%>%"
+"0","  spread(key=stock, value=price)"
+"0",""
+"0","head(stocksS)"

@@ -1,0 +1,179 @@
+---
+title: 'DATA151: Midterm #1 (R Section)'
+author: "Tyler Bontrager"
+date: "09/29/2022"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Sowing wild oats...
+
+#### Description: 
+
+An oat farmer is interested in studying how to improve the yield from his farm.  It is known that there is a nutrient gradient across his field so he splits his field into six areas.  He wishes to study three different oat varieties (Golden Rain, Marvellous, and Victory) and four concentrations of a nitrogen fertilizer (0.0, 0.2, 0.4, 0.6). The farmer looks at all combinations (twelve) of these two treatments (oat varieties and nitrogen fertilizer).  Every treatment combination is present at each of the six areas.  At the end of the season, the farmer records the yield from these plots.
+
+#### Part 1: Getting Started (5 points - 1 point each!)
+
+* Create a new R markdown document for the Midterm template 
+* Save new Rmd in your R Studio Cloud as "data151_mid1_YOURNAME"
+* Change the author in the heading of the R markdown
+* Change the date
+* Leave yourself at least 3 comments in your code chunks
+
+#### Part 2: Installing the package  (4 points)
+
+In order to access these data you will need to install the package `MASS`.
+
+```{r}
+## INSERT CODE HERE ###
+install.packages('MASS')
+#installs package MASS for later use
+#the second comment I would like to leave is "wow, today was the most rain we had this week!
+#the third comment I would like to leave is "I have no idea how to make 3 comments on this block
+```
+
+#### Part 3: Library (2 points)
+
+Now you actually need to call the library to be able to get the data.  
+
+```{r}
+## INSERT CODE HERE ###
+library(MASS) #Pretty sure I'm doing this right, but I'm not sure why it's
+#called "MASS"..?
+```
+
+#### Part 4: Bring the Data into the Global Environment (2 points)
+
+These data are simply called `oats`.  Please call them into the global environment
+
+```{r}
+## INSERT CODE HERE ###
+od = oats
+#od <- "oats_data" because I hate long variable names and snake case.
+```
+
+At this point it may also be helpful to read about the dataset. 
+
+#### Part 5: Structure (2 points)
+
+Look at the structure of your data.  How many obervations are there? 
+
+```{r}
+## INSERT CODE HERE ###
+str(od)
+#I'm not quite sure what "obervations" are (:P), but it appears there are 72
+#rows which means there are 72 observations.
+# Structure tells me a lot about each of the columns too, so I can see that 
+# B, V, and N are factors while Y seems to be an integer; I'm thinking a rounded
+# continuous variable.
+```
+```{r}
+head(od)
+
+#super useful column names for sure. *somebody* hates long variable names too, but I can't
+#blame 'em.
+
+#B=Block; V=Variety?; N=Nutrient gradient?; Y-Yield.
+```
+
+```{r}
+?oats
+```
+
+```{}
+Learning about oats dataset:
+I was completely correct about the names of the columns except for N, which is
+actually nitrogen treatment, not nutrient gradient because nobody cares
+about that because it can't be controlled (hence the random plotting).
+
+```
+
+#### Part 6: Understanding the study (6 points)
+
+What is the response? (2 points)
+
+```{}
+In this particular example dataset, the response variable is yield.
+
+```
+
+What are the explanatory variables (treatments)? (4 points)
+
+```{}
+The explanatory variables are V and N because either could explain the response,
+but the treatment of interest in this study is the fertilizer variety.
+
+```
+
+#### Part 7: Make a hypothesis (4 points)
+
+Create a hypothesis about nitrogen fertilizer concentration levels, without first looking at the data. 
+
+```{}
+Whoops. Well, `head()` doesn't count, right? A conclusion with such few data points is
+silly.
+
+My hypothesis given my intuition and some previous exposure to information of this
+kind is that I would expect an increase in nitrogen fertilizer concentration levels
+to positively impact the yield up to a certain extent; that is, past a certain point I
+would expect that the benefits of adding fertilizer are more wasteful than productive for
+the yield.
+
+```
+
+#### Part 8: Yield (4 points)
+
+Create a new variable called `yield` from the `Y` column in the `oats` data set. (2 points)
+
+```{r}
+## INSERT CODE HERE ###
+yield = oats['Y']
+#yield is the name for the selection I made by indexing the 'Y' column of the
+#oats matrix.
+
+```
+
+The farmer would like to know what their total yeild was this season. Use the variable you created above. (2 points)
+
+```{r}
+## INSERT CODE HERE ###
+#Not sure what yeild is (:P) but I'll try my best ;D
+sum(yield)
+#The units of yield is in 1/4lbs per subplot (of area 1/80 acre)
+```
+
+#### Part 9: Visualize (6 points)
+
+Explore the relationship between nitrogen (`N`) and yeild (`Y`) by creating a boxplot.  
+
+HINT: Please look at your 3A R class notes
+
+```{r}
+## INSERT CODE HERE ###
+#or I could also just
+?boxplot
+#because I'm such a good student who takes amazing notes and knows
+#exactly where he puts them :)
+#found them... but they're unreadable in the 8 minutes I have left
+#haha
+```
+```{r}
+boxplot(N~Y, data=od)
+
+#oops I goofed.
+```
+```{r}
+boxplot(Y~N, data=od)
+```
+#### Part 10: Observations (5 points)
+
+What are your observations from this plot? Does your hypothesis (from Part 7) appear to be supported? Explain.
+
+```{}
+My observations are that there is a steady positive association given the limited sample size in the dataset. The spread of the data is wider than I might find otherwise convincing, but if the medians are to be trusted, then I was right in thinking that certain levels of treatment do seem to be less productive than others with respect to waste and yield. The upper limits of the data points on the y-axis for the higher levels of treatments seem to be greater than those for the lower levels of treatments, which might give the impression that yield has a better chance of increasing given the higher levels of treatment.
+```

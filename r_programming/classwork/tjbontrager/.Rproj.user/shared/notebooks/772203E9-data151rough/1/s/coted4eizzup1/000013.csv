@@ -1,0 +1,6 @@
+"0","ggplot(tcFacJoinSp, aes(x=stem_percent,y=in_state_tuition)) + "
+"0","  geom_point() +"
+"0","  geom_smooth(method=""lm"",se=FALSE,lty=2) +"
+"0","  ggtitle(""Cost of tuition for in-state students against prevalence of STEM majors"")+"
+"0","  xlab(""Prevalence of STEM majors (%)"")+"
+"0","  ylab(""In-state tuition cost ($)"")"

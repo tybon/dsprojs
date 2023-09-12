@@ -1,0 +1,8 @@
+"0","#In the following graph, I want to find out whether colleges with higher STEM enrollment tend to cost more. My hypothesis is that it would be the case."
+"0",""
+"0","jointisp = ti %>%"
+"0","  left_join(sp) %>%"
+"0","  group_by(stem_percent)%>%"
+"0","  summarize(medianNet=median(net_cost))"
+"2","Joining, by = ""name"""
+"0","jointisp"

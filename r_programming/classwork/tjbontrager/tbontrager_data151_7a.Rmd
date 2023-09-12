@@ -1,0 +1,17 @@
+---
+title: "dswr7a"
+author: "Tyler Bontrager"
+date: "2022-10-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+salaries1920 <- read.csv("https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/nba2019-20.csv", 
+                         header=TRUE)
+all_seasons <- read.csv("https://raw.githubusercontent.com/kitadasmalley/DATA151/main/Data/all_seasons.csv", 
+                        header=TRUE)
+```

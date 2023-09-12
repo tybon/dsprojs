@@ -1,0 +1,6 @@
+"0","## What could we do if we want proportions?"
+"0",""
+"0","titanClassProp<-titanClass%>%"
+"0","  mutate(prop=n_class/sum(n_class))"
+"0",""
+"0","titanClassProp"
