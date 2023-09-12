@@ -1,0 +1,172 @@
+---
+title: "DATA 152 HW6 - Tyler Bontrager"
+date: "Due April 5, 2023 @ 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(skimr)
+getwd()
+ds=read_csv("DATA 152 Pepsi Challenge - SP23.txt")
+head(ds)
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following questions. **  
+Failure to do so will result in a deduction of 5 points.  All subquestions are worth 5pts each.
+
+## QUESTION 1
+
+Read in the "DATA 152 Pepsi Challenge - SP23.txt" dataset using `read_csv`, and name it `ds` in the setup section.  (It is commented out currently, but you'll need to uncomment it when knitting.)  Then complete the following:
+
+### 1A (5)
+
+Calculate the sample proportion ($\hat{p}$) of students who preferred Pepsi **for each section**.
+
+```{r}
+ds %>%
+  group_by(preference) %>%
+  summarize(n=n())
+  #mutate(n=n(),phat=(preference=="Pepsi")/n)
+#I was trying to figure out how to get phat without hardcoding in values.
+
+phat1 = 7/(7+11)
+phat2 = 7/(7+8)
+phat1
+phat2
+```
+Section 1: 0.39, Section 2: 0.47.
+### 1B (5)
+Calculate the overall (pooled) sample proportion ($\hat{p}$) of students who preferred Pepsi.
+
+```{r}
+phatTot = (7+7)/(7+11+7+8)
+phatTot
+```
+Total: 0.42.
+### 1C (10)
+Do DATA152 students prefer Pepsi to Coca Cola?  Let's find out.  Let p=the true proportion of DATA152 students who prefer Pepsi to Coca Cola (where your population is DATA152 students across all semesters, not just this one).  What are your null and alternative hypotheses?
+
+**ANSWER:** The null hypothesis is that there is no preference of people between coke and pepsi. The alternative hypothesis can be that people prefer pepsi.
+
+### 1D
+Are the assumptions for using the normal approximation for sample proportions met?  
+
+```{r}
+ggplot(ds, aes(x=))
+```
+
+**ANSWER:** [fill in]
+
+### 1E
+Regardless of your answer in 1F, carry out a 1-proportion z-test.
+
+```{r}
+prop.test(14,33,0.5,alternative="greater")
+```
+
+**ANSWER:** p-value: 0.7569
+
+### 1F
+Based on your answer in 1E, is there significant evidence that DATA152 students prefer Pepsi to Coca Cola?
+
+**ANSWER:** The p-value does not suggest that we have enough evidence to reject the null hypothesis that the true population is a 50/50 split between preferences to coke or pepsi.
+
+## QUESTION 2
+In 2015, the US Census Bureau reported that 62.2% of American families owned their homes--the lowest rate in 20 years.  Census data reveal that the ownership rate in one small city is much lower.  The city council is debating a plan to offer tax breaks to first-time home buyers to encourage people to become homeowners.  They decide to adopt the plan on a 2-yr trial basis and use the data they collect to make a decision about continuing the tax breaks.  Since this plan costs the city tax revenues, they will continue to use it only if there is strong evidence that the rate of home ownership is increasing.
+
+### 2A
+In words, what will their hypothesis be?
+
+**ANSWER:** The null hypothesis would be that the rate of homeownership will remain the same after offering the tax break.
+
+### 2B
+IN CONTEXT, what would a Type I error be?
+
+**ANSWER:** A Type I error would be to erroneously reject the fact that the true proportion of people who own their houses is 62.2% and did not change.
+
+### 2C
+IN CONTEXT, what would a Type II error be?
+
+**ANSWER:** A Type II error would be to fail to reject the hypothesis that the true proportion of people who own their houses is 62.2% and did not change.
+
+
+## QUESTION 3
+Researchers comparing the effectiveness of two pain medications randomly selected a group of patients who had been complaining of a certain kind of joint pain.  They randomly divided these people into two groups and then administered the pain killers.  Of the 112 people in the group who received medication A, 84 said this pain reliever was effective.  Of the 108 people in the other group, 66 reported that pain reliever B was effective.  Are the pain relievers equally effective in reducing pain in patients?
+
+### 3A
+What are the null and alternative hypotheses?
+
+**ANSWER:** The null hypothesis should be that there is no difference in effectiveness of pain relief between pain relievers A and B. The alternative hypothesis would be that there is a difference in effectiveness, and could be that "A is more effective than B" or "B is more effective than A" or simply rejecting the hypothesis that there is no difference.
+
+### 3B
+Are the assumptions for a 2-proportion z-test satisfied?  Justify your answer.
+
+**ANSWER:** I would argue that it is too simple to assume that samples of medical trials are independent given that medical histories are a vital part of any clinical trial, so on this note the assumptions would not be satisfied.
+
+### 3C
+Carry out a 2-proportion z-test using `prop.test`.  Make sure you print your output.
+
+```{r}
+prop.test(x = c(84, 66), n = c(112,108), p=c(0.50,0.50), alternative="two.sided")
+```
+
+### 3D
+What is the p-value of your test?
+
+**ANSWER:** 0.0000001180
+
+### 3E
+Based on your p-value and a significance threshold of $\alpha=0.05$, would you reject or fail to reject you null hypothesis?
+
+**ANSWER:** reject
+
+### 3F
+Which type of error (Type I or Type II) is more harmful in this case?  Justify your answer.  
+
+**ANSWER:** it would be more harmful to erroneously deny these people relief from pain, and this would be a type II error.
+
+
+## QUESTION 4
+Georgianna claims that in a small city renowned for its music school, the average child takes less than 5 years of piano lessons.  We have a random sample of 20 children from the city, with a mean of 4.6 years of piano lessons and a standard deviation of 2.2 years.  
+
+### 4A
+What are the null and alternative hypothesis?
+
+**ANSWER:** The null hypothesis is that the true mean of children taking piano lessons is 5 years. The alternative hypothesis is that the true mean is less than 5 years.
+
+### 4B
+Which assumptions of a 1-sample t-test can you verify with the information given?
+
+**ANSWER:** The samples come from a normally distributed population, the sample is probably representative given that the city is small, and each child's performance in piano lessons is probably not going to be influenced by another child's performance.
+
+### 4C
+What is the t-score of your data?
+
+```{r}
+xbar=4.6
+mu=5
+s=2.2
+n=20
+t_score=(xbar-mu)/(s/sqrt(n))
+t_score
+```
+
+**ANSWER:** -0.8131
+
+### 4D
+Use the `pt()` function to find the p-value of your hypothesis test.  (Note: we can't use the t.test function as we did in class because we don't have raw data.)
+
+```{r}
+pt(t_score,df=19)
+```
+
+### 4E
+What is your conclusion in context of the original problem?
+
+**ANSWER:** There is not enough evidence to reject the null hypothesis given the data. That is, there is not strong evidence to show that this music school effectively teaches children piano in less than 5 years.
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW6.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA152_HW6.Rmd and GORE_KRISTEN_DATA152_HW6.html.  **Failure to follow these instructions will result in a 10-point deduction.**

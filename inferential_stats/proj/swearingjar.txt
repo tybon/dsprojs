@@ -1,0 +1,55 @@
+DATA 152 Project
+
+Swearing statistics among willamette students and faculty
+
+Observational study
+
+Survey questions distributed via QR code to Google Form or paper
+
+units: students/faculty/staff?/strangers?/parents?
+sample: >50
+variables:
+	-favorite swear "word"
+	-most used swear
+	-where do you swear the most
+	-where don't you swear the most
+	-who does/always doesn't/never hear you swear?
+	-who do you hear swearing a lot?
+	-with whom do you spend most of your time
+	-to what extent do you find it appropriate to swear
+		-in public
+		-emotionally
+		-in private
+		-in class
+		- ...
+	-any occupation? student? professor?
+	-where did you learn to swear?
+	-DEMOGRAPHICS
+		-home town
+		-rural/suburban/metro
+		-gender expression
+		-race
+		-sexual orientation
+		-extracurriculars if so what
+		-major/department
+		-age
+		-on/off campus
+			-
+potential observational sittings:
+	sports games
+	bistro
+	library?
+	goudy
+	gym
+	academic buildings
+	dorms?
+
+IN MEETING:
+rate curse words
+self-report how many times they swear
+self-report (other stuff)
+consider pejoratives
+leikert scale of common curse words
+keep it general for specifically faculty (or not?)
+
+var: swearing jar

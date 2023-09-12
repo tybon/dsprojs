@@ -1,0 +1,1272 @@
+R version 4.2.1 (2022-06-23 ucrt) -- "Funny-Looking Kid"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> setwd("C:\\Users\\epicm\\Documents\\School\\flder\\ISWR\\data")
+> getwd()
+[1] "C:/Users/epicm/Documents/School/flder/ISWR/data"
+> library(tidyverse)
+Error in library(tidyverse) : there is no package called ‘tidyverse’
+> install.packages("tidyverse")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/epicm/AppData/Local/R/win-library/4.2’
+(as ‘lib’ is unspecified)
+also installing the dependencies ‘colorspace’, ‘sys’, ‘bit’, ‘ps’, ‘sass’, ‘cachem’, ‘memoise’, ‘base64enc’, ‘digest’, ‘fastmap’, ‘farver’, ‘labeling’, ‘munsell’, ‘RColorBrewer’, ‘viridisLite’, ‘rappdirs’, ‘rematch’, ‘askpass’, ‘bit64’, ‘prettyunits’, ‘processx’, ‘evaluate’, ‘highr’, ‘yaml’, ‘xfun’, ‘bslib’, ‘htmltools’, ‘jquerylib’, ‘tinytex’, ‘backports’, ‘ellipsis’, ‘generics’, ‘glue’, ‘assertthat’, ‘blob’, ‘DBI’, ‘lifecycle’, ‘R6’, ‘tidyselect’, ‘vctrs’, ‘withr’, ‘data.table’, ‘gtable’, ‘isoband’, ‘scales’, ‘gargle’, ‘uuid’, ‘cellranger’, ‘curl’, ‘ids’, ‘rematch2’, ‘cpp11’, ‘pkgconfig’, ‘mime’, ‘openssl’, ‘timechange’, ‘fansi’, ‘utf8’, ‘clipr’, ‘vroom’, ‘tzdb’, ‘progress’, ‘callr’, ‘fs’, ‘knitr’, ‘rmarkdown’, ‘selectr’, ‘stringi’, ‘broom’, ‘cli’, ‘crayon’, ‘dbplyr’, ‘dplyr’, ‘dtplyr’, ‘forcats’, ‘ggplot2’, ‘googledrive’, ‘googlesheets4’, ‘haven’, ‘hms’, ‘httr’, ‘jsonlite’, ‘lubridate’, ‘magrittr’, ‘modelr’, ‘pillar’, ‘purrr’, ‘readr’, ‘readxl’, ‘reprex’, ‘rlang’, ‘rstudioapi’, ‘rvest’, ‘stringr’, ‘tibble’, ‘tidyr’, ‘xml2’
+
+
+  There is a binary version available but the source version is
+  later:
+         binary source needs_compilation
+evaluate   0.19   0.20             FALSE
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/colorspace_2.0-3.zip'
+Content type 'application/zip' length 2627355 bytes (2.5 MB)
+downloaded 2.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/sys_3.4.1.zip'
+Content type 'application/zip' length 46200 bytes (45 KB)
+downloaded 45 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/bit_4.0.5.zip'
+Content type 'application/zip' length 1130105 bytes (1.1 MB)
+downloaded 1.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/ps_1.7.2.zip'
+Content type 'application/zip' length 549182 bytes (536 KB)
+downloaded 536 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/sass_0.4.4.zip'
+Content type 'application/zip' length 2570006 bytes (2.5 MB)
+downloaded 2.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/cachem_1.0.6.zip'
+Content type 'application/zip' length 71175 bytes (69 KB)
+downloaded 69 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/memoise_2.0.1.zip'
+Content type 'application/zip' length 50235 bytes (49 KB)
+downloaded 49 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/base64enc_0.1-3.zip'
+Content type 'application/zip' length 32477 bytes (31 KB)
+downloaded 31 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/digest_0.6.31.zip'
+Content type 'application/zip' length 195066 bytes (190 KB)
+downloaded 190 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/fastmap_1.1.0.zip'
+Content type 'application/zip' length 126569 bytes (123 KB)
+downloaded 123 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/farver_2.1.1.zip'
+Content type 'application/zip' length 1512596 bytes (1.4 MB)
+downloaded 1.4 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/labeling_0.4.2.zip'
+Content type 'application/zip' length 62511 bytes (61 KB)
+downloaded 61 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/munsell_0.5.0.zip'
+Content type 'application/zip' length 245155 bytes (239 KB)
+downloaded 239 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/RColorBrewer_1.1-3.zip'
+Content type 'application/zip' length 55837 bytes (54 KB)
+downloaded 54 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/viridisLite_0.4.1.zip'
+Content type 'application/zip' length 1300043 bytes (1.2 MB)
+downloaded 1.2 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rappdirs_0.3.3.zip'
+Content type 'application/zip' length 51297 bytes (50 KB)
+downloaded 50 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rematch_1.0.1.zip'
+Content type 'application/zip' length 16237 bytes (15 KB)
+downloaded 15 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/askpass_1.1.zip'
+Content type 'application/zip' length 72261 bytes (70 KB)
+downloaded 70 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/bit64_4.0.5.zip'
+Content type 'application/zip' length 494401 bytes (482 KB)
+downloaded 482 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/prettyunits_1.1.1.zip'
+Content type 'application/zip' length 37859 bytes (36 KB)
+downloaded 36 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/processx_3.8.0.zip'
+Content type 'application/zip' length 846902 bytes (827 KB)
+downloaded 827 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/highr_0.10.zip'
+Content type 'application/zip' length 46524 bytes (45 KB)
+downloaded 45 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/yaml_2.3.6.zip'
+Content type 'application/zip' length 116445 bytes (113 KB)
+downloaded 113 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/xfun_0.36.zip'
+Content type 'application/zip' length 404173 bytes (394 KB)
+downloaded 394 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/bslib_0.4.2.zip'
+Content type 'application/zip' length 5061710 bytes (4.8 MB)
+downloaded 4.8 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/htmltools_0.5.4.zip'
+Content type 'application/zip' length 351067 bytes (342 KB)
+downloaded 342 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/jquerylib_0.1.4.zip'
+Content type 'application/zip' length 525954 bytes (513 KB)
+downloaded 513 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/tinytex_0.43.zip'
+Content type 'application/zip' length 135804 bytes (132 KB)
+downloaded 132 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/backports_1.4.1.zip'
+Content type 'application/zip' length 102215 bytes (99 KB)
+downloaded 99 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/ellipsis_0.3.2.zip'
+Content type 'application/zip' length 40425 bytes (39 KB)
+downloaded 39 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/generics_0.1.3.zip'
+Content type 'application/zip' length 80688 bytes (78 KB)
+downloaded 78 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/glue_1.6.2.zip'
+Content type 'application/zip' length 162308 bytes (158 KB)
+downloaded 158 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/assertthat_0.2.1.zip'
+Content type 'application/zip' length 54796 bytes (53 KB)
+downloaded 53 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/blob_1.2.3.zip'
+Content type 'application/zip' length 48367 bytes (47 KB)
+downloaded 47 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/DBI_1.1.3.zip'
+Content type 'application/zip' length 767416 bytes (749 KB)
+downloaded 749 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/lifecycle_1.0.3.zip'
+Content type 'application/zip' length 138925 bytes (135 KB)
+downloaded 135 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/R6_2.5.1.zip'
+Content type 'application/zip' length 84276 bytes (82 KB)
+downloaded 82 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/tidyselect_1.2.0.zip'
+Content type 'application/zip' length 224221 bytes (218 KB)
+downloaded 218 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/vctrs_0.5.1.zip'
+Content type 'application/zip' length 1360184 bytes (1.3 MB)
+downloaded 1.3 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/withr_2.5.0.zip'
+Content type 'application/zip' length 232220 bytes (226 KB)
+downloaded 226 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/data.table_1.14.6.zip'
+Content type 'application/zip' length 2238363 bytes (2.1 MB)
+downloaded 2.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/gtable_0.3.1.zip'
+Content type 'application/zip' length 164264 bytes (160 KB)
+downloaded 160 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/isoband_0.2.7.zip'
+Content type 'application/zip' length 1960501 bytes (1.9 MB)
+downloaded 1.9 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/scales_1.2.1.zip'
+Content type 'application/zip' length 615819 bytes (601 KB)
+downloaded 601 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/gargle_1.2.1.zip'
+Content type 'application/zip' length 534243 bytes (521 KB)
+downloaded 521 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/uuid_1.1-0.zip'
+Content type 'application/zip' length 49058 bytes (47 KB)
+downloaded 47 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/cellranger_1.1.0.zip'
+Content type 'application/zip' length 104452 bytes (102 KB)
+downloaded 102 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/curl_5.0.0.zip'
+Content type 'application/zip' length 2622150 bytes (2.5 MB)
+downloaded 2.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/ids_1.0.1.zip'
+Content type 'application/zip' length 123924 bytes (121 KB)
+downloaded 121 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rematch2_2.1.2.zip'
+Content type 'application/zip' length 47487 bytes (46 KB)
+downloaded 46 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/cpp11_0.4.3.zip'
+Content type 'application/zip' length 321925 bytes (314 KB)
+downloaded 314 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/pkgconfig_2.0.3.zip'
+Content type 'application/zip' length 22554 bytes (22 KB)
+downloaded 22 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/mime_0.12.zip'
+Content type 'application/zip' length 40621 bytes (39 KB)
+downloaded 39 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/openssl_2.0.5.zip'
+Content type 'application/zip' length 2651307 bytes (2.5 MB)
+downloaded 2.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/timechange_0.2.0.zip'
+Content type 'application/zip' length 508593 bytes (496 KB)
+downloaded 496 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/fansi_1.0.3.zip'
+Content type 'application/zip' length 312435 bytes (305 KB)
+downloaded 305 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/utf8_1.2.2.zip'
+Content type 'application/zip' length 150040 bytes (146 KB)
+downloaded 146 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/clipr_0.8.0.zip'
+Content type 'application/zip' length 54762 bytes (53 KB)
+downloaded 53 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/vroom_1.6.0.zip'
+Content type 'application/zip' length 1350971 bytes (1.3 MB)
+downloaded 1.3 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/tzdb_0.3.0.zip'
+Content type 'application/zip' length 1011484 bytes (987 KB)
+downloaded 987 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/progress_1.2.2.zip'
+Content type 'application/zip' length 85983 bytes (83 KB)
+downloaded 83 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/callr_3.7.3.zip'
+Content type 'application/zip' length 440415 bytes (430 KB)
+downloaded 430 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/fs_1.5.2.zip'
+Content type 'application/zip' length 389184 bytes (380 KB)
+downloaded 380 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/knitr_1.41.zip'
+Content type 'application/zip' length 1488483 bytes (1.4 MB)
+downloaded 1.4 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rmarkdown_2.19.zip'
+Content type 'application/zip' length 3720654 bytes (3.5 MB)
+downloaded 3.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/selectr_0.4-2.zip'
+Content type 'application/zip' length 491641 bytes (480 KB)
+downloaded 480 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/stringi_1.7.12.zip'
+Content type 'application/zip' length 14221653 bytes (13.6 MB)
+downloaded 13.6 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/broom_1.0.2.zip'
+Content type 'application/zip' length 1865860 bytes (1.8 MB)
+downloaded 1.8 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/cli_3.6.0.zip'
+Content type 'application/zip' length 1294097 bytes (1.2 MB)
+downloaded 1.2 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/crayon_1.5.2.zip'
+Content type 'application/zip' length 162842 bytes (159 KB)
+downloaded 159 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/dbplyr_2.3.0.zip'
+Content type 'application/zip' length 1098085 bytes (1.0 MB)
+downloaded 1.0 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/dplyr_1.0.10.zip'
+Content type 'application/zip' length 1305390 bytes (1.2 MB)
+downloaded 1.2 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/dtplyr_1.2.2.zip'
+Content type 'application/zip' length 329574 bytes (321 KB)
+downloaded 321 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/forcats_0.5.2.zip'
+Content type 'application/zip' length 383284 bytes (374 KB)
+downloaded 374 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/ggplot2_3.4.0.zip'
+Content type 'application/zip' length 4216724 bytes (4.0 MB)
+downloaded 4.0 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/googledrive_2.0.0.zip'
+Content type 'application/zip' length 1872049 bytes (1.8 MB)
+downloaded 1.8 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/googlesheets4_1.0.1.zip'
+Content type 'application/zip' length 496891 bytes (485 KB)
+downloaded 485 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/haven_2.5.1.zip'
+Content type 'application/zip' length 757162 bytes (739 KB)
+downloaded 739 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/hms_1.1.2.zip'
+Content type 'application/zip' length 103474 bytes (101 KB)
+downloaded 101 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/httr_1.4.4.zip'
+Content type 'application/zip' length 516261 bytes (504 KB)
+downloaded 504 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/jsonlite_1.8.4.zip'
+Content type 'application/zip' length 1104924 bytes (1.1 MB)
+downloaded 1.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/lubridate_1.9.0.zip'
+Content type 'application/zip' length 941940 bytes (919 KB)
+downloaded 919 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/magrittr_2.0.3.zip'
+Content type 'application/zip' length 227219 bytes (221 KB)
+downloaded 221 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/modelr_0.1.10.zip'
+Content type 'application/zip' length 202829 bytes (198 KB)
+downloaded 198 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/pillar_1.8.1.zip'
+Content type 'application/zip' length 689622 bytes (673 KB)
+downloaded 673 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/purrr_1.0.1.zip'
+Content type 'application/zip' length 498691 bytes (487 KB)
+downloaded 487 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/readr_2.1.3.zip'
+Content type 'application/zip' length 1195009 bytes (1.1 MB)
+downloaded 1.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/readxl_1.4.1.zip'
+Content type 'application/zip' length 1199059 bytes (1.1 MB)
+downloaded 1.1 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/reprex_2.0.2.zip'
+Content type 'application/zip' length 505256 bytes (493 KB)
+downloaded 493 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rlang_1.0.6.zip'
+Content type 'application/zip' length 1576077 bytes (1.5 MB)
+downloaded 1.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rstudioapi_0.14.zip'
+Content type 'application/zip' length 318969 bytes (311 KB)
+downloaded 311 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/rvest_1.0.3.zip'
+Content type 'application/zip' length 219546 bytes (214 KB)
+downloaded 214 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/stringr_1.5.0.zip'
+Content type 'application/zip' length 318067 bytes (310 KB)
+downloaded 310 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/tibble_3.1.8.zip'
+Content type 'application/zip' length 733126 bytes (715 KB)
+downloaded 715 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/tidyr_1.2.1.zip'
+Content type 'application/zip' length 967510 bytes (944 KB)
+downloaded 944 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/xml2_1.3.3.zip'
+Content type 'application/zip' length 1573852 bytes (1.5 MB)
+downloaded 1.5 MB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/tidyverse_1.3.2.zip'
+Content type 'application/zip' length 428965 bytes (418 KB)
+downloaded 418 KB
+
+package ‘colorspace’ successfully unpacked and MD5 sums checked
+package ‘sys’ successfully unpacked and MD5 sums checked
+package ‘bit’ successfully unpacked and MD5 sums checked
+package ‘ps’ successfully unpacked and MD5 sums checked
+package ‘sass’ successfully unpacked and MD5 sums checked
+package ‘cachem’ successfully unpacked and MD5 sums checked
+package ‘memoise’ successfully unpacked and MD5 sums checked
+package ‘base64enc’ successfully unpacked and MD5 sums checked
+package ‘digest’ successfully unpacked and MD5 sums checked
+package ‘fastmap’ successfully unpacked and MD5 sums checked
+package ‘farver’ successfully unpacked and MD5 sums checked
+package ‘labeling’ successfully unpacked and MD5 sums checked
+package ‘munsell’ successfully unpacked and MD5 sums checked
+package ‘RColorBrewer’ successfully unpacked and MD5 sums checked
+package ‘viridisLite’ successfully unpacked and MD5 sums checked
+package ‘rappdirs’ successfully unpacked and MD5 sums checked
+package ‘rematch’ successfully unpacked and MD5 sums checked
+package ‘askpass’ successfully unpacked and MD5 sums checked
+package ‘bit64’ successfully unpacked and MD5 sums checked
+package ‘prettyunits’ successfully unpacked and MD5 sums checked
+package ‘processx’ successfully unpacked and MD5 sums checked
+package ‘highr’ successfully unpacked and MD5 sums checked
+package ‘yaml’ successfully unpacked and MD5 sums checked
+package ‘xfun’ successfully unpacked and MD5 sums checked
+package ‘bslib’ successfully unpacked and MD5 sums checked
+package ‘htmltools’ successfully unpacked and MD5 sums checked
+package ‘jquerylib’ successfully unpacked and MD5 sums checked
+package ‘tinytex’ successfully unpacked and MD5 sums checked
+package ‘backports’ successfully unpacked and MD5 sums checked
+package ‘ellipsis’ successfully unpacked and MD5 sums checked
+package ‘generics’ successfully unpacked and MD5 sums checked
+package ‘glue’ successfully unpacked and MD5 sums checked
+package ‘assertthat’ successfully unpacked and MD5 sums checked
+package ‘blob’ successfully unpacked and MD5 sums checked
+package ‘DBI’ successfully unpacked and MD5 sums checked
+package ‘lifecycle’ successfully unpacked and MD5 sums checked
+package ‘R6’ successfully unpacked and MD5 sums checked
+package ‘tidyselect’ successfully unpacked and MD5 sums checked
+package ‘vctrs’ successfully unpacked and MD5 sums checked
+package ‘withr’ successfully unpacked and MD5 sums checked
+package ‘data.table’ successfully unpacked and MD5 sums checked
+package ‘gtable’ successfully unpacked and MD5 sums checked
+package ‘isoband’ successfully unpacked and MD5 sums checked
+package ‘scales’ successfully unpacked and MD5 sums checked
+package ‘gargle’ successfully unpacked and MD5 sums checked
+package ‘uuid’ successfully unpacked and MD5 sums checked
+package ‘cellranger’ successfully unpacked and MD5 sums checked
+package ‘curl’ successfully unpacked and MD5 sums checked
+package ‘ids’ successfully unpacked and MD5 sums checked
+package ‘rematch2’ successfully unpacked and MD5 sums checked
+package ‘cpp11’ successfully unpacked and MD5 sums checked
+package ‘pkgconfig’ successfully unpacked and MD5 sums checked
+package ‘mime’ successfully unpacked and MD5 sums checked
+package ‘openssl’ successfully unpacked and MD5 sums checked
+package ‘timechange’ successfully unpacked and MD5 sums checked
+package ‘fansi’ successfully unpacked and MD5 sums checked
+package ‘utf8’ successfully unpacked and MD5 sums checked
+package ‘clipr’ successfully unpacked and MD5 sums checked
+package ‘vroom’ successfully unpacked and MD5 sums checked
+package ‘tzdb’ successfully unpacked and MD5 sums checked
+package ‘progress’ successfully unpacked and MD5 sums checked
+package ‘callr’ successfully unpacked and MD5 sums checked
+package ‘fs’ successfully unpacked and MD5 sums checked
+package ‘knitr’ successfully unpacked and MD5 sums checked
+package ‘rmarkdown’ successfully unpacked and MD5 sums checked
+package ‘selectr’ successfully unpacked and MD5 sums checked
+package ‘stringi’ successfully unpacked and MD5 sums checked
+package ‘broom’ successfully unpacked and MD5 sums checked
+package ‘cli’ successfully unpacked and MD5 sums checked
+package ‘crayon’ successfully unpacked and MD5 sums checked
+package ‘dbplyr’ successfully unpacked and MD5 sums checked
+package ‘dplyr’ successfully unpacked and MD5 sums checked
+package ‘dtplyr’ successfully unpacked and MD5 sums checked
+package ‘forcats’ successfully unpacked and MD5 sums checked
+package ‘ggplot2’ successfully unpacked and MD5 sums checked
+package ‘googledrive’ successfully unpacked and MD5 sums checked
+package ‘googlesheets4’ successfully unpacked and MD5 sums checked
+package ‘haven’ successfully unpacked and MD5 sums checked
+package ‘hms’ successfully unpacked and MD5 sums checked
+package ‘httr’ successfully unpacked and MD5 sums checked
+package ‘jsonlite’ successfully unpacked and MD5 sums checked
+package ‘lubridate’ successfully unpacked and MD5 sums checked
+package ‘magrittr’ successfully unpacked and MD5 sums checked
+package ‘modelr’ successfully unpacked and MD5 sums checked
+package ‘pillar’ successfully unpacked and MD5 sums checked
+package ‘purrr’ successfully unpacked and MD5 sums checked
+package ‘readr’ successfully unpacked and MD5 sums checked
+package ‘readxl’ successfully unpacked and MD5 sums checked
+package ‘reprex’ successfully unpacked and MD5 sums checked
+package ‘rlang’ successfully unpacked and MD5 sums checked
+package ‘rstudioapi’ successfully unpacked and MD5 sums checked
+package ‘rvest’ successfully unpacked and MD5 sums checked
+package ‘stringr’ successfully unpacked and MD5 sums checked
+package ‘tibble’ successfully unpacked and MD5 sums checked
+package ‘tidyr’ successfully unpacked and MD5 sums checked
+package ‘xml2’ successfully unpacked and MD5 sums checked
+package ‘tidyverse’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\epicm\AppData\Local\Temp\Rtmpy8seBo\downloaded_packages
+installing the source package ‘evaluate’
+
+trying URL 'https://cran.rstudio.com/src/contrib/evaluate_0.20.tar.gz'
+Content type 'application/x-gzip' length 26664 bytes (26 KB)
+downloaded 26 KB
+
+* installing *source* package 'evaluate' ...
+** package 'evaluate' successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (evaluate)
+
+The downloaded source packages are in
+	‘C:\Users\epicm\AppData\Local\Temp\Rtmpy8seBo\downloaded_packages’
+> library(tidyverse)
+── Attaching packages ──────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   1.0.1 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+── Conflicts ─────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+Warning messages:
+1: package ‘tidyverse’ was built under R version 4.2.2 
+2: package ‘ggplot2’ was built under R version 4.2.2 
+3: package ‘tibble’ was built under R version 4.2.2 
+4: package ‘tidyr’ was built under R version 4.2.2 
+5: package ‘readr’ was built under R version 4.2.2 
+6: package ‘purrr’ was built under R version 4.2.2 
+7: package ‘dplyr’ was built under R version 4.2.2 
+8: package ‘stringr’ was built under R version 4.2.2 
+9: package ‘forcats’ was built under R version 4.2.2 
+> ds = read_csv("US Liberal Arts College Rankings 2023.txt")
+Rows: 361 Columns: 41                                                                                       
+── Column specification ─────────────────────────────────────────────────
+Delimiter: ","
+chr (29): College Name, State, 2023, 2022, 2021, 2020, 2019, 2018, 20...
+dbl (12): IPEDS ID, 2016, 2015, 2011, 2010, 2009, 2002, 1990, 1989, 1...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+> names(ds)
+ [1] "College Name" "State"        "IPEDS ID"     "2023"        
+ [5] "2022"         "2021"         "2020"         "2019"        
+ [9] "2018"         "2017"         "2016"         "2015"        
+[13] "2014"         "2013"         "2012"         "2011"        
+[17] "2010"         "2009"         "2008"         "2007"        
+[21] "2006"         "2005"         "2004"         "2003"        
+[25] "2002"         "2001"         "2000"         "1999"        
+[29] "1998"         "1997"         "1996"         "1995"        
+[33] "1994"         "1993"         "1992"         "1991"        
+[37] "1990"         "1989"         "1988"         "1986"        
+[41] "1984"        
+> dim(ds)
+[1] 361  41
+> #gives metadata
+> summary(ds) #5number summary
+ College Name          State              IPEDS ID     
+ Length:361         Length:361         Min.   :100937  
+ Class :character   Class :character   1st Qu.:154527  
+ Mode  :character   Mode  :character   Median :190248  
+                                       Mean   :188233  
+                                       3rd Qu.:216524  
+                                       Max.   :455770  
+                                                       
+     2023               2022               2021          
+ Length:361         Length:361         Length:361        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+     2020               2019               2018          
+ Length:361         Length:361         Length:361        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+     2017                2016             2015            2014          
+ Length:361         Min.   :  1.00   Min.   :  1.00   Length:361        
+ Class :character   1st Qu.: 44.50   1st Qu.: 45.00   Class :character  
+ Mode  :character   Median : 82.00   Median : 89.00   Mode  :character  
+                    Mean   : 86.83   Mean   : 89.34                     
+                    3rd Qu.:127.00   3rd Qu.:133.00                     
+                    Max.   :174.00   Max.   :178.00                     
+                    NA's   :185      NA's   :180                        
+     2013               2012                2011             2010       
+ Length:361         Length:361         Min.   :  1.00   Min.   :  1.00  
+ Class :character   Class :character   1st Qu.: 47.00   1st Qu.: 30.75  
+ Mode  :character   Mode  :character   Median : 93.00   Median : 62.00  
+                                       Mean   : 92.82   Mean   : 61.90  
+                                       3rd Qu.:137.00   3rd Qu.: 92.00  
+                                       Max.   :187.00   Max.   :122.00  
+                                       NA's   :173      NA's   :235     
+      2009            2008               2007          
+ Min.   :  1.00   Length:361         Length:361        
+ 1st Qu.: 31.50   Class :character   Class :character  
+ Median : 60.00   Mode  :character   Mode  :character  
+ Mean   : 61.17                                        
+ 3rd Qu.: 89.50                                        
+ Max.   :122.00                                        
+ NA's   :237                                           
+     2006               2005               2004          
+ Length:361         Length:361         Length:361        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+     2003                2002           2001          
+ Length:361         Min.   : 1.00   Length:361        
+ Class :character   1st Qu.:13.50   Class :character  
+ Mode  :character   Median :26.00   Mode  :character  
+                    Mean   :25.22                     
+                    3rd Qu.:38.00                     
+                    Max.   :48.00                     
+                    NA's   :310                       
+     2000               1999               1998          
+ Length:361         Length:361         Length:361        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+     1997               1996               1995          
+ Length:361         Length:361         Length:361        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+     1994               1993               1992          
+ Length:361         Length:361         Length:361        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+                                                         
+     1991                1990            1989          1988      
+ Length:361         Min.   : 1.00   Min.   : 1    Min.   : 1.00  
+ Class :character   1st Qu.: 7.00   1st Qu.: 7    1st Qu.: 6.50  
+ Mode  :character   Median :13.00   Median :13    Median :13.00  
+                    Mean   :12.88   Mean   :13    Mean   :13.31  
+                    3rd Qu.:19.00   3rd Qu.:19    3rd Qu.:19.75  
+                    Max.   :25.00   Max.   :25    Max.   :25.00  
+                    NA's   :336     NA's   :336   NA's   :335    
+      1986             1984      
+ Min.   : 1.000   Min.   :1.000  
+ 1st Qu.: 4.250   1st Qu.:3.500  
+ Median : 7.500   Median :6.500  
+ Mean   : 7.071   Mean   :5.917  
+ 3rd Qu.:10.750   3rd Qu.:9.000  
+ Max.   :11.000   Max.   :9.000  
+ NA's   :347      NA's   :349    
+> #and I guess other stuff?
+> library(skim)
+Error in library(skim) : there is no package called ‘skim’
+> library(skimr)
+Error in library(skimr) : there is no package called ‘skimr’
+> skim(ds)
+Error in skim(ds) : could not find function "skim"
+> install.packages(skimr)
+Error in install.packages : object 'skimr' not found
+> install.packages("skimr")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Installing package into ‘C:/Users/epicm/AppData/Local/R/win-library/4.2’
+(as ‘lib’ is unspecified)
+also installing the dependency ‘repr’
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/repr_1.1.5.zip'
+Content type 'application/zip' length 123106 bytes (120 KB)
+downloaded 120 KB
+
+trying URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/skimr_2.1.5.zip'
+Content type 'application/zip' length 1237494 bytes (1.2 MB)
+downloaded 1.2 MB
+
+package ‘repr’ successfully unpacked and MD5 sums checked
+package ‘skimr’ successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\Users\epicm\AppData\Local\Temp\Rtmpy8seBo\downloaded_packages
+> skim(ds)
+Error in skim(ds) : could not find function "skim"
+> library(skimr)
+Warning message:
+package ‘skimr’ was built under R version 4.2.2 
+> skim(ds)
+── Data Summary ────────────────────────
+                           Values
+Name                       ds    
+Number of rows             361   
+Number of columns          41    
+_______________________          
+Column type frequency:           
+  character                29    
+  numeric                  12    
+________________________         
+Group variables            None  
+
+── Variable type: character ─────────────────────────────────────────────
+   skim_variable n_missing complete_rate min max empty n_unique
+ 1 College Name          0         1      11  42     0      357
+ 2 State                 0         1       2   2     0       44
+ 3 2023                161         0.554   1  12     0       52
+ 4 2022                139         0.615   1  12     0       55
+ 5 2021                140         0.612   1  12     0       50
+ 6 2020                146         0.596   1  12     0       51
+ 7 2019                132         0.634   1  12     0       50
+ 8 2018                189         0.476   1   3     0       51
+ 9 2017                183         0.493   1   3     0       56
+10 2014                179         0.504   1   3     0       59
+11 2013                181         0.499   1   3     0       61
+12 2012                179         0.504   1   3     0       59
+13 2008                113         0.687   1  12     0       49
+14 2007                148         0.590   1  12     0       45
+15 2006                146         0.596   1  12     0       44
+16 2005                146         0.596   1  12     0       42
+17 2004                147         0.593   1  12     0       46
+18 2003                146         0.596   1  12     0       30
+19 2001                202         0.440   1  12     0       30
+20 2000                203         0.438   1  12     0       29
+21 1999                202         0.440   1  12     0       22
+22 1998                202         0.440   1  12     0       22
+23 1997                200         0.446   1  12     0       41
+24 1996                199         0.449   1  12     0       39
+25 1995                200         0.446   1  12     0       28
+26 1994                220         0.391   1  12     0       29
+27 1993                220         0.391   1  12     0       28
+28 1992                220         0.391   1  12     0       29
+29 1991                219         0.393   1  12     0       26
+   whitespace
+ 1          0
+ 2          0
+ 3          0
+ 4          0
+ 5          0
+ 6          0
+ 7          0
+ 8          0
+ 9          0
+10          0
+11          0
+12          0
+13          0
+14          0
+15          0
+16          0
+17          0
+18          0
+19          0
+20          0
+21          0
+22          0
+23          0
+24          0
+25          0
+26          0
+27          0
+28          0
+29          0
+
+── Variable type: numeric ───────────────────────────────────────────────
+   skim_variable n_missing complete_rate      mean       sd     p0
+ 1 IPEDS ID              0        1      188233.   51717.   100937
+ 2 2016                185        0.488      86.8     50.6       1
+ 3 2015                180        0.501      89.3     51.9       1
+ 4 2011                173        0.521      92.8     53.9       1
+ 5 2010                235        0.349      61.9     35.8       1
+ 6 2009                237        0.343      61.2     35.3       1
+ 7 2002                310        0.141      25.2     14.7       1
+ 8 1990                336        0.0693     12.9      7.29      1
+ 9 1989                336        0.0693     13        7.36      1
+10 1988                335        0.0720     13.3      7.57      1
+11 1986                347        0.0388      7.07     3.60      1
+12 1984                349        0.0332      5.92     3.06      1
+         p25      p50      p75   p100 hist 
+ 1 154527    190248   216524   455770 ▆▇▁▁▁
+ 2     44.5      82      127      174 ▇▇▇▇▇
+ 3     45        89      133      178 ▇▇▇▇▇
+ 4     47        93      137      187 ▇▇▇▇▇
+ 5     30.8      62       92      122 ▇▇▇▇▆
+ 6     31.5      60       89.5    122 ▇▇▇▆▇
+ 7     13.5      26       38       48 ▇▆▇▅▇
+ 8      7        13       19       25 ▇▅▇▇▇
+ 9      7        13       19       25 ▇▇▇▇▇
+10      6.5      13       19.8     25 ▇▇▇▇▇
+11      4.25      7.5     10.8     11 ▅▃▃▃▇
+12      3.5       6.5      9        9 ▅▂▂▃▇
+> ds
+# A tibble: 361 × 41
+   Colle…¹ State IPEDS…² `2023` `2022` `2021` `2020` `2019` `2018` `2017`
+   <chr>   <chr>   <dbl> <chr>  <chr>  <chr>  <chr>  <chr>  <chr>  <chr> 
+ 1 Willia… MA     168342 1      1      1      1      1      1      1     
+ 2 Amhers… MA     164465 2      2      2      2      2      2      2     
+ 3 Pomona… CA     121345 3      4      4      5      5      6      7     
+ 4 Swarth… PA     216287 4      3      3      3      3      3      4     
+ 5 Welles… MA     168218 5      5      4      3      3      3      3     
+ 6 Bowdoi… ME     161004 6      6      6      6      5      3      6     
+ 7 Carlet… MN     173258 6      9      9      7      5      8      7     
+ 8 United… MD     164155 6      6      6      17     22     21     12    
+ 9 Clarem… CA     112260 9      8      6      7      9      8      9     
+10 United… NY     197036 9      11     15     21     18     12     19    
+# … with 351 more rows, 31 more variables: `2016` <dbl>, `2015` <dbl>,
+#   `2014` <chr>, `2013` <chr>, `2012` <chr>, `2011` <dbl>,
+#   `2010` <dbl>, `2009` <dbl>, `2008` <chr>, `2007` <chr>,
+#   `2006` <chr>, `2005` <chr>, `2004` <chr>, `2003` <chr>,
+#   `2002` <dbl>, `2001` <chr>, `2000` <chr>, `1999` <chr>,
+#   `1998` <chr>, `1997` <chr>, `1996` <chr>, `1995` <chr>,
+#   `1994` <chr>, `1993` <chr>, `1992` <chr>, `1991` <chr>, …
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+> ds %>%
++     gather(key="Year",value="Ranking",`2023`:`1984`)
+# A tibble: 13,718 × 5
+   `College Name`                 State `IPEDS ID` Year  Ranking
+   <chr>                          <chr>      <dbl> <chr> <chr>  
+ 1 Williams College               MA        168342 2023  1      
+ 2 Amherst College                MA        164465 2023  2      
+ 3 Pomona College                 CA        121345 2023  3      
+ 4 Swarthmore College             PA        216287 2023  4      
+ 5 Wellesley College              MA        168218 2023  5      
+ 6 Bowdoin College                ME        161004 2023  6      
+ 7 Carleton College               MN        173258 2023  6      
+ 8 United States Naval Academy    MD        164155 2023  6      
+ 9 Claremont McKenna College      CA        112260 2023  9      
+10 United States Military Academy NY        197036 2023  9      
+# … with 13,708 more rows
+# ℹ Use `print(n = ...)` to see more rows
+> ds %>%
++ mutate(Year=as.numeric(Year))
+# A tibble: 13,718 × 5
+   `College Name`                 State `IPEDS ID`  Year Ranking
+   <chr>                          <chr>      <dbl> <dbl> <chr>  
+ 1 Williams College               MA        168342  2023 1      
+ 2 Amherst College                MA        164465  2023 2      
+ 3 Pomona College                 CA        121345  2023 3      
+ 4 Swarthmore College             PA        216287  2023 4      
+ 5 Wellesley College              MA        168218  2023 5      
+ 6 Bowdoin College                ME        161004  2023 6      
+ 7 Carleton College               MN        173258  2023 6      
+ 8 United States Naval Academy    MD        164155  2023 6      
+ 9 Claremont McKenna College      CA        112260  2023 9      
+10 United States Military Academy NY        197036  2023 9      
+# … with 13,708 more rows
+# ℹ Use `print(n = ...)` to see more rows
+> ds %>% 
++     mutate(Year=as.numeric(Year),Ranking=as.numeric(Year))
+# A tibble: 13,718 × 5
+   `College Name`                 State `IPEDS ID`  Year Ranking
+   <chr>                          <chr>      <dbl> <dbl>   <dbl>
+ 1 Williams College               MA        168342  2023    2023
+ 2 Amherst College                MA        164465  2023    2023
+ 3 Pomona College                 CA        121345  2023    2023
+ 4 Swarthmore College             PA        216287  2023    2023
+ 5 Wellesley College              MA        168218  2023    2023
+ 6 Bowdoin College                ME        161004  2023    2023
+ 7 Carleton College               MN        173258  2023    2023
+ 8 United States Naval Academy    MD        164155  2023    2023
+ 9 Claremont McKenna College      CA        112260  2023    2023
+10 United States Military Academy NY        197036  2023    2023
+# … with 13,708 more rows
+# ℹ Use `print(n = ...)` to see more rows
+> ds = ds %>% 
++     mutate(Year=as.numeric(Year),Ranking=as.numeric(Ranking),State=factor(State))
+Warning message:
+Problem while computing `Ranking = as.numeric(Ranking)`.
+ℹ NAs introduced by coercion 
+> ds %>%
++     filter(State='OR')
+Error in `filter()`:
+! We detected a named input.
+ℹ This usually means that you've used `=` instead of `==`.
+ℹ Did you mean `State == "OR"`?
+Run `rlang::last_error()` to see where the error occurred.
+> ds %>%
++     filter(State=='OR')
+# A tibble: 190 × 5
+   `College Name`          State `IPEDS ID`  Year Ranking
+   <chr>                   <fct>      <dbl> <dbl>   <dbl>
+ 1 Reed College            OR        209922  2023      72
+ 2 Willamette University   OR        210401  2023      76
+ 3 Lewis and Clark College OR        209056  2023      94
+ 4 Linfield College        OR        209065  2023     120
+ 5 Warner Pacific College  OR        210304  2023      NA
+ 6 Reed College            OR        209922  2022      62
+ 7 Willamette University   OR        210401  2022      71
+ 8 Lewis and Clark College OR        209056  2022      82
+ 9 Linfield College        OR        209065  2022     117
+10 Warner Pacific College  OR        210304  2022      NA
+# … with 180 more rows
+# ℹ Use `print(n = ...)` to see more rows
+> ORschools = ds %>%
++     filter(Year>=2010, State="OR")
+Error in `filter()`:
+! We detected a named input.
+ℹ This usually means that you've used `=` instead of `==`.
+ℹ Did you mean `State == "OR"`?
+Run `rlang::last_error()` to see where the error occurred.
+> ORschools = ds %>%
++     filter(Year>=2010, State=="OR")
+> ORschools %>% 
++     ggplot(aes(x=Year,y=Ranking,group=`College Name`))
+>         + geom_line(color="purple")
+Error in `+.gg`:
+! Cannot use `+` with a single argument
+ℹ Did you accidentally put `+` on a new line?
+Run `rlang::last_error()` to see where the error occurred.
+> ORschools %>% 
++     ggplot(aes(x=Year,y=Ranking,group=`College Name`)) +
++     geom_line(color="purple")
+Warning message:
+Removed 14 rows containing missing values (`geom_line()`). 
+> ORschools %>% 
++     ggplot(aes(x=Year,y=Ranking,color=`College Name`)) +
++     geom_line()
+Warning message:
+Removed 14 rows containing missing values (`geom_line()`). 
+> ORschools %>% 
++     ggplot(aes(x=Year,y=Ranking,color=`College Name`)) +
++     geom_line() +
++     scale_y_reverse()
+Warning message:
+Removed 14 rows containing missing values (`geom_line()`). 
+> ORschools %>% 
++     ggplot(aes(x=Year,y=Ranking,color=`College Name`)) +
++     geom_line() +
++     scale_y_reverse() +
++     ggtitle("Oregon Liberal Arts Colleges Rankings (USNews)")
+Warning message:
+Removed 14 rows containing missing values (`geom_line()`). 
+> ORschools %>% 
++     ggplot(aes(x=Year,y=Ranking,color=`College Name`)) +
++     geom_line() +
++     scale_y_reverse() +
++     ggtitle("Oregon Liberal Arts Colleges Rankings (USNews)") +
++     theme_bw()
+Warning message:
+Removed 14 rows containing missing values (`geom_line()`). 
+> ORschools %>%
++ 
++ z
+Error in z(.) : could not find function "z"
+> ORschools %>%
++     summarize(bestRank=min(Ranking,na.rm=T))
+# A tibble: 1 × 1
+  bestRank
+     <dbl>
+1       49
+> ORschools %>%
++     summarize(bestRank=min(Ranking,na.rm=T),
++               lowestRank=max(Ranking,na.rm=T),
++               medianRank=median(Ranking,na.rm=T)
++               n=n())
+Error: unexpected symbol in:
+"              medianRank=median(Ranking,na.rm=T)
+              n"
+> ORschools %>%
++     summarize(bestRank=min(Ranking,na.rm=T),
++               lowestRank=max(Ranking,na.rm=T),
++               medianRank=median(Ranking,na.rm=T),
++               n=n())
+# A tibble: 1 × 4
+  bestRank lowestRank medianRank     n
+     <dbl>      <dbl>      <dbl> <int>
+1       49        128         76    70
+> ORschools %>%
++     group_by(`College Name`) %>%
++     summarize(bestRank=min(Ranking,na.rm=T),
++               lowestRank=max(Ranking,na.rm=T),
++               medianRank=median(Ranking,na.rm=T),
++               n=n())
+# A tibble: 5 × 5
+  `College Name`          bestRank lowestRank medianRank     n
+  <chr>                      <dbl>      <dbl>      <dbl> <int>
+1 Lewis and Clark College       68         94       75.5    14
+2 Linfield College             105        128      119      14
+3 Reed College                  49         93       73      14
+4 Warner Pacific College       Inf       -Inf       NA      14
+5 Willamette University         57         82       67.5    14
+Warning messages:
+1: In min(Ranking, na.rm = T) :
+  no non-missing arguments to min; returning Inf
+  
+  
+------- IN CLASS ACTIVITY -------
+
+> choc = read_csv("chocolate2.txt")
+Rows: 1795 Columns: 11                                                                                      
+── Column specification ─────────────────────────────────────────────────
+Delimiter: ","
+chr (7): company, barName, companyLocation, beanType, broadBeanOrigin...
+dbl (4): REF, reviewDate, cocoaPercent, rating
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+> choc
+# A tibble: 1,795 × 11
+   company  barName    REF revie…¹ cocoa…² compa…³ rating beanT…⁴ broad…⁵
+   <chr>    <chr>    <dbl>   <dbl>   <dbl> <chr>    <dbl> <chr>   <chr>  
+ 1 A. Morin Agua Gr…  1876    2016    0.63 FRANCE    3.75 NA      SAO TO…
+ 2 A. Morin Kpime     1676    2015    0.7  FRANCE    2.75 NA      TOGO   
+ 3 A. Morin Atsane    1676    2015    0.7  FRANCE    3    NA      TOGO   
+ 4 A. Morin Akata     1680    2015    0.7  FRANCE    3.5  NA      TOGO   
+ 5 A. Morin Quilla    1704    2015    0.7  FRANCE    3.5  NA      PERU   
+ 6 A. Morin Carenero  1315    2014    0.7  FRANCE    2.75 Criollo VENEZU…
+ 7 A. Morin Cuba      1315    2014    0.7  FRANCE    3.5  NA      CUBA   
+ 8 A. Morin Sur del…  1315    2014    0.7  FRANCE    3.5  Criollo VENEZU…
+ 9 A. Morin Puerto …  1319    2014    0.7  FRANCE    3.75 Criollo VENEZU…
+10 A. Morin Pablino   1319    2014    0.7  FRANCE    4    NA      PERU   
+# … with 1,785 more rows, 2 more variables: SouthAmericaCo <chr>,
+#   SouthAmericaBeans <chr>, and abbreviated variable names ¹​reviewDate,
+#   ²​cocoaPercent, ³​companyLocation, ⁴​beanType, ⁵​broadBeanOrigin
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+> head(choc)
+# A tibble: 6 × 11
+  company  barName     REF revie…¹ cocoa…² compa…³ rating beanT…⁴ broad…⁵
+  <chr>    <chr>     <dbl>   <dbl>   <dbl> <chr>    <dbl> <chr>   <chr>  
+1 A. Morin Agua Gra…  1876    2016    0.63 FRANCE    3.75 NA      SAO TO…
+2 A. Morin Kpime      1676    2015    0.7  FRANCE    2.75 NA      TOGO   
+3 A. Morin Atsane     1676    2015    0.7  FRANCE    3    NA      TOGO   
+4 A. Morin Akata      1680    2015    0.7  FRANCE    3.5  NA      TOGO   
+5 A. Morin Quilla     1704    2015    0.7  FRANCE    3.5  NA      PERU   
+6 A. Morin Carenero   1315    2014    0.7  FRANCE    2.75 Criollo VENEZU…
+# … with 2 more variables: SouthAmericaCo <chr>,
+#   SouthAmericaBeans <chr>, and abbreviated variable names ¹​reviewDate,
+#   ²​cocoaPercent, ³​companyLocation, ⁴​beanType, ⁵​broadBeanOrigin
+# ℹ Use `colnames()` to see all variable names
+> names(choc)
+ [1] "company"           "barName"           "REF"              
+ [4] "reviewDate"        "cocoaPercent"      "companyLocation"  
+ [7] "rating"            "beanType"          "broadBeanOrigin"  
+[10] "SouthAmericaCo"    "SouthAmericaBeans"
+> types(choc)
+Error in types(choc) : could not find function "types"
+> typeof(choc.company)
+Error in typeof(choc.company) : object 'choc.company' not found
+> typeof(choc$company)
+[1] "character"
+> typeof(choc$cocoaPercent)
+[1] "double"
+> typeof(choc$rating)
+[1] "double"
+> typeof(choc$SouthAmericaBeans)
+[1] "character"
+> typeof(choc$SouthAmericaCo)
+[1] "character"
+> colnames()
+Error in is.data.frame(x) : argument "x" is missing, with no default
+> colnames(choc)
+ [1] "company"           "barName"           "REF"              
+ [4] "reviewDate"        "cocoaPercent"      "companyLocation"  
+ [7] "rating"            "beanType"          "broadBeanOrigin"  
+[10] "SouthAmericaCo"    "SouthAmericaBeans"
+> summary(choc)
+   company            barName               REF         reviewDate  
+ Length:1795        Length:1795        Min.   :   5   Min.   :2006  
+ Class :character   Class :character   1st Qu.: 576   1st Qu.:2010  
+ Mode  :character   Mode  :character   Median :1069   Median :2013  
+                                       Mean   :1036   Mean   :2012  
+                                       3rd Qu.:1502   3rd Qu.:2015  
+                                       Max.   :1952   Max.   :2017  
+  cocoaPercent   companyLocation        rating        beanType        
+ Min.   :0.420   Length:1795        Min.   :1.000   Length:1795       
+ 1st Qu.:0.700   Class :character   1st Qu.:2.875   Class :character  
+ Median :0.700   Mode  :character   Median :3.250   Mode  :character  
+ Mean   :0.717                      Mean   :3.186                     
+ 3rd Qu.:0.750                      3rd Qu.:3.500                     
+ Max.   :1.000                      Max.   :5.000                     
+ broadBeanOrigin    SouthAmericaCo     SouthAmericaBeans 
+ Length:1795        Length:1795        Length:1795       
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         
+> skim(choc)
+── Data Summary ────────────────────────
+                           Values
+Name                       choc  
+Number of rows             1795  
+Number of columns          11    
+_______________________          
+Column type frequency:           
+  character                7     
+  numeric                  4     
+________________________         
+Group variables            None  
+
+── Variable type: character ─────────────────────────────────────────────
+  skim_variable     n_missing complete_rate min max empty n_unique
+1 company                   0         1       2  39     0      416
+2 barName                   0         1       3  45     0     1039
+3 companyLocation           0         1       4  17     0       60
+4 beanType                888         0.505   3  24     0       40
+5 broadBeanOrigin           1         0.999   1  29     0      100
+6 SouthAmericaCo            0         1       2   3     0        2
+7 SouthAmericaBeans         0         1       2   3     0        2
+  whitespace
+1          0
+2          0
+3          0
+4          0
+5          0
+6          0
+7          0
+
+── Variable type: numeric ───────────────────────────────────────────────
+  skim_variable n_missing complete_rate     mean       sd      p0     p25
+1 REF                   0             1 1036.    553.        5     576   
+2 reviewDate            0             1 2012.      2.93   2006    2010   
+3 cocoaPercent          0             1    0.717   0.0632    0.42    0.7 
+4 rating                0             1    3.19    0.478     1       2.88
+      p50     p75 p100 hist 
+1 1069    1502    1952 ▆▆▇▇▇
+2 2013    2015    2017 ▃▃▆▆▇
+3    0.7     0.75    1 ▁▁▇▁▁
+4    3.25    3.5     5 ▁▂▇▆▁
+> choc %>% group_by(rating)
+# A tibble: 1,795 × 11
+# Groups:   rating [13]
+   company  barName    REF revie…¹ cocoa…² compa…³ rating beanT…⁴ broad…⁵
+   <chr>    <chr>    <dbl>   <dbl>   <dbl> <chr>    <dbl> <chr>   <chr>  
+ 1 A. Morin Agua Gr…  1876    2016    0.63 FRANCE    3.75 NA      SAO TO…
+ 2 A. Morin Kpime     1676    2015    0.7  FRANCE    2.75 NA      TOGO   
+ 3 A. Morin Atsane    1676    2015    0.7  FRANCE    3    NA      TOGO   
+ 4 A. Morin Akata     1680    2015    0.7  FRANCE    3.5  NA      TOGO   
+ 5 A. Morin Quilla    1704    2015    0.7  FRANCE    3.5  NA      PERU   
+ 6 A. Morin Carenero  1315    2014    0.7  FRANCE    2.75 Criollo VENEZU…
+ 7 A. Morin Cuba      1315    2014    0.7  FRANCE    3.5  NA      CUBA   
+ 8 A. Morin Sur del…  1315    2014    0.7  FRANCE    3.5  Criollo VENEZU…
+ 9 A. Morin Puerto …  1319    2014    0.7  FRANCE    3.75 Criollo VENEZU…
+10 A. Morin Pablino   1319    2014    0.7  FRANCE    4    NA      PERU   
+# … with 1,785 more rows, 2 more variables: SouthAmericaCo <chr>,
+#   SouthAmericaBeans <chr>, and abbreviated variable names ¹​reviewDate,
+#   ²​cocoaPercent, ³​companyLocation, ⁴​beanType, ⁵​broadBeanOrigin
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+> choc %>% group_by(companyLocation)
+# A tibble: 1,795 × 11
+# Groups:   companyLocation [60]
+   company  barName    REF revie…¹ cocoa…² compa…³ rating beanT…⁴ broad…⁵
+   <chr>    <chr>    <dbl>   <dbl>   <dbl> <chr>    <dbl> <chr>   <chr>  
+ 1 A. Morin Agua Gr…  1876    2016    0.63 FRANCE    3.75 NA      SAO TO…
+ 2 A. Morin Kpime     1676    2015    0.7  FRANCE    2.75 NA      TOGO   
+ 3 A. Morin Atsane    1676    2015    0.7  FRANCE    3    NA      TOGO   
+ 4 A. Morin Akata     1680    2015    0.7  FRANCE    3.5  NA      TOGO   
+ 5 A. Morin Quilla    1704    2015    0.7  FRANCE    3.5  NA      PERU   
+ 6 A. Morin Carenero  1315    2014    0.7  FRANCE    2.75 Criollo VENEZU…
+ 7 A. Morin Cuba      1315    2014    0.7  FRANCE    3.5  NA      CUBA   
+ 8 A. Morin Sur del…  1315    2014    0.7  FRANCE    3.5  Criollo VENEZU…
+ 9 A. Morin Puerto …  1319    2014    0.7  FRANCE    3.75 Criollo VENEZU…
+10 A. Morin Pablino   1319    2014    0.7  FRANCE    4    NA      PERU   
+# … with 1,785 more rows, 2 more variables: SouthAmericaCo <chr>,
+#   SouthAmericaBeans <chr>, and abbreviated variable names ¹​reviewDate,
+#   ²​cocoaPercent, ³​companyLocation, ⁴​beanType, ⁵​broadBeanOrigin
+# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+> choc %>% group_by(companyLocation) %>%
++ summarize(n=n())
+# A tibble: 60 × 2
+   companyLocation     n
+   <chr>           <int>
+ 1 AMSTERDAM           4
+ 2 ARGENTINA           9
+ 3 AUSTRALIA          49
+ 4 AUSTRIA            26
+ 5 BELGIUM            40
+ 6 BOLIVIA             2
+ 7 BRAZIL             17
+ 8 CANADA            125
+ 9 CHILE               2
+10 COLOMBIA           23
+# … with 50 more rows
+# ℹ Use `print(n = ...)` to see more rows
+> choc %>% group_by(companyLocation) %>%
++ summarize(n=n()) %>%
++     ggplot(aes(x=fct_reor''))
+Error: unexpected string constant in:
+"summarize(n=n()) %>%
+    ggplot(aes(x=fct_reor''"
+> choc %>% group_by(companyLocation) %>%
++ summarize(n=n()) %>%
++     ggplot(aes(x=fct_reorder(companyLocation,n))) +
++     geom_col()
+Error in `geom_col()`:
+! Problem while setting up geom.
+ℹ Error occurred in the 1st layer.
+Caused by error in `compute_geom_1()`:
+! `geom_col()` requires the following missing aesthetics: y
+Run `rlang::last_error()` to see where the error occurred.
+> choc %>% group_by(companyLocation) %>%
++ summarize(n=n()) %>%
++     ggplot(aes(x=fct_reorder(companyLocation,n),y=n)) +
++     geom_col()
+> choc %>% 
++ group_by(companyLocation) %>
+Error: unexpected input in:
+"choc %>% 
+group_by(companyLocation) %>"
+> choc %>% 
++ group_by(companyLocation) %>
+Error: unexpected input in:
+"choc %>% 
+group_by(companyLocation) %>"
+> choc %>% 
++ group_by(companyLocation) %>%
++     summarize(n=n()) %>%
++     filter(n>=50)
+# A tibble: 6 × 2
+  companyLocation     n
+  <chr>           <int>
+1 CANADA            125
+2 ECUADOR            54
+3 FRANCE            156
+4 ITALY              63
+5 U.K.               96
+6 U.S.A.            764
+>     ggplot(aes(x=fct_reorder(companyLocation,n),y=n)) +
++     geom_col()
+Error in `fortify()`:
+! `data` must be a <data.frame>, or an object coercible by
+  `fortify()`, not an S3 object with class <uneval>.
+ℹ Did you accidentally pass `aes()` to the `data` argument?
+Run `rlang::last_error()` to see where the error occurred.
+> choc %>% 
++ group_by(companyLocation) %>%
++     summarize(n=n()) %>%
++     filter(n>=50)%>%
++     ggplot(aes(x=fct_reorder(companyLocation,n),y=n)) +
++     geom_col() +
++     ggtitle("Distribution of candy bar kinds by country") +
++     xlab("Country")
+
+

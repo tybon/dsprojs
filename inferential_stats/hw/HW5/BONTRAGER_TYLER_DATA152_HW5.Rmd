@@ -1,0 +1,162 @@
+---
+title: "DATA 152 HW5 - Tyler Bontrager"
+date: "Due March 15, 2023 @ 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(skimr)
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following questions. **  
+Failure to do so will result in a deduction of 5 points.
+
+## QUESTION 1 (20)
+
+The weight of potato chips in a medium sized bag is stated to be 10oz.  The amount that the packaging machine puts in these bags is believed to have a normal distribution with mean 10.2oz and standard deviation 0.12oz.  
+
+### 1A (5)
+What fraction of all bags sold are underweight?
+
+```{r}
+claim=10
+mean=10.2
+sd=0.12
+P_under=pnorm(claim,mean,sd)
+P_under
+```
+
+**ANSWER:** The probability that a bag is underweight is 0.05 which means 5 out of 100 bags are expected to be underweight.
+
+### 1B (5)
+Some of the chips are sold in "bargain packs" of 3 bags.  What's the probability that none of the 3 are underweight?
+
+```{r}
+sample=3
+1-P_under^sample
+```
+
+**ANSWER:** The probability that none of the 3 bags in the sample are underweight is 0.9999. Which I find surprising.
+
+### 1C (10)
+What's the probability that the mean weight of the 3 bags is below the stated amount?
+
+```{r}
+
+pnorm(claim,mean,sd/sqrt(sample))
+```
+
+**ANSWER:** 0.002
+
+
+## QUESTION 2 (25)
+
+A poll conducted in 2013 found that 52% of US adult Twitter users get at least some news on Twitter, and the standard error (i.e. $\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$ ) for this estimate was 2.4%.  
+
+### 2A (10)
+What was the sample size for this study?
+
+```{r}
+phat=0.52
+moe=0.024
+#square, multiply n, divide MOE
+n=(phat*(1-phat))/moe^2
+n
+```
+
+**ANSWER:** 433 Americans.
+
+### 2B (10)
+Construct a 95% confidence interval for the true % of US adult Twitter users who get some of their news from Twitter.
+
+```{r}
+zstar = qnorm(0.975)
+zstar
+
+upper=phat+zstar*sqrt((phat*(1-phat))/n)
+lower=phat-zstar*sqrt((phat*(1-phat))/n)
+upper
+lower
+```
+
+**ANSWER:** upper is 0.567 and lower is 0.473, so interval is [0.473,0.567]
+
+
+### 2C (5)
+What is the interpretation/conclusion of your confidence interval in 2B?
+
+**ANSWER:** I am 95% confident that the true proportion of American adults who use Twitter is captured by the interval of [0.473,0.567].
+
+
+## QUESTION 3 (10)
+
+Mars claims that 10% of all M&M's are green.  You decide to buy a large bag of M&M's to test this.  After a long counting session, you realize that 14% of the 500 M&M's in the bag were green.  Is this an unusually large proportion of M&Ms?  Use an appropriate statistical calculation to support your answer.
+
+```{r}
+phat=0.14
+p=0.10
+n=500
+pval= 1-pnorm(phat,p,sqrt(p*(1-p)/n))
+pval
+```
+
+**ANSWER:** P-value is sufficiently low, so we can reject the null hypothesis that 14% is not an outlying proportion of greens for this sample of M&Ms.
+
+
+## QUESTION 4 (15)
+
+A May 2000 Gallup Poll found that 38% of a random sample of 1012 adults said that they believe in ghosts.
+
+### 4A (10)
+Find the margin of error for this poll if we want 90% confidence in our estimate of the percent of American adults who believe in ghosts.
+
+```{r}
+zstar=qnorm(0.95)
+phat=0.38
+n=1012
+upper=phat+zstar*sqrt((phat*(1-phat))/n)
+lower=phat-zstar*sqrt((phat*(1-phat))/n)
+upper
+lower
+moe=zstar*sqrt((phat*(1-phat))/n)
+moe
+```
+
+**ANSWER:** margin of error = +/- 0.251
+
+### 4B (5)
+If we want to be 99% confident, will the margin of error be larger or smaller?  Explain.
+
+**ANSWER:** the margin of error will be larger because it needs to accommodate the data that wouldn't otherwise be fitting the interval for the sake of confidence.
+
+
+
+## QUESTION 5 (20)
+A TV news reporter says that a proposed constitutional amendment is likely to win approval in the upcoming election because a poll of 1505 likely voters indicated that 52% would vote in favor.  The reporter goes on to say that the margin of error for this poll was 3%.
+
+### 5A (10)
+Explain why the poll was actually inconclusive.
+
+**ANSWER:** Well, it looks as though it could be the case that the true proportion could be between 49% and 55% of voters, which means that there is some 2/7 chance at random that the votes turn out to not be a simple majority (51% or higher).
+
+### 5B (10)
+What confidence level did the pollsters use?
+
+```{r}
+phat=0.52
+moe=0.03
+n=1505
+zstar=moe/(sqrt(phat*(1-phat)/n))
+zstar
+qnorm(0.99)
+```
+**ANSWER**: I just guess and checked because I forgot how to solve it the more precise way, but about 99%?
+
+## QUESTION 6 [not really a question] (10)
+MILESTONE #4: Set up a time to meet with Dr. Gore to go over the current progress of your project.  Zoom is fine, but at least 2 of your members must be present for this meeting.  The meeting needs to have taken place by 3/23.
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW5.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA152_HW5.Rmd and GORE_KRISTEN_DATA152_HW5.html.  Failure to follow these instructions will result in a 10-point deduction.

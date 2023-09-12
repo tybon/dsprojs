@@ -1,0 +1,140 @@
+---
+title: "DATA 152 HW3 - Tyler Bontrager"
+date: "Due February 15, 2023 @ 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following: **
+
+## QUESTION 1 (20)
+A wildlife biologist examines frogs for a genetic trait he suspects may be linked to sensitivity to industrial toxins in the environment.  Previous research had established that this trait is usually found in 1 of every 8 frogs.  He collects and examines a dozen frogs.  If the frequency of the trait has not changed, what's the probability that he finds the trait in
+
+```{r}
+
+```
+
+### 1A (5)
+None of the 12 frogs?
+
+```{r}
+(7/8)^12
+```
+20.1% chance
+
+### 1B (5)
+At least 2 frogs?
+
+```{r}
+pbinom(2,12,1/8)
+```
+81.8% chance
+
+### 1C (5)
+3 or 4 frogs?
+
+```{r}
+three = dbinom(3,12,1/8) #P(3)
+four = dbinom(4,12,1/8) #P(4)
+three+four
+```
+P(3Frogs)+P(4Frogs) <=> P(3|4Frogs) = 17.1%
+
+### 1D (5)
+no more than 4 frogs?
+
+```{r}
+pbinom(4,12,1/8)
+```
+98.9% chance
+
+## QUESTION 2 (15)
+The Centers for Disease Control and Prevention say that about 18% of high school students smoke tobacco (down from 38% in 1997).  Suppose you randomly select high school students to survey them on their attitudes toward scenes of smoking in the movies.  What's the probability that
+
+### 2A (5)
+None of the first 4 students you interview is a smoker?
+
+```{r}
+(1-(0.18))^4
+```
+45.2% chance
+
+### 2B (5)
+The first smoker is the 6th person you choose?
+
+```{r}
+dgeom(5,0.18)
+```
+6.7% chance
+
+### 2C (5)
+There are no more than 2 smokers among 10 people you choose?
+
+```{r}
+pbinom(2,10,0.18)
+```
+73.7%
+
+## QUESTION 3 (20)
+A website manager has noticed that during the evening hours, about 3 people per minute check out from their shopping cart and make an online purchase.  She believes that each purchase is independent of the others and wants to model the number of purchases per minute.
+
+### 3A (5)
+What distribution (geometric, binomial, poisson, etc) might you use to model the # of purchases per minute?
+
+ANSWER: poisson
+
+### 3B (5)
+What is the probability that in any one minute at least 1 purchase is made?
+
+```{r}
+#3 people expected to check out from shopping cart in one minute
+1-ppois(1,lambda=3)
+```
+80.1% chance
+
+### 3C (10)
+What is the probability that no one makes a purchase in the next 2 minutes?
+
+```{r}
+2*dpois(0,lambda=3)
+```
+10.0% chance
+
+## QUESTION 4 (15)
+An airline, believing that 5% of passengers fail to show up for flights, overbooks (i.e. sells more tickets than there are seats).  Suppose a plane will hold 265 passengers, and the the airline sells 275 tickets.  What's the probability that the airline will not have enough seats?
+
+```{r}
+(1-pbinom(265,275,0.95))
+```
+11.6% chance
+
+## QUESTION 5 (15)
+What criteria does a trial need to satisfy to be considered a Bernoulli trial?
+
+ANSWER: A Bernoulli trial must consist of a Boolean condition over a fixed number of trials while the probability for "success" remains the same.
+
+## QUESTION 6 (15)
+Which distribution (binomial, geometric, poisson) is appropriate for the following random variables?
+
+### 6A (5)
+A very skilled stenographer makes one typographical error (typo) per hour on average.  X=the number of typos made in a 1hr period.
+
+ANSWER: Poisson (rate probabilities)
+
+## 6B (5)
+You purchase a 5-pack of light bulbs which were recalled because 6% of the lights did not work.  X=# of lights in the pack that don't work.
+
+ANSWER: Binomial (fixed trials)
+
+## 6C (5)
+You are an engineer overseeing a manufacturing process.  You are interested in the # of parts produced until a defective part is made.
+
+ANSWER: Geometric (unbounded trials)
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW3.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA152_HW1.Rmd and GORE_KRISTEN_DATA152_HW3.html.  Failure to follow these instructions will result in a 10-point deduction.

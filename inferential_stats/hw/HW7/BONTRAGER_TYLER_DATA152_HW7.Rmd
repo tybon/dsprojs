@@ -1,0 +1,188 @@
+---
+title: "DATA 152 HW7 - TYLER BONTRAGER"
+date: "Due April 12, 2023 @ 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(skimr)
+library(car)
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following questions. **  
+Failure to do so will result in a deduction of 5 points.  
+
+Subquestions are worth 5 points each.
+
+## QUESTION 1
+
+In an investigation of environmental causes of disease, data were collected on the annual mortality rate (deaths per 100,000) for males in the 61 large towns in England and Wales.  In addition, the water hardness was recorded as the calcium concentration (ppm) in the drinking water.  The dataset also notes, for each town, whether it was south or north of Derby.  Is there a significant difference in mortality rates in the two regions?  
+
+### 1A
+Read in the `Hard_water.txt` dataset and name it `water`.
+
+```{r}
+getwd()
+water = read_delim("Hard_water.txt",delim="\t")
+head(water)
+```
+
+### 1B
+What are your null and alternative hypotheses?
+
+**ANSWER:** Null: there is no significant difference in mortality rates between north and south. Alt: there is a difference in mortality rates between north and south.
+
+### 1C
+Create 2 histograms of the mortality rates--one for each region (south or north of Derby).
+
+```{r}
+ggplot(water) +
+  geom_histogram(aes(x=Mortality, fill=Region))
+
+north = water %>%
+  filter(Region=="North")
+south = water %>%
+  filter(Region=="South")
+
+ggplot(north)+
+  geom_histogram(aes(x=Mortality))
+ggplot(south)+
+  geom_histogram(aes(x=Mortality))
+
+```
+
+### 1D
+Are the assumptions for a 2-sample t-test satisfied?  Justify your answer.  
+
+**ANSWER:** Yes. The data seems normally distributed, each record is independent (can't be both north and south of Derby), and the sample is representative.
+
+### 1E
+Carry out a 2-sample t-test.  Make sure your output is printed in the rendered HTML document.
+
+```{r}
+t.test(x=water$Region=="North",y=water$Region=="South",alternative="two.sided")
+```
+
+### 1F
+What is your conclusion in context of the original problem?
+
+**ANSWER:** The p-value is 0.21, which means that there may be some difference, but it is not significant enough to reject the null hypothesis by the standard 0.05 threshold.
+
+
+## QUESTION 2
+
+### 2A
+Read in mlb2022.txt (comma delimited) and complete the following:
+
+### 2B
+Create side-by-side boxplots that show the # of homeruns (HR) vs. position.
+
+```{r}
+mlb = read_csv("mlb2022.txt")
+head(mlb)
+ggplot(mlb, aes(x=HR,y=POSITION,fill=POSITION)) +
+  geom_boxplot()
+  
+```
+
+### 2C
+QUESTION OF INTEREST: Is the mean # of homeruns hit statistically different among the positions?  
+
+What are your null and alternate hypotheses?
+
+**ANSWER:** N: The true mean of number of homeruns hit is not statistically different among positions. A: The true mean of number of homeruns hit is statistically different among positions.
+
+### 2D
+Filter your data to only include players who have played a minimum of 125 games.  Name this dataset `baseball`.
+
+```{r}
+baseball = mlb %>%
+  filter(G>=125)
+baseball
+
+baseball %>%
+  ggplot(aes(x=HR)) +
+  geom_histogram()
+```
+
+### 2E
+Are the assumptions of the Tukey HSD test satisfied?  Justify your answer.
+
+**ANSWER:** Yes 1) normally distributed 2) independent records 3) representative sample
+
+### 2F
+Conduct a TukeyHSD test on the `baseball` dataset to answer the question of interest.  Sort the p-values from least to greatest.
+
+```{r}
+library(car)
+mod = aov(HR~POSITION,data=baseball)
+tukee = TukeyHSD(mod,conf.level=0.95)
+tukee2 = as_tibble(tukee$POSITION) 
+tukee2 %>% arrange(`p adj`)
+```
+
+### 2G
+What are your results (in context of the original question)?  
+
+**ANSWER:** I would say there is not enough statistical evidence to reject the null hypothesis that position has a great impact on number of homeruns.
+
+
+## QUESTION 3
+A commonly discussed phenomenon around attending college is gaining the "freshman 15"--i.e. the extra 15 pounds that so often accompany the first year at college.  Cornell Professor of Nutrition David Letisky did a study on this phenomenon.  He recruited students from 2 large sections of an intro health course.  Although they were volunteers, they appeared to match the rest of the first year class in terms of demographic variables such as sex and ethnicity.  The students were weighed during the first week of the semester and again 12 weeks later.  
+
+The resulting data is in the "Freshman_15.txt" dataset.
+
+### 3A
+Read in the dataset and name it "ds".
+
+```{r}
+ds = read_delim("Freshman_15.txt",delim="\t")
+head(ds)
+```
+
+### 3B
+What are your null and alternative hypotheses?
+
+**ANSWER:** N: There is no statistical difference between the weights from first week to week 12 that supports the "freshman 15" idea; the mean difference in weights is zero. A: The true mean of the difference in weights is greater than zero (in fact, 15 is the claim).
+
+### 3C
+Create a column that calculates the terminal weight - initial weight.  Name this column "diff".
+
+```{r}
+ds = ds %>%
+  mutate(diff=Terminal.Weight-Initial.Weight)
+ds
+```
+
+### 3D
+Create a histogram of the difference column.
+
+```{r}
+ds %>%
+  ggplot(aes(x=diff,fill="purple")) +
+  geom_histogram()
+```
+
+### 3E
+Are the assumptions of a paired t-test satisfied?  Justify your answer.
+
+**ANSWER:** 1) normally distributed 2) independent records 3) maybe representative sample. These are just students from some health classes. Dubious, but representative enough for an exercise.
+
+### 3F
+Carry out a paired t-test using t.test.  Make sure the output of the test is shown in your rendered HTML.  
+
+```{r}
+t.test(x=ds$Initial.Weight,y=ds$Terminal.Weight,paired=T,alternative="greater")
+```
+
+### 3G
+Based on the hypothesis test results (and subsequent p-value), is the "Freshman 15" a myth?
+
+**ANSWER:** Yes. It seems so.
+
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW7.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA152_HW7.Rmd and GORE_KRISTEN_DATA152_HW7.html.  Failure to follow these instructions will result in a 10-point deduction.

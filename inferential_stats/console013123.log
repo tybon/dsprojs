@@ -1,0 +1,47 @@
+R version 4.2.1 (2022-06-23 ucrt) -- "Funny-Looking Kid"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> getwd()
+[1] "C:/Users/epicm/Documents"
+> setwd("~/School/flder/ISWR")
+> getwd()
+[1] "C:/Users/epicm/Documents/School/flder/ISWR"
+> mms=sample(c("yellow","red","orange","blue,"green","brown"),100000,prob=c(0.2,0.2,0.1,0.1,0.1,0.3),replace=T)
+Error: unexpected symbol in "mms=sample(c("yellow","red","orange","blue,"green"
+> mms=sample(c("yellow","red","orange","blue","green","brown"),100000,prob=c(0.2,0.2,0.1,0.1,0.1,0.3),replace=T)
+> tibble(mms=mms) %>%
++ group_by(mms) %>%
++ summarize(n=n(),perc=n/100000)
+# A tibble: 6 × 3
+  mms        n   perc
+  <chr>  <int>  <dbl>
+1 blue    9722 0.0972
+2 brown  29859 0.299 
+3 green   9900 0.099 
+4 orange 10312 0.103 
+5 red    19977 0.200 
+6 yellow 20230 0.202 
+> #dnd example
+> dnd=sample(c(1,0),100000,replace=T,c(0.1,0.9))
+> tibble(dnd=dnd) %>%
++     group_by(dnd) %>%
++     summarize(n=n(),perc=n/100000)
+# A tibble: 2 × 3
+    dnd     n  perc
+  <dbl> <int> <dbl>
+1     0 89977 0.900
+2     1 10023 0.100
+#could also do dnd=sample(1:20,10000,replace=T) as it assumes equal probs

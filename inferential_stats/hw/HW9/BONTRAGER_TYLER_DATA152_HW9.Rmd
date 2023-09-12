@@ -1,0 +1,241 @@
+---
+title: "DATA 152 HW9 - Tyler Bontrager"
+date: "Due May 5, 2023 @ 11:59pm (FRIDAY)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(skimr)
+library(GGally)
+library(car)
+
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following questions. **  
+Failure to do so will result in a deduction of 5 points.  
+
+
+## QUESTION 1
+
+### 1A
+Read in ncbirths.csv using `read_csv` and name the tibble "births".
+
+```{r}
+getwd()
+births = read_csv("ncbirths.csv")
+```
+
+### 1B
+As a reminder, this dataset has several covariates around the mother's age, fathers' age, age before birth (weeks), etc.  We previously examined whether the mother's smoking status was linked to lower weights.  Now we want to take into account the other covariates in the dataset.  
+
+Fit a multiple linear regression model with the following variables:  
+
+*  mage (mother's age)  
+*  weeks (baby's age at birth)
+*  visits (# of visits mother made to OBGYN)  
+*  habit (smoker vs. nonsmoker)
+
+Name the model `mod`.
+
+```{r}
+mod = lm(formula= weight ~ mage + weeks + visits + habit, data=births)
+mod
+```
+
+### 1C
+Run `summary(mod)`.  What variables are statistically significant?  
+
+```{r}
+summary(mod)
+```
+
+**ANSWER:** It seems that weeks is the most statistically significant predictor for the weight, but so is habitsmoker and mage.
+
+### 1D
+Rerun your model with only the statistically significant variables.  Name the resulting model `mod2`.
+
+```{r}
+mod2 = lm(formula= weight ~ habit + mage, data=births)
+```
+
+### 1E
+Run `plot(mod2)` and check the LINE assumptions.  Is your model valid?  Justify your answer.
+
+```{r}
+plot(mod2)
+vif(mod2)
+varvec=c("mage","habit")
+births %>%
+  ggpairs(columns=varvec)
+```
+
+**ANSWER:** The diagnostics show that the model is homoscedastic since the residuals are relatively constant for all X as seen in the Scale-Location plot. The Q-Q plot shows that the data is generally normally distributed except for those in the negative quantiles. The Residuals-Fitted plot shows a rather linear relationship in the data. VIF shows no significant multicollinearity.
+
+### 1F
+Use the `predict` function and your `mod2` model to predict the weight of a baby born at 38 weeks to a 20 year old mother who smokes.  Assume she had 12 visits with the OBGYN.
+
+```{r}
+predict(mod2,data.frame(habit="smoker",mage=20,visits=12))
+```
+
+**ANSWER:** Shy of 7 pounds.
+
+
+
+## QUESTION 2
+
+### 2A
+Read in "Movie_profits.txt" using `read_table()`.  Name the dataset `movie`.
+
+```{r}
+movie = read_tsv("Movie_profits.txt")
+head(movie)
+```
+
+**ANSWER:** mOvIeD
+
+### 2B
+Run `skim` on the dataset to get a high-level summary.
+
+```{r}
+skim(movie)
+```
+
+**ANSWER:** sKiMd
+
+### 2C
+Create a scatterplot of gross sales (y) vs. budget.
+
+```{r}
+movie %>%
+  ggplot(aes(x=`Budget ($M)`, y=`US Gross ($M)`)) +
+  geom_point(color="purple")
+```
+
+**ANSWER:** sCaTtErD
+
+### 2D
+Are there any outliers or leverage points?
+
+**ANSWER:** On visual inspection, there do seem to be.
+
+### 2E
+Which assumption(s) of linear regression are violated by this relationship?
+
+**ANSWER:** I think this data looks a bit heteroscedastic.
+
+### 2F
+Run a linear model for log(gross sales) vs. budget.  Make sure you print the model summary.
+
+```{r}
+movie %>%
+  ggplot(aes(x=`Budget ($M)`, y=log(`US Gross ($M)`))) +
+  geom_point(color="purple")
+mod3=lm(log(movie$`US Gross ($M)`) ~ movie$`Budget ($M)`)
+summary(mod3)
+```
+
+### 2G
+What is the equation for gross sales?
+
+**ANSWER:** log(sales) = 0.012\*budget + 3.2
+
+### 2H
+What is the $R^2$ value of your model?
+
+**ANSWER:** 0.40
+
+### 2I
+What is the interpretation of your $R^2$?
+
+**ANSWER:** It's not a horrible fit, but probably not an amazing predictor.
+
+### 2J
+Based on your model, what is the predicted gross for a movie with a $200M budget?
+
+```{r}
+newData=data.frame(mod3.x=c(200))
+predict(mod3,newData)
+#no idea what's going on here, but I know basic algebra.
+```
+
+**ANSWER:** 270 million dollars.
+
+e\^(0.012 \* budget + 3.2) = e\^ loge(sales)
+
+
+
+## QUESTION 3
+
+### 3A
+Read in "Bodyfat.txt" using `read_table()`.  Name the tibble "body".  This dataset contains 15 body measurements on 250 males from 22 to 81 years old.  
+
+```{r}
+body = read_tsv("Bodyfat.txt")
+names(body)
+head(body)
+```
+
+### 3B
+Is average body fat % related to weight?  Create a scatterplot of body fat vs. weight.
+
+```{r}
+body %>%
+  ggplot(aes(x=Pct.BF,y=Weight))+
+  geom_point(color="purple")
+```
+
+### 3C
+Based on your plot in 3B, describe the form (linear, parabolic, sinuisoidal, etc), strength, and association (+, -, none) of the relationship.
+
+**ANSWER:** Positive, moderately strong linear correlation between %BF and weight.
+
+### 3D
+Create a linear regression model of the relationship in 3B.  Make sure you print the model summary.
+
+```{r}
+mod4 = lm(Weight~Pct.BF,body)
+summary(mod4)
+```
+
+**ANSWER:** sUmMaRyD
+
+### 3E
+Interpret the slope in context of this problem.
+
+**ANSWER:** For every percent increase in body fat, weight increases by a factor of two. A percent body fat increase of 4 would mean that weight would increase by 8.
+
+### 3F
+Now suppose we want to add waist and height to the model.  Using the `ggpairs` function, create a scatterplot matrix for the following variables: body fat %, waist, height, and weight.
+
+```{r}
+bodyvars = c("Pct.BF","Waist","Height","Weight")
+body %>%
+  ggpairs(bodyvars)
+```
+
+### 3G
+Create a linear regression model of body fat % as a function of waist, height, and weight.  Make sure you print the model summary.
+
+```{r}
+mod5 = lm(formula=Pct.BF~Waist+Height+Weight,data=body)
+summary(mod5)
+```
+
+**ANSWER:** mOdFiVeD
+
+### 3H
+Notice that the coefficient sign for weight changed from when we ran the model in 3D and the one we ran in 3G.  Why did this occur?
+
+**ANSWER:** There could be collinearity between Weight and Waist.
+
+### 3I
+How would you fix your model from 3G?
+
+**ANSWER:** I would just choose to use either weight or waist and see which factor is a better predictor for %BF.
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW9.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA152_HW9.Rmd and GORE_KRISTEN_DATA152_HW9.html.  Failure to follow these instructions will result in a 10-point deduction.

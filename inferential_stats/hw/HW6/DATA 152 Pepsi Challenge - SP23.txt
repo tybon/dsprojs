@@ -1,0 +1,34 @@
+firstDrink,preference,section
+Coca Cola,Coca Cola,Section 1
+Coca Cola,Coca Cola,Section 1
+Pepsi,Pepsi,Section 1
+Coca Cola,Pepsi,Section 1
+Coca Cola,Pepsi,Section 1
+Pepsi,Pepsi,Section 1
+Pepsi,Coca Cola,Section 1
+Coca Cola,Coca Cola,Section 1
+Pepsi,Coca Cola,Section 1
+Pepsi,Pepsi,Section 1
+Pepsi,Pepsi,Section 1
+Pepsi,Coca Cola,Section 1
+Coca Cola,Pepsi,Section 1
+Coca Cola,Coca Cola,Section 1
+Coca Cola,Coca Cola,Section 1
+Coca Cola,Coca Cola,Section 1
+Coca Cola,Coca Cola,Section 1
+Pepsi,Pepsi,Section 2
+Coca Cola,Coca Cola,Section 2
+Pepsi,Coca Cola,Section 2
+Pepsi,Coca Cola,Section 2
+Coca Cola,Pepsi,Section 2
+Pepsi,Pepsi,Section 2
+Pepsi,Pepsi,Section 2
+Coca Cola,Coca Cola,Section 2
+Pepsi,Coca Cola,Section 2
+Coca Cola,Coca Cola,Section 2
+Coca Cola,Pepsi,Section 2
+Coca Cola,Coca Cola,Section 2
+Coca Cola,Pepsi,Section 2
+Coca Cola,Pepsi,Section 2
+Coca Cola,Coca Cola,Section 2
+Coca Cola,Coca Cola,Section 1

@@ -1,0 +1,191 @@
+---
+title: "DATA 152 HW8 - Tyler Bontrager"
+date: "Due April 19, 2023 @ 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(skimr)
+
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following questions. **  
+Failure to do so will result in a deduction of 5 points.  
+
+
+## QUESTION 1
+The following table shows the survival status of Titanic passengers broken down by whether the passengers were members of the crew or passengers in 1st-, 2nd-, or 3rd-class staterooms:
+
+```{r}
+tab = as.table(rbind(c(212,201,119,180), c(677,123,166,530))) 
+dimnames(tab) = list(
+	Status = c("Alive", "Dead"),
+	Class  = c("Crew","First","Second","Third")
+) 
+tab
+```
+
+### 1A
+If we draw an individual at random, what's the probability that we will draw a member of the crew?
+
+```{r}
+#r,c
+(212+677) / (201+123+119+166+180+530)
+```
+
+**ANSWER:**  0.674
+
+### 1B
+What's the probability of randomly selecting a third class passenger who survived?
+
+```{r}
+(180)/(212+201+119+180+677+123+166+530)
+```
+
+**ANSWER:**  0.082
+
+### 1C
+What's the probability of a randomly selected passenger surviving, given that the passenger was a first-class passenger?
+
+```{r}
+(1-((123)/(123+201)))
+```
+
+**ANSWER:**  0.620
+
+### 1D
+Are survival status and class independent?  State the null and alternative hypotheses
+
+**ANSWER:**  Everyone has an equal chance of surviving and dying; survival status and class have no significant impact on each other. There is no significant dependence between groups.
+
+### 1E
+Are the assumptions of a chi-squared test satisfied?  Justify your answer.
+
+```{r}
+chi = chisq.test(tab)
+names(chi)
+chi$expected
+```
+
+**ANSWER:**  1. data involves counts, 2. independent and mutually exclusive records, 3. random and representative
+
+### 1F
+Carry out a chi-squared test of independence.  Make sure you print the output of your test.
+
+```{r}
+chi$residuals
+chi
+```
+
+**ANSWER:**  A chi-square value so large implies a really small p-value, confirmed by p < 2.2 \* 10^-16. p is so small that R does not have enough precision to say exactly how small it is, and this always makes me think I made a mistake somewhere. Except now I added the residuals and for some reason I don't think it's a mistake anymore; it's just a really small p-value.
+
+### 1G
+What is your conclusion in context of the question posed in 1D?
+
+```{r}
+
+```
+
+**ANSWER:**  Class and survival probability are absolutely not independent.
+
+
+## QUESTION 2
+Census data for New York City indicate that 29.2% of the under-18 population is White, 28.2% Black, 31.5% Latino, 9.1% Asian, and 2% other ethnicities.  The New York Civil Liberties Union points out that, of 26,181 police officers, 64.8% are white, 14.5% black, 19.1% Latino, and 1.4% Asian.  Do the police officers reflect the ethnic composition of the city's youth?
+
+### 2A
+Create a table with the # of officers for each ethnicity.  Don't forget to include a cell for "other".  This cell should have a count of 0.  
+_Hint:_ If you're having issues with the syntax, look at the code in question 1.
+
+```{r}
+cops=26181
+nonad=1708602
+tab2=as.table(rbind(
+  c(floor(.648*cops),floor(.145*cops),floor(.191*cops),floor(.014*cops),0),
+  #### Totals for under-18 population ..??? ####
+  #Totpop census 8,175,133
+  #pc age < 18 20.9%
+  #nonadult pop = 1,708,602
+  c(floor(.292*nonad),floor(.282*nonad),floor(.315*nonad),floor(.091*nonad),floor(.02*nonad))
+  ))
+#dimnames(tab2)[1]
+#dimnames(tab2)[2]
+#dimnames(tab2)
+#typeof(dimnames(tab2)[2])
+#bruh
+dimnames(tab2)[2] = list(
+  race = c("W","B","L","A","O")
+)
+dimnames(tab2)[1] = list(
+  pop = c("cop","youth")
+)
+tab2
+```
+
+**ANSWER:**  wow, objects in R make no sense
+
+### 2B
+State the null and alternative hypotheses.
+
+**ANSWER:**  There is no significant dependence between each group
+
+### 2C
+Are the assumptions of a chi-squared goodness-of-fit test satisfied?  Justify your answer.
+
+```{r}
+chi2 = chisq.test(tab2)
+chi2$expected
+```
+
+**ANSWER:**  1. data involves counts, 2. independent and mutually exclusive records, 3. random and representative 
+
+### 2D
+Carry out a chi-squared goodness-of-fit test using your counts from question 2A.  Make sure you print the output of your test.
+
+```{r}
+chi2$residuals
+chi2
+```
+
+**ANSWER:**  it's another insanely low p-value and I'm scared I might have made the same mistake again somehow. Residuals offer me comfort, but we ignore confirmation bias in this class, right?
+
+### 2E
+What is your conclusion in context of the original question?
+
+**ANSWER:**  there is, in fact, a significant dependence between each group.
+
+## QUESTION 3
+Two different stats professors teach an intro stats course.  The following table shows the distribution of final grades they reported.  We wonder whether one of these professors is an easier grader...  
+
+Here is the data table:
+
+```{r echo=F}
+stats = as.table(cbind(c(3,11,14,9,3), c(9,12,8,2,1))) 
+dimnames(stats) = list(
+	Grade = LETTERS[c(1:4,6)],
+	Class  = c("Prof Alpha","Prof Beta")
+) 
+stats
+```
+
+To test if the distributions are the same across all groups (i.e. both professors in this case), we would do a chi-squared test of homogeneity.  This test has the same set of assumptions as the chi-squared test of independence that we learned in class.  
+
+### 3A
+Which assumption would be violated in this example?
+
+```{r}
+
+```
+
+**ANSWER:**  It doesn't seem to be a large enough random, representative sample.
+
+### 3B
+How would you propose fixing the issue?  _Hint:_ Can you combine categories?  Which ones would you combine?   
+
+**ANSWER:** I would just simplify the table and make it Pass / No pass or High / Not high grades depending on the interest.
+
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW8.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA152_HW8.Rmd and GORE_KRISTEN_DATA152_HW8.html.  Failure to follow these instructions will result in a 10-point deduction.

@@ -1,0 +1,362 @@
+---
+title: "Swearing Culture on Campus"
+author: "Tyler Bontrager et al"
+date: "2023-04-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(car)
+library(GGally)
+```
+
+Import dataset:
+```{r}
+ds=read_csv("swearjardata_update.csv")
+ds_backup=ds
+head(ds)
+tail(ds)
+```
+
+##EDA:
+
+Race:
+```{r}
+ds %>%
+  ggplot(aes(x=race))+
+  geom_histogram(stat="count")+
+  ggtitle("Race Chart")+
+  xlab("Race")+
+  ylab("Count")+
+  theme_minimal()+
+  coord_flip()
+
+ds %>%
+  group_by(race) %>%
+  summarize(n=n())
+
+ds %>%
+  mutate(Caucasian = ds$race=="Caucasian",
+         MixedOrNotCaucasian = ds$race!="Caucasian") %>%
+  select(Caucasian,MixedOrNotCaucasian) %>%
+  group_by(Caucasian,MixedOrNotCaucasian) %>%
+  summarize(n=n())
+
+#adding pnw column
+ds = ds %>%
+  mutate(ispnw = (ds$origin=="Oregon"|ds$origin=="California"|ds$origin=="Washington"))
+
+#fun command I just learned
+by(ds,ds$race,summary)
+```
+
+Implementing modifications to PerDay columns:
+```{r}
+# changeFactorToRandom = function(freq) {
+#   ret = switch(freq,
+#                "A"=runif(1,1,5),
+#                "B"=runif(1,6,11),
+#                "C"=runif(1,12,20),
+#                "D"=20,
+#                "E"=0)
+# }
+# 
+# testds = ds
+# testds$PerDayFuckmod[testds$PerDayFuckmod=="A"]
+# testds$PerDayShitmod[testds$PerDayShitmod=="A"]
+# testds$PerDayDamnmod[testds$PerDayDamnmod=="A"]
+# testds$PerDayBitchmod[testds$PerDayBitchmod=="A"]
+# testds$PerDayAssmod[testds$PerDayAssmod=="A"]
+# 
+# testds$PerDayFuckmod[testds$PerDayFuckmod=="B"]
+# testds$PerDayShitmod[testds$PerDayShitmod=="B"]
+# testds$PerDayDamnmod[testds$PerDayDamnmod=="B"]
+# testds$PerDayBitchmod[testds$PerDayBitchmod=="B"]
+# testds$PerDayAssmod[testds$PerDayAssmod=="B"]
+# 
+# testds$PerDayFuckmod[testds$PerDayFuckmod=="C"]
+# testds$PerDayShitmod[testds$PerDayShitmod=="C"]
+# testds$PerDayDamnmod[testds$PerDayDamnmod=="C"]
+# testds$PerDayBitchmod[testds$PerDayBitchmod=="C"]
+# testds$PerDayAssmod[testds$PerDayAssmod=="C"]
+# 
+# testds$PerDayFuckmod[testds$PerDayFuckmod=="D"]
+# testds$PerDayShitmod[testds$PerDayShitmod=="D"]
+# testds$PerDayDamnmod[testds$PerDayDamnmod=="D"]
+# testds$PerDayBitchmod[testds$PerDayBitchmod=="D"]
+# testds$PerDayAssmod[testds$PerDayAssmod=="D"]
+# 
+# testds$PerDayFuckmod[testds$PerDayFuckmod=="E"]
+# testds$PerDayShitmod[testds$PerDayShitmod=="E"]
+# testds$PerDayDamnmod[testds$PerDayDamnmod=="E"]
+# testds$PerDayBitchmod[testds$PerDayBitchmod=="E"]
+# testds$PerDayAssmod[testds$PerDayAssmod=="E"]
+# 
+# modfunc = function(colvec) {
+#   for (i in range(length(colvec)))
+#   {
+#     if (colvec[i]=="A") {
+#       colvec[i] = replace(colvec,i,runif(1,1,5)%/%1)
+#     }
+#     else if (colvec[i]=="B") {
+#       colvec[i] = replace(colvec,i,runif(1,6,11)%/%1)
+#     }
+#     else if (colvec[i]=="C") {
+#       colvec[i] = replace(colvec,i,runif(1,12,20)%/%1)
+#     }
+#     else if (colvec[i]=="D") {
+#       colvec[i] = replace(colvec,i,20)
+#     }
+#     else if (colvec[i]=="E") {
+#       colvec[i] = replace(colvec,i,0)
+#     }
+#   }
+#   print(colvec)
+#   return(colvec)
+# }
+# 
+# toy
+
+
+#literally just did it by hand. took like 10 minutes against the hours I tried
+#automating this with R.
+
+```
+Justification for implementing this:
+1. We needed numeric data for insightful analysis.
+2. We made sure that each case had a value that was within the range reported.
+3. Randomness should nullify the effect any variation might have on the insights drawn
+4. The difference isn't particularly meaningful; whether a person who swore 1-5 times per day swore exactly twice or exactly 5 times should not impact the insights we draw using this modification.
+
+Todo: use numeric variables with money coefficients to find out who owes how much for each word studied.
+
+EDA on Perday columns
+```{r}
+freqvec=c(ds$PerDayFuckmod,ds$PerDayShitmod,ds$PerDayDamnmod,ds$PerDayBitchmod,ds$PerDayAssmod)
+moneyvec=c(ds$MoneyF,ds$MoneyS,ds$MoneyD,ds$MoneyB,ds$MoneyA)
+moneyfreqvec=freqvec*moneyvec
+
+ds = ds %>%
+  mutate (
+    moneyffreq=MoneyF*freqvec[1],
+    moneysfreq=MoneyS*freqvec[2],
+    moneydfreq=MoneyD*freqvec[3],
+    moneybfreq=MoneyB*freqvec[4],
+    moneyafreq=MoneyA*freqvec[5],
+    totalfreq=PerDayFuckmod+PerDayShitmod+PerDayDamnmod+PerDayBitchmod+PerDayAssmod,
+    totalmon=MoneyF+MoneyS+MoneyD+MoneyB+MoneyA
+  )
+
+data.frame(freqvec,moneyfreqvec) %>%
+  ggplot(aes(x=freqvec,y=moneyfreqvec))+
+  geom_point()
+
+ds %>%
+  ggplot(aes(x=age,y=totalfreq))+
+  geom_col(fill="purple")+
+  ggtitle("Frequency of swearing per day by age")+
+  xlab("Age (years)")+
+  ylab("Frequency (swears/day)")+
+  theme_minimal()
+
+ds %>%
+  ggplot(aes(x=age,y=totalfreq,fill=gender))+
+  geom_col()+
+  ggtitle("Frequency of swearing per day by age")+
+  xlab("Age (years)")+
+  ylab("Frequency (swears/day)")+
+  theme_minimal()
+
+ds %>%
+  ggplot(aes(x=Comfort1,y=totalfreq,fill=as.factor(age)))+
+  geom_col()+
+  ggtitle("Frequency of swearing per day by first comfort location")+
+  xlab("Comfort Location")+
+  ylab("Frequency (swears/day)")+
+  guides(fill=guide_legend(title=NULL))+
+  coord_flip()+
+  theme_minimal()
+
+ds %>%
+  ggplot(aes(x=Comfort2,y=totalfreq,fill=as.factor(age)))+
+  geom_col()+
+  ggtitle("Frequency of swearing per day by second comfort location")+
+  xlab("Comfort Location")+
+  ylab("Frequency (swears/day)")+
+  guides(fill=guide_legend(title=NULL))+
+  coord_flip()+
+  theme_minimal()
+
+ds %>%
+  ggplot(aes(x=Comfort3,y=totalfreq,fill=as.factor(age)))+
+  geom_col()+
+  ggtitle("Frequency of swearing per day by third comfort location")+
+  xlab("Comfort Location")+
+  ylab("Frequency (swears/day)")+
+  guides(fill=guide_legend(title=NULL))+
+  coord_flip()+
+  theme_minimal()
+
+ds %>% # CAREFUL! This plot shows that respondents who observe close friends swearing tend to swear a lot themselves!
+  ggplot(aes(x=PeopleObserved1,y=totalfreq))+
+  geom_col(fill="purple")+
+  ggtitle("Frequency of swearing based on resp. obs. of others swearing")+
+  xlab("Relationship")+
+  ylab("Frequency (swears/day)")+
+  guides(fill=guide_legend(title=NULL))+
+  coord_flip()+
+  theme_minimal()
+ds %>% # CAREFUL! This plot shows that respondents who observe close friends swearing tend to swear a lot themselves!
+  ggplot(aes(x=Favorite,y=totalfreq,fill=gender))+
+  geom_col(position="fill")+
+  ggtitle("")+
+  xlab("Favorite Swear Word")+
+  ylab("Frequency (swears/day)")+
+  guides(fill=guide_legend(title=NULL))+
+  coord_flip()+
+  theme_minimal()
+
+dsorig = ds %>%
+  group_by(origin) %>%
+  summarize(n=n()) %>%
+  arrange(desc(origin))
+ds %>%
+  ggplot(aes(x=origin,y=totalfreq,fill=origin))+
+  geom_col()+
+  ggtitle("Swearing based on origin")+
+  xlab("")+
+  ylab("Frequency")+
+  guides(fill=guide_legend(title=NULL))+
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.background = element_rect(color="white"))
+
+ds %>%
+  ggplot(aes(x=ispnw,y=totalfreq,fill=ispnw))+
+  geom_col()+
+  ggtitle("Swearing based on PNW origin")+
+  
+  theme_minimal()
+table(ds$ispnw)
+#Hypothesis: no significant difference in swearing between PNWers and non PNWers
+#success = ispnw    failure = not ispnw
+#successes(x) = 38     total(n) = 58
+#p = 0.5 ; "proportions are equal under null"    alternative = "two.sided"
+prop.test(38,58,0.5,alternative="two.sided")
+#Conclusion:
+#There is enough evidence to reject the hypothesis that
+#there is an equal proportion of people who swear if they're from the PNW or not.
+#People from the PNW have more tendency to swear than those not from the PNW
+
+ds %>%
+  ggplot(aes(x=totalfreq))+
+  geom_histogram(bins=15,fill="red")+
+  ggtitle("Distribution of swearing frequency")+
+  xlab("Frequency (swears/day)")+
+  ylab("# Respondents")+
+  theme_minimal()
+skim(ds$totalfreq)
+#Hypothesis: From the data visualized, it might be wise to guess that the true
+#mean is greater than what it seems visualized here. The null is that there is
+#no significant difference between the true mean and our observed mean.
+t_score=(mean(ds$totalfreq,na.rm=TRUE)-35)/(sd(ds$totalfreq,na.rm=TRUE)/sqrt(58))
+pt(t_score,df=57)
+t.test(ds$totalfreq,mu=35,alternative="greater")
+#As it turns out, it seems 35 is pretty close to the true mean.
+#Assumptions: Independent obs, representative sample, normal distribution!
+#Indep: How often one person swears doesn't affect how often another person swears.
+#   P(one person swearing 25 times) * P(one person swearing 10 times) =
+#       P(one person swearing 25 times and one person swearing 10 times)
+
+#Next step is assume each person at WU swears an average of 35 times for an average of a level-2
+#intensity word. Average cost per swear is $0.29. 35 swears per day implies average swear cost per student is
+#$10.15. 1367 students* (Source: About Willamette 2022) means that $13,875.05 is owed to the swear
+#jar.
+#Means of cost to use each swear word
+#F:0.602  S:0.398  D:0.150  B:0.606  A:0.214
+#WOWS swearing:
+#F:569  S:79  D:  B:8  A:
+#Total: $373.98
+
+#linear regression
+#compare how 
+
+setwd("C:/Users/epicm/Documents/School/20222023/ISWR/proj")
+linds = read_csv("linreg.csv")
+head(linds)
+
+#linds %>%
+#  mutate(IntensityMod = recode(IntensityWord,
+ #                              "4"=runif(n=1,min=3.51,max=4),
+  #                             "3"=runif(n=1,min=2.51,max=3.50),
+   #                            "2"=runif(n=1,min=1.51,max=2.50),
+    #                           "1"=runif(n=1,min=0.51,max=1.50),
+     #                          "0"=runif(n=1,min=0,max=0.50)
+      #                         )
+       # )
+
+#linds$IntensityWord[linds$IntensityWord == 4] <- runif(n=1,min=3.51,max=4)
+#linds$IntensityWord[linds$IntensityWord == 3] <- runif(n=1,min=2.51,max=3.50)
+#linds$IntensityWord[linds$IntensityWord == 2] <- runif(n=1,min=1.51,max=2.50)
+#linds$IntensityWord[linds$IntensityWord == 1] <- runif(n=1,min=0.51,max=1.50)
+#linds$IntensityWord[linds$IntensityWord == 0] <- runif(n=1,min=0,max=0.50)
+#linds
+
+newIW = c()
+for (el in linds$IntensityWord) 
+  {
+    if (el==4) 
+      {
+      newIW=append(newIW,runif(n=1,min=3.51,max=4))
+      }
+    else if (el==3) 
+      {
+        newIW=append(newIW,runif(n=1,min=2.51,max=3.50))
+      }
+    else if (el==2) 
+      {
+        newIW=append(newIW,runif(n=1,min=1.51,max=2.50))
+      }
+    else if (el==1) 
+      {
+        newIW=append(newIW,runif(n=1,min=0.51,max=1.50))
+      } 
+    else 
+      {
+        newIW=append(newIW,runif(n=1,min=0,max=0.50))
+      }
+}
+newIW
+linds
+
+
+linds = linds %>%
+  mutate(IWMod = newIW)
+
+linds %>% 
+  ggplot(aes(x=PerDayWord,y=IWMod,color=Word)) +
+  geom_point(alpha=0.3)+
+  scale_x_continuous()+
+  scale_y_continuous()+
+  geom_smooth(method="lm")+
+  facet_grid(.~Word)+
+  ggtitle("Frequency of word use on word intensity by word")+
+  xlab("Swears per day")+
+  ylab("Intensity")+
+  theme_minimal()
+mod=lm(IWMod~PerDayWord,linds)
+summary(mod)
+```
+
+
+
+
+
+

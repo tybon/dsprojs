@@ -1,0 +1,196 @@
+---
+title: "DATA 152 HW4 - Tyler Bontrager"
+date: "Due February 22, 2023 @ 11:59pm"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+** CHANGE YOUR NAME IN THE HEADER and then complete the following: **
+
+## QUESTION 1
+
+### 1A
+Simulate 10000 standard normal random variables by running `rnorm(10000,0,1)`.  Name this variable "normSim".
+
+```{r}
+normSim = rnorm(10000,0,1)
+```
+
+### 1B
+Create a histogram of your data.
+
+```{r}
+tibble(normSim) %>%
+  ggplot(aes(x=normSim)) +
+  geom_histogram(color="black",fill="cyan4")
+
+```
+
+### 1C
+What percent of your observations fall 2 standard deviations below the mean?  In other words, what percent of your z scores (i.e. standardized values) are less than 2?
+
+```{r}
+nsTibble = tibble(normSim)
+mean(normSim)
+
+z = (normSim-mean(normSim))/sd(normSim)
+
+nsTibble %>%
+  mutate(
+    z_score = z
+  )
+
+nsTibble %>%
+  ggplot(aes(x=z,y=..density..)) +
+  geom_histogram(color="black",fill="cyan4")
+
+pnorm(-2,0,1)
+
+```
+
+ANSWER: 2.28% (did I do this correctly?)
+
+### 1D
+Use `pnorm` to calculate the exact probability a standard normal variable is less than -2.
+
+```{r}
+pnorm(-2,0,1) #?
+
+```
+
+ANSWER: 2.28%?
+
+### 1E
+Why are your answers in 1C and 1D different?
+
+ANSWER: I couldn't seem to find the observed number of z scores 2 sds below the mean, but I'd imagine they'd be off because our data isn't supposed to be perfectly normal.
+
+## QUESTION 2
+
+In triathlons, it is common for racers to be placed into age and gender groups.  Friends Jed and Heather both completed the Hermosa Beach Triathlon, where Jed competed in the "Men, ages 30-34" group while Heather competed in the "Women, Ages 25-29" group.  Jed completed the race in 1:22:29 (4948 seconds), while Heather completed the race in 1:31:53 (5513 seconds).  They are curious about how they did within their respective groups.  Here's information about the performance of their groups:
+
+* The finishing times of the "Men, ages 30-34" group has a mean of 4313 seconds with a standard deviation of 583 seconds.
+* The finishing times of the "Women, Ages 25-29" group has a mean of 5261 seconds with a standard deviation of 807 seconds.  The distributions of finishing times for both groups are approximately Normal.
+
+### 2A
+What are the z-scores for Jed's and Heather's finishing times?
+
+```{r}
+jz = (4948-4313)/583
+hz = (5513-5261)/807
+
+#Jed's Z-score:
+jz
+#Heather's Z-score:
+hz
+```
+
+ANSWER: Jed: 1.09; Heather: 0.31
+
+### 2B
+Did Jed or Heather perform better in their respective groups?  Explain your reasoning.
+
+ANSWER: They both performed better in their respective groups. Jed performed better with respect to Heather's z-score, where he had scored over one standard deviation above the mean of his group whereas Heather performed in a better yet less significant way.
+
+### 2C
+What percent of triathletes performed better than Heather?  Remember: a better performance corresponds to a faster finish.
+
+```{r}
+1-pnorm(hz,0,1)
+
+```
+
+ANSWER: 37.7% of triathletes performed better than Heather.
+
+### 2D
+What percent of triathletes performed better than Jed?
+Remember: a better performance corresponds to a faster finish.
+
+```{r}
+1-pnorm(jz,0,1)
+
+```
+
+ANSWER: 13.8% of triathletes performed better than Jed.
+
+### 2E
+Use the 68-95-99.7 Rule to calculate the range of times that encompasses 95% of all run times for the "Women, Ages 25-29" group.
+
+```{r}
+
+0-2*1
+0+2*1
+
+5261-2*807
+5261+2*807
+
+```
+
+ANSWER: 95% of run times are expected to be between -2 and 2 standard deviations from the mean. This corresponds to between 3647 and 6875 seconds.
+
+## QUESTION 3
+The average daily high temperature in June in LA is 77F with a standard deviation of 5F.  Suppose that the temperatures in June closely follow a normal distribution.
+
+```{r}
+tempSim = rnorm(10000,77,5)
+tibble(tempSim) %>%
+  ggplot() +
+  geom_histogram(aes(x=tempSim,y=..density..),color="black",fill="purple")
+tempmean=77
+tempsd=5
+
+```
+
+ANSWER: Yes?
+
+### 3A
+What is the probability of observing an 83F temperature or higher in LA during a randomly chosen day in June?
+
+```{r}
+1-pnorm(83,tempmean,tempsd)
+
+```
+
+ANSWER: 11.5%
+
+### 3B
+How cool are the coldest 10% of the days during June in LA?
+
+```{r}
+qnorm(.10,tempmean,tempsd)
+
+```
+
+ANSWER: 70.6 degF
+
+## QUESTION 4
+Cholesterol levels for women aged 20 to 34 follow an approximately normal distribution with mean 185 milligrams per deciliter (mg/dl).  Women with cholesterol levels above 220 mg/dl are considered to have high cholesterol.  About 18.5% of women fall into the "high cholesterol" category.  What is the standard deviation of cholesterol levels for women aged 20 to 34?
+
+
+```{r}
+cholSim = rnorm(10000,77,5)
+tibble(cholSim) %>%
+  ggplot() +
+  geom_histogram(aes(x=cholSim,y=..density..),color="black",fill="purple")
+cholmean=185
+#cholstd = ?
+#standardize
+
+# z=(x-u)/o
+# 18.5% is 1 standard deviation above the mean => z=1
+# 1=(x-u)/o
+# o=(x-u)
+# o=(220-185) => o=35 mg/dL
+
+```
+
+ANSWER: 35 mg/dL
+
+
+***
+*INSTRUCTIONS TO SUBMIT* Knit this into an html document and submit BOTH the Rmd and the html file in WISE.  Name both files using this naming convention: LASTNAME_FIRSTNAME_DATA152_HW4.Rmd (or html).  For example, Dr. Gore's submissions would be named GORE_KRISTEN_DATA154_HW1.Rmd and GORE_KRISTEN_DATA152_HW4.html.  Failure to follow these instructions will result in a 10-point deduction.
