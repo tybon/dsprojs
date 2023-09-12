@@ -1,5 +1,7 @@
 #presidential election poll example
 
+library(tidyverse)
+
 candidate = c("trump","desantis","haley","pence")
 prop=c(0.43,0.41,0.06,0.04)
 tib = tibble(candidate,prop)

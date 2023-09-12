@@ -1,8 +1,8 @@
 
 
 library(tidyverse)
-setwd('C:\\Users\\epicm\\Documents\\School\\flder\\ISWR\\data')
-ds = read_csv("foodSpending.csv")
+#setwd('C:\\Users\\epicm\\Documents\\School\\flder\\ISWR\\data')
+ds = read_csv("../data/foodSpending.csv")
 theMean=mean(ds$amt)
 theSD=sd(ds$amt)
 n=20

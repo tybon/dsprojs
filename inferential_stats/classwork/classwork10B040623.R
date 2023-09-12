@@ -1,14 +1,14 @@
 ## ----------------
 library(tidyverse)
 library(skimr)
-setwd("C:\\Users\\epicm\\Documents\\School\\20222023\\ISWR\\data")
-ds=read_csv("textbooks.csv")
+#setwd("C:\\Users\\epicm\\Documents\\School\\20222023\\ISWR\\data")
+ds=read_csv("../data/textbooks.csv")
 skim(ds)
-t.test(ds$diff,mu=0,alternative="")
-t.test(ds$ucla_new,ds$amaz_new,paired=T,alternative="")
+t.test(ds$diff,mu=0,alternative="two.sided")
+t.test(ds$ucla_new,ds$amaz_new,paired=T,alternative="less")
 
 #baseball example
-t.test(baseball$diff,mu=0,alternative="greater")
+t.test(ds$diff,mu=0,alternative="greater")
 
 #* issues with these conclusions
 #* - sample size

@@ -1,6 +1,3 @@
 library(tidyverse)
 library(skimr)
-getwd()
-setwd("C:/Users/epicm/Documents/School/20222023/ISWR/data")
-getwd()
 ds = read_csv("ncbirths.csv")

@@ -33,8 +33,8 @@ tibble(x=x) %>%
   labs(title="Chips Ahoy! Experiment", x="#chips") +
   theme_minimal()
 
-setwd("C:\\Users\\epicm\\Documents\\School\\20222023\\ISWR\\data")
-df = read_csv("tires.csv")
+#setwd("C:\\Users\\epicm\\Documents\\School\\20222023\\ISWR\\data")
+df = read_csv("../data/tires.csv")
 #class exercise
 #assumption checking
 #*observations are independent

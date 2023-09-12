@@ -2,12 +2,12 @@ library(tidyverse)
 library(skimr)
 library(car)
 
-setwd("C:\\Users\\epicm\\Documents\\School\\20222023\\ISWR\\data")
-bs=read_tsv("house_prices_tab.txt")
+#setwd("C:\\Users\\epicm\\Documents\\School\\20222023\\ISWR\\data")
+bs=read_tsv("../data/house_prices_tab.txt")
 
 bs %>%
   ggplot(aes(x=sqft_living,y=price)) +
-  geom_point(aes(color=purple)) +
+  geom_point(aes(color="purple")) +
   geom_smooth(method="lm") + #shows a violation of EqualVariance
   theme_minimal()
 
@@ -51,5 +51,5 @@ bs %>%
   theme_minimal()
 bs%>%mutate(condition=factor(condition))
 
-mod2=lm(log(price ~ ( log(sqft_living + condition) )+ #(this part is unnecessary)
-              log(sqft_living)*condition, data=ds))
+#mod2=lm(log(price ~ ( log(sqft_living + condition) )+ #(this part is unnecessary)
+#              log(sqft_living)*condition, data=bs))

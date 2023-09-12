@@ -1,4 +1,4 @@
-setwd("C:/Users/epicm/Documents/School/flder/ISWR/data")
+#setwd("C:/Users/epicm/Documents/School/flder/ISWR/data")
 
 library(tidyverse)
 library(skimr)
@@ -26,7 +26,7 @@ tibble(ppg)%>%
 
 ## exercise #1
 
-notds=read_csv("SATscores-2023.txt")
+notds=read_csv("../data/SATscores-2023.txt")
 head(notds)
 tail(notds)
 names(notds)
@@ -57,7 +57,7 @@ notds%>%
 
 ## exercise #2
 
-ds=read_csv("ACTscores-2023.txt")
+ds=read_csv("../data/ACTscores-2023.txt")
 head(ds)
 tail(ds)
 names(ds)
