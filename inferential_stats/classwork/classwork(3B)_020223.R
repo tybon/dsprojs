@@ -1,9 +1,9 @@
 #setwd("C:/Users/epicm/Documents/School/flder/ISWR")
-
+setwd("inferential_stats/classwork")
 library(tidyverse)
 library(skimr)
 
-wthr = read_csv("data/portlandWeather-NWS.txt")
+wthr = read_csv("../data/portlandWeather-NWS.txt")
 
 head(wthr)
 tail(wthr)
